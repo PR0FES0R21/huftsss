@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+
+  {% include 'components/admin/link.html' %}
+
+  <title>Dashboard | Kelola Mata Pelajaran</title>
+</head>
+
+<body id="body-pd" class="">
+
+  <div id="infoModal" class="modal fade-in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Tambah Data Mapel
+          </h1>
+          <button type="button" class="btn-close out" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3 needs-validation" id="form-mapel" novalidate>
+            <div class="col-12">
+              <input type="hidden" name="id" id="id">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <label for="kode-mapel" class="form-label">Kode Mapel</label>
+              <input type="text" name="kode-mapel" class="form-control" id="kode-mapel"
+                placeholder="Masukan Kode Mata Pelajaran" required autocomplete="off" />
+              <div class="invalid-feedback">Kode Mapel Wajid diisi!</div>
+
+              <label for="nama-mapel" class="form-label mt-3">Nama Mapel</label>
+              <input type="text" name="nama-mapel" class="form-control" id="nama-mapel"
+                placeholder="Masukkan Nama Mapel" required required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+              <label for="jenjang" class="form-label mt-3">Jenjang</label>
+              <select class="form-select" aria-label="jenjang" id="jenjang" name="jenjang" required>
+                <option value="all" selected>-- Semua Jenjang --</option>
+                <option value="X">X (10)</option>
+                <option value="XI">XI (11)</option>
+                <option value="XII">XII (12)</option>
+              </select>
+
+              <label for="jurusan" class="form-label mt-3">Program Keahlian</label>
+              <select class="form-select" aria-label="jurusan" id="jurusan" name="jurusan" required>
+                <option value="all" selected>-- Semua Program Keahlian --</option>
+                <option value="TKJ">Teknik Komputer dan Jaringan</option>
+                <option value="TBSM">Teknik Bisnis Sepeda Motor</option>
+                <option value="TP">Teknik Pemesinan</option>
+                <option value="TKRO">Teknik Kendaraan Ringan Otomotif</option>
+              </select>
+
+              <label for="kkm" class="form-label mt-3">KKM</label>
+              <input type="number" name="kkm" class="form-control" id="kkm" placeholder="KKM Untuk Mata Pelajaran ini"
+                required required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end border-top mt-5">
+              <button type="button" class="btn btn-secondary close mt-3 me-3" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary mt-3" id="handler-form-mapel">
+                Tambahkan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'components/admin/alert.html' %}
+  {% include 'components/admin/header.html' %}
+  {% include 'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Kelola Mata Pelajaran</div>
+      <div class="breadcrumb-information">
+        Lihat daftar mata pelajaran yang tersedia dan tambahkan atau edit mata
+        pelajaran.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <!-- overview section -->
+    <div class="overview">
+      <div class="overview-title">Informasi Kelola Mata Pelajaran</div>
+      <div class="overview-description mb-3 mb-md-0">
+        Pada halaman "Kelola Mata Pelajaran", admin memiliki fungsi untuk
+        mengelola informasi tentang mata pelajaran yang diajarkan di sekolah.
+      </div>
+      <div class="overview-list-content">
+        <ul class="d-none d-md-block">
+          <li>
+            Admin dapat dengan mudah melihat daftar lengkap mata pelajaran
+            yang tersedia di sekolah, menambahkan mata pelajaran baru, dan
+            mengedit detail mata pelajaran yang sudah ada untuk menyesuaikan
+            informasi yang diperlukan. Dengan fitur ini, admin dapat mengelola
+            daftar mata pelajaran sekolah secara efisien dan terorganisir.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end overview section -->
+    <div class="container-fluid mt-3 no-padding">
+      <div class="row">
+        <!-- Col Pertama -->
+        <div class="col-12 d-flex col-sm-6 full-width-sm">
+          <div class="flex-row-d container-informasi-halaman justify-content-between">
+            <div class="informasi-halaman">
+              <div class="title-informasi">Total Semua Mapel</div>
+              <div class="value-informasi" id="mapel_count_data">{{ data.subject_count }}</div>
+            </div>
+            <img class="me-3" src="{{ url_for('static', filename='images/icons/i-total-mapel.svg')}}" alt="" />
+          </div>
+        </div>
+        <!-- Col Kedua -->
+        <div class="col-12 col-sm-6 d-flex justify-content-end">
+          <div class="action-buttons flex-row-d mt-2">
+            <button class="delete-button" id="hapus-data-mapel-a">
+              Hapus Semua data <i class="bx bx-trash"></i>
+            </button>
+            <button class="add-button" id="tambah-data-mapel">
+              Tambah data mapel <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table seluruh data -->
+    <div class="table-view-data">
+      <div class="row view-data-table-title-container">
+        <div class="col-12 col-sm-4 view-table-data-title">
+          Semua Data Mapel
+        </div>
+        <div class="col-12 col-sm-8 d-flex justify-content-sm-end">
+          <!-- filter -->
+          <div class="toggle-container">
+            <button class="toggle-button fw-medium" id="tombol-filter">
+              <i class="bx bx-filter-alt"></i> Filter
+            </button>
+            <div class="toggle-box" id="toggleBox">
+              <div class="toggle-box-container">
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-kelas">
+                  <option value="semua kelas" selected>Semua Kelas</option>
+                  <option value="X TKJ 1">X TKJ 1</option>
+                  <option value="XII TBSM">XII TBSM</option>
+                  <option value="XII TKR1">XII TKR1</option>
+                  <option value="XII TKR2">XII TKR2</option>
+                  <option value="XII TP1">XII TP1</option>
+                  <option value="XII TP2">XII TP2</option>
+                </select>
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-jenjang">
+                  <option value="" selected>Berdasarkan Jenjang</option>
+                  <option value="X (10)">X (10)</option>
+                  <option value="XII (11)">XII (11)</option>
+                  <option value="XII (12)">XII (12)</option>
+                </select>
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-jurusan">
+                  <option value="" selected>Berdasarkan Jurusan</option>
+                  <option value="Teknik Komputer">Teknik Komputer</option>
+                  <option value="Teknik Pemesinan">Teknik Pemesinan</option>
+                  <option value="Teknik Kendaraan Ringan">
+                    Teknik Kendaraan Ringan
+                  </option>
+                  <option value="Teknik Sepeda Motor">
+                    Teknik Sepeda Motor
+                  </option>
+                </select>
+                <div class="btn btn-primary btn-sm w-100" id="apply-button">
+                  Terapkan
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end filter -->
+          <button class="import btn btn-secondary btn-sm mx-2">
+            <i class="bx bx-export"></i><span>Export CSV</span>
+          </button>
+          <button class="export btn btn-primary btn-sm">
+            <i class="bx bxs-file-export"></i><span>Import CSV</span>
+          </button>
+        </div>
+      </div>
+      <div class="view-table-data-content mx-2 pb-2">
+        <table id="table-data" class="table display nowrap table-striped table-bordered" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Kode Mapel</th>
+              <th>Nama Mapel</th>
+              <th>Jenjang Kelas</th>
+              <th>Program Keahlian</th>
+              <th>KKM</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end table data -->
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/kelola_mapel.js') }}"></script>
+  <script>
+    DataTable.types().forEach((type) => {
+      DataTable.type(type, "detect", () => false);
+    });
+
+    var csrf_token = "{{ csrf_token() }}";
+  </script>
+</body>
+
+</html>

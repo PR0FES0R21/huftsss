@@ -1,0 +1,1 @@
+const weatherApikey = "c5aeea26c35d42d88ca65926240105"

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+  {% include 'components/admin/link.html' %}
+  <title>Dashboard | Kelola Guru</title>
+</head>
+
+<body id="body-pd" class="">
+  {% include 'components/admin/alert.html' %}
+
+  <!-- modal tambah dan edit data -->
+  <div id="infoModal" class="modal fade-in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Tambah Data Guru
+          </h1>
+          <button type="button" class="btn-close out" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3 needs-validation" id="form-add-guru" novalidate>
+            <div class="col-md-6">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <input type="hidden" name="idGuru" id="idGuru" />
+              <label for="namaGuru" class="form-label">Nama Guru</label>
+              <input type="text" name="nama" class="form-control" id="namaGuru"
+                placeholder="Silahkan Masukkan Nama Guru" required autocomplete="off" />
+              <div class="invalid-feedback">Nama Guru Wajib Diisi!</div>
+
+              <label for="nktam" class="form-label mt-3">NKTAM</label>
+              <input type="number" name="nktam" class="form-control" id="nktam" placeholder="Masukkan NKTAM" required
+                required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+              <label for="tanggalLahirGuru" class="form-label mt-3">Tanggal Lahir</label>
+              <div class="input-group mb-3">
+                <input type="text" name="tanggalLahirGuru" class="form-control datepicker" id="tanggalLahirGuru"
+                  placeholder="Pilih Tanggal Lahir" required required autocomplete="off" />
+                <button class="btn btn-outline-secondary" type="button" id="tanggalLahirIcon">
+                  <i class="fa-regular fa-calendar"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback">Bidang ini wajib diisi</div>
+
+              <!-- Radio Buttons -->
+              <div class="mt-3">
+                <label class="form-label d-block">Jenis Kelamin</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="jkGuru" id="Laki Laki" value="Laki Laki"
+                    required />
+                  <label class="form-check-label" for="Laki Laki">Laki-Laki</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="jkGuru" id="Perempuan" value="Perempuan"
+                    required />
+                  <label class="form-check-label" for="perempuan">Perempuan</label>
+                </div>
+                <div class="invalid-feedback">
+                  Pilih salah satu jenis kelamin.
+                </div>
+              </div>
+            </div>
+
+            <!-- kanan -->
+            <div class="col-md-6">
+              <label for="jabatan" class="form-label">Jabatan</label>
+              <input type="text" name="jabatan" class="form-control" id="jabatan" placeholder="Jabatan Guru" required />
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+              <label for="mapelYangDiajar" class="form-label mt-3">Mata Pelajaran Yang Diajar</label>
+              <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="mapelYangDiajar"
+                name="mataPelajaran" required>
+                <option value="" selected>-- Pilih Mata Pelajaran --</option>
+                <option value="1">Bahasa Indonesia</option>
+                <option value="2">Matematika</option>
+                <option value="3">MIPA</option>
+              </select>
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+              <label for="nomorTeleponGuru" class="form-label mt-3">Nomor Telepon</label>
+              <input type="number" name="nomorTeleponGuru" class="form-control" id="nomorTeleponGuru"
+                placeholder="Masukan Nomor Telepon" required required autocomplete="off" />
+
+              <label for="emailGuru" class="form-label mt-3">Email</label>
+              <input type="email" name="emailGuru" class="form-control" id="emailGuru"
+                placeholder="Silahkan Masukan Email" required required autocomplete="off" />
+            </div>
+
+            <div class="col-12 d-flex justify-content-end border-top mt-5">
+              <button type="button" class="btn btn-secondary close mt-3 me-3" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button type="submit" name="submit" id="submit-form" class="btn btn-primary mt-3">
+                Tambahkan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal -->
+
+  {% include 'components/admin/header.html' %} {% include
+  'components/admin/aside.html' %}
+
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Kelola Guru</div>
+      <div class="breadcrumb-information">
+        Kelola data guru dan pengajar dalam aplikasi.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <!-- overview section -->
+    <div class="overview">
+      <div class="overview-title">Informasi Kelola Guru</div>
+      <div class="overview-description mb-3 mb-md-0">
+        Halaman ini memungkinkan admin untuk mengelola akun dan data guru
+        dalam aplikasi. Admin dapat menambah, mengubah, dan menghapus akun
+        guru
+      </div>
+      <div class="overview-list-content">
+        <ul class="d-none d-md-block">
+          <li>
+            Untuk menambahkan akun guru baru, admin diminta untuk memasukkan
+            NKTAM, Nama Lengkap dan Data Lainya. Secara otomatis, password
+            untuk akun baru akan diatur sebagai "12345678" untuk sementara.
+          </li>
+          <li>
+            Guru dapat melakukan login ke aplikasi menggunakan NKTAM dan
+            Password Default. Password default yang digunakan pada saat
+            pertama kali login adalah "12345678".
+          </li>
+          <li>
+            Setelah berhasil login, guru akan diinstruksikan untuk melengkapi
+            profil pribadinya. Disarankan bagi guru untuk segera mengubah
+            password default ("12345678") menjadi password yang lebih aman dan
+            personal.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end overview section -->
+    <div class="container-fluid mt-3 no-padding">
+      <div class="row">
+        <!-- Col Pertama -->
+        <div class="col-12 d-flex col-sm-6 full-width-sm">
+          <div class="flex-row-d container-informasi-halaman justify-content-between">
+            <div class="informasi-halaman">
+              <div class="title-informasi">Total Semua Guru</div>
+              <div class="value-informasi" id="teacher_count_data">{{ data.teacher_count }}</div>
+            </div>
+            <img class="me-3" src="{{ url_for('static', filename='images/icons/i-total-guru.svg')}}" alt="" />
+          </div>
+        </div>
+        <!-- Col Kedua -->
+        <div class="col-12 col-sm-6 d-flex justify-content-end">
+          <div class="action-buttons flex-row-d mt-2">
+            <button class="delete-button confirminputalert" id="hapus-semua-data-guru">
+              Hapus Semua data <i class="bx bx-trash"></i>
+            </button>
+            <button class="add-button" id="tambah-data-guru" data-type="Guru">
+              Tambah data guru <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table seluruh data -->
+    <div class="table-view-data">
+      <div class="row view-data-table-title-container">
+        <div class="col-12 col-sm-4 view-table-data-title">
+          Semua Data Guru
+        </div>
+        <div class="col-12 col-sm-8 d-flex justify-content-sm-end">
+          <button class="import btn btn-secondary btn-sm mx-2">
+            <i class="bx bx-export"></i><span>Export CSV</span>
+          </button>
+          <button class="export btn btn-primary btn-sm">
+            <i class="bx bxs-file-export"></i><span>Import CSV</span>
+          </button>
+        </div>
+      </div>
+      <div class="view-table-data-content mx-2 pb-2">
+        <table id="table-data" class="table display nowrap table-striped table-bordered" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>NKTAM</th>
+              <th>Jabatan</th>
+              <th>Mata Pelajaran</th>
+              <th>Email</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end table data -->
+  </div>
+  <!-- end main section -->
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/kelola-guru.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/utility/data.js') }}"></script>
+
+  <script>
+    flatpickr("#tanggalLahirGuru", {
+      dateFormat: "d-m-Y",
+    });
+
+    csrf_token = "{{ csrf_token() }}";
+  </script>
+</body>
+
+</html>

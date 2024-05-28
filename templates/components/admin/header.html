@@ -1,0 +1,14 @@
+<header class="header" id="header">
+  <div class="header_toggle">
+    <i class="bx bx-menu" id="header-toggle"></i>
+  </div>
+  <div class="header-profile flex-row">
+    <div class="text-end">
+      <div class="profile-name inter-600 text-capitalize">{{ data.name }}</div>
+      <div class="role text-capitalize">{{ data.position }}</div>
+    </div>
+    <div class="header_img ms-3">
+      <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}" alt="Profile" />
+    </div>
+  </div>
+</header>

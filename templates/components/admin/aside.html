@@ -1,0 +1,63 @@
+<div class="l-navbar" id="nav-bar">
+  <nav class="nav">
+    <div>
+      <a href="/" class="nav_logo">
+        <img src="{{ url_for('static', filename='images/mainlogo.png')}}" alt="Logo Smk Muhammadiyah 2 Kalirejo"
+          class="img-logo w-50" />
+      </a>
+      <div class="nav_list">
+        <a href="{{ admin_url_for('admin_views.index') }}"
+          class="nav_link {% if request.endpoint == 'admin_views.index' %}active{% endif %}">
+          <i class="bx bx-grid-alt nav_icon"></i>
+          <span class="nav_name">Dashboard</span>
+        </a>
+        <a href="{{ admin_url_for('admin_views.kelola_guru') }}"
+          class="nav_link {% if request.endpoint == 'admin_views.kelola_guru' %}active{% endif %}">
+          <img src="{{ url_for('static', filename='images/icons/kelola-guru.svg')}}" alt="Icon Kelola Guru"
+            class="sidebar-icon" />
+          <span class="nav_name">Kelola Guru</span>
+        </a>
+        <a href="{{ admin_url_for('admin_views.kelola_siswa') }}"
+          class="nav_link {% if request.endpoint == 'admin_views.kelola_siswa' %}active{%endif%}">
+          <img src="{{ url_for('static', filename='images/icons/kelola-siswa.svg')}}" alt="icon kelola siswa"
+            class="sidebar-icon" />
+          <span class="nav_name">Kelola Siswa</span>
+        </a>
+        <a href="{{ admin_url_for('admin_views.kelola_ujian') }}"
+          class="nav_link {% if request.endpoint in ['admin_views.kelola_ujian', 'admin_views.kelola_ujian_add', 'admin_views.kelola_ujian_ubah', 'admin_views.kelola_soal'] %}active{%endif%}">
+          <img src="{{ url_for('static', filename='images/icons/kelola-ujian.svg')}}" alt="icon kelola ujian"
+            class="sidebar-icon" />
+          <span class="nav_name">Kelola Ujian</span>
+        </a>
+        <a href="{{ admin_url_for('admin_views.kelola_mapel') }}"
+          class="nav_link {% if request.endpoint == 'admin_views.kelola_mapel' %}active{% endif %}">
+          <img src="{{ url_for('static', filename='images/icons/kelola-matapelajaran.svg')}}"
+            alt="icon kelola mata pelajaran" class="sidebar-icon" />
+          <span class="nav_name">Mata Pelajaran</span>
+        </a>
+        <a href="{{ admin_url_for('admin_views.kelola_kelas') }}"
+          class="nav_link {% if request.endpoint == 'admin_views.kelola_kelas' %}active{% endif %}">
+          <img src="{{ url_for('static', filename='images/icons/kelas.svg')}}" alt="icon kelola kelas"
+            class="sidebar-icon" />
+          <span class="nav_name">Kelas</span>
+        </a>
+        <a href="{{ admin_url_for('admin_views.analitik') }}"
+          class="nav_link {% if request.endpoint == 'admin_views.analitik' %} active {% endif %}">
+          <img src="{{ url_for('static', filename='images/icons/analitik.svg')}}" alt="icon analitik"
+            class="sidebar-icon" />
+          <span class="nav_name">Analitik</span>
+        </a>
+      </div>
+    </div>
+    <div>
+      <a href="{{ admin_url_for('admin_views.profile') }}" class="nav_link">
+        <i class="bx bx-user nav_icon"></i>
+        <span class="nav_name">Profile</span>
+      </a>
+      <a href="{{ admin_url_for('admin_views.logout') }}" class="nav_link">
+        <i class="bx bx-log-out nav_icon"></i>
+        <span class="nav_name">SignOut</span>
+      </a>
+    </div>
+  </nav>
+</div>

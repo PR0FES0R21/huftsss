@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+
+  {% include 'components/admin/link.html' %}
+
+  <title>Admin | Analitik</title>
+</head>
+
+<body id="body-pd" class="">
+  <header class="header" id="header">
+    <div class="header_toggle">
+      <i class="bx bx-menu" id="header-toggle"></i>
+    </div>
+    <div class="header-profile flex-row">
+      <div class="text-end">
+        <div class="profile-name inter-600">Sayoga Pratama</div>
+        <div class="role">Administrator</div>
+      </div>
+      <div class="header_img ms-3">
+        <img src="{{ url_for('static', filename='images/icons/profile-demo.png')}}" alt="Profile" />
+      </div>
+    </div>
+  </header>
+  {% include 'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Analitik</div>
+      <div class="breadcrumb-information">
+        Analisis performa siswa dan kelas untuk pengambilan keputusan yang lebih baik.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="height-100 main">
+    <div class="analytic-container">
+      <div class="analytic-info">
+        <div class="title-analytic-info">Dashboard Analitik Sekolah</div>
+        <div class="desc-analytic-info">
+          Halaman Analitik menyajikan informasi tentang pertumbuhan siswa dan
+          gambaran data sekolah secara keseluruhan. Anda dapat melihat grafik
+          pertumbuhan siswa berdasarkan kelas, serta grafik distribusi dan
+          tren nilai rata-rata kelas. Fitur filter memungkinkan Anda untuk
+          melihat data berdasarkan jenjang dan jurusan, sambil juga
+          mengevaluasi tingkat pemahaman siswa terhadap pelajaran.
+        </div>
+      </div>
+      <div class="analytic-main">
+        <div class="container-fluid no-padding">
+          <div class="row no-padding">
+            <div class="col-md-6 col-lg-3 chart">
+              <div class="card custom-card secondary-color">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">Gambaran Data Sekolah</h5>
+                  </div>
+                  <div id="chart-gambaran-data-sekolah"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 order-md-1 order-lg-0 col-lg-5 chart">
+              <div class="card custom-card secondary-color">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">Tingkat Pertumbuhan Siswa</h5>
+                  </div>
+                  <div id="pertumbuhanSiswaChart"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 order-md-0 order-lg-1 col-lg-4 chart">
+              <div class="card secondary-color custom-card">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">
+                      Jumlah Siswa Berdasarkan Jurusan
+                    </h5>
+                  </div>
+                  <div id="jumlah-siswa-berdasarkan-jurusan"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="card secondary-color custom-card">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">
+                      Pertumbuhan Siswa Berdasarkan Jurusan
+                    </h5>
+                  </div>
+                  <div id="pertumbuhan-siswa-berdasarkan-jurusan"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="card secondary-color custom-card">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">
+                      Distribusi Nilai ( Waktu Pengerjaan Ujian Vs Nilai Ujian
+                      )
+                    </h5>
+                  </div>
+                  <div id="distribusi-nilai"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-information">
+          <div class="filter-information-title">
+            Filter data Siswa
+            <p>Filter ini Hanya Berlaku Untuk Data Dibawah Ini</p>
+          </div>
+          <div class="filter-information-content">
+            <div class="row mt-3">
+              <div class="col-12 col-lg-3 col-md-6 mb-2 mb-lg-0 filter-analitik">
+                <label for="semua-jenjang">Jenjang</label>
+                <select class="form-select" aria-label="Default select example" id="semua-jenjang">
+                  <option selected>Semua Jenjang</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-3 col-md-6 mb-2 mb-lg-0 filter-analitik">
+                <label for="semua-kelas">Kelas</label>
+                <select class="form-select" aria-label="Default select example" id="semua-kelas">
+                  <option selected>Pilih Kelas</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-3 col-md-6 mb-2 mb-lg-0 filter-analitik">
+                <label for="semua-jurusan">Jurusan</label>
+                <select class="form-select" aria-label="Default select example" id="semua-jurusan">
+                  <option selected>Pilih Jurusan</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-3 col-md-6 mb-2 mb-lg-0 filter-analitik">
+                <label for="semua-mapel">Mapel</label>
+                <select class="form-select" aria-label="Default select example" id="semua-mapel">
+                  <option selected>Pilih Mapel</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+            <p class="text-end">Kategori</p>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12 col-lg-7">
+            <div class="card secondary-color custom-card">
+              <div class="card-body no-padding">
+                <div class="card-title">
+                  <h5 class="chart-title">
+                    Tingkat Pemahaman Siswa Terhadap Mata Pelajaran
+                  </h5>
+                </div>
+                <div id="tingkat-pemahaman-siswa"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-5">
+            <div class="analitik-chart-width-custom float-md-start float-lg-none">
+              <div class="card secondary-color custom-card">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">Persentase Jenis Kelamin</h5>
+                  </div>
+                  <div id="chart-jenis-kelamin"></div>
+                </div>
+              </div>
+            </div>
+            <div class="float-md-end float-lg-none analitik-chart-width-custom ps-md-3 ps-lg-0">
+              <div class="card secondary-color custom-card">
+                <div class="card-body no-padding">
+                  <div class="card-title">
+                    <h5 class="chart-title">Kinerja Siswa Dalam Ujian</h5>
+                  </div>
+                  <div id="kinerja-siswa-dalam-ujian"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/analitik.js') }}"></script>
+</body>
+
+</html>

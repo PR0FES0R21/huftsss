@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Siswa | Evaluasi Nilai Siswa</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#023E8A" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png')}}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/siswa/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <style>
+    </style>
+</head>
+
+<body id="body">
+    <!-- Header -->
+    {% include 'components/student/header.html'%}
+    <!-- Aside -->
+    {% include 'components/student/aside.html' %}
+    <!-- Main -->
+    <div id="main" class="pt-1">
+        <div class="Evaluasi-Performa-siswa bg-white m-md-5 container">
+            <div class="p-lg-5">
+                <div class="overview-halaman p-3 p-lg-2">
+                    <div class="overview-title">Halaman Hasil Ujian Anda</div>
+                    <div class="overview-desc pt-2">Di sini, Anda dapat melihat hasil ujian yang telah Anda selesaikan.
+                        Lihat skor Anda, jawaban yang benar, dan analisis singkat tentang performa Anda <span
+                            class="d-none d-md-inline">Temukan area di mana Anda dapat meningkatkan prestasi Anda di
+                            ujian berikutnya!</span></div>
+                </div>
+                <div class="evaluasi-content">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select border-success text-success" aria-label="Default select example">
+                                <option selected>Semua Smester</option>
+                                <option value="1">Semester Ganjil</option>
+                                <option value="2">Semester Genap</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select text-success border-success" aria-label="Default select example">
+                                <option selected>Semua Jenis Ujian</option>
+                                <option value="1">Semester Ganjil</option>
+                                <option value="2">Semester Genap</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12 col-md-6">
+                            <div class="chart-container">
+                                <div class="header-chart d-flex justify-content-between align-items-center">
+                                    <div class="title-header">
+                                        <div class="title">Trend Nilai</div>
+                                        <div class="desc-header">Grafik Nilai Dari Beberapa Ujian</div>
+                                    </div>
+                                    <div class="help text-info" id="popover-trend-nilai" data-bs-toggle="popover"
+                                        data-bs-content="Trend nilai dalam diagram area menunjukkan perubahan nilai Anda dari satu ujian ke ujian berikutnya secara visual, memungkinkan Anda untuk melihat apakah nilai Anda cenderung meningkat, menurun, atau tetap stabil seiring waktu, memberikan wawasan penting tentang kemajuan akademis Anda.">
+                                        <i class="bi bi-patch-question fs-3"></i>
+                                    </div>
+                                </div>
+                                <div class="content-chart">
+                                    <div class="chart-chart-container">
+                                        <div id="chart-Trend-nilai"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mt-4 mt-md-0">
+                            <div class="chart-container">
+                                <div class="header-chart d-flex justify-content-between align-items-center">
+                                    <div class="title-header">
+                                        <div class="title">Pemahaman Pelajaran</div>
+                                        <div class="desc-header">Tingkat Pemahaman Siswa Terhadap Pelajaran</div>
+                                    </div>
+                                    <div class="help text-info" id="popover-tingkat-pemahaman" data-bs-toggle="popover"
+                                        data-bs-content="gambaran komprehensif tentang sejauh mana siswa memahami berbagai aspek pelajaran, dengan setiap sumbu mewakili kategori tertentu dan jarak dari pusat diagram menunjukkan tingkat pemahaman">
+                                        <i class="bi bi-patch-question fs-3"></i>
+                                    </div>
+                                </div>
+                                <div class="content-chart">
+                                    <div class="chart-chart-container">
+                                        <div id="chart-tingkat-pemahaman-siswa"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-view-data mt-5 pt-2">
+                        <div class="view-table-data-content mx-2 pb-2">
+                            <table id="table-data" class="table display nowrap" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Mata Pelajaran</th>
+                                        <th>Waktu Mulai</th>
+                                        <th>Waktu Selesai</th>
+                                        <th>Nilai</th>
+                                        <th>Rata Rata</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <footer>
+        <div class="container mt-4 mt-md-0 text-center text-md-start">
+            <p>&copy; 2024 Profesords. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{url_for('static', filename='js/utility/datatables.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="{{ url_for('static', filename='js/entities/ujian-siswa.js') }}" type="module"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="{{ url_for('static', filename='js/entities/student/evaluasi.js') }}"></script>
+
+    <script>
+        new bootstrap.Popover(document.getElementById('popover-trend-nilai'));
+        new bootstrap.Popover(document.getElementById('popover-tingkat-pemahaman'));
+
+        function tingkatPemahamanSiswa() {
+            var options = {
+                series: [{
+                    name: 'Pemahaman',
+                    data: [80, 38, 98, 80, 40, 97, 56, 88],
+                }],
+                markers: {
+                    size: 0,
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                chart: {
+                    height: 350,
+                    type: 'radar',
+                },
+                yaxis: {
+                    show: false
+                },
+                xaxis: {
+                    categories: ['Matematika', 'B.Indonesia', 'B.inggris', 'Ipas', 'Agama', 'Kimia', 'sejarah', 'Kejuruan']
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chart-tingkat-pemahaman-siswa"), options);
+            chart.render();
+        }
+
+        function trendNilai() {
+            var options = {
+                series: [{
+                    name: 'Nilai',
+                    data: [31, 40, 28, 51, 42, 109, 100]
+                },],
+                chart: {
+                    height: 350,
+                    type: 'area',
+                    toolbar: {
+                        show: false
+                    },
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    labels: {
+                        show: false // Menghilangkan label sumbu x
+                    }
+                },
+                yaxis: {
+                    show: false,
+                }
+
+            };
+
+            var chart = new ApexCharts(document.getElementById("chart-Trend-nilai"), options);
+            chart.render();
+        }
+
+        tingkatPemahamanSiswa()
+        trendNilai()
+    </script>
+</body>
+
+</html>

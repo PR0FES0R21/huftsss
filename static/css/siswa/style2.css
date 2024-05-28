@@ -1,0 +1,230 @@
+/* Style untuk membuat jawaban memenuhi lebar container dan pindah ke baris baru jika terlalu panjang */
+.form-group .form-check-label {
+  flex: 1;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-check {
+  margin: 10px 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M29.414 8.586c-1.562-1.562-4.095-1.562-5.657 0L16 16.343 8.243 8.586c-1.562-1.562-4.095-1.562-5.657 0s-1.562 4.095 0 5.657L12.343 16 4.586 23.757c-1.562 1.562-1.562 4.095 0 5.657s4.095 1.562 5.657 0L16 19.657l7.757 7.757c1.562 1.562 4.095 1.562 5.657 0s1.562-4.095 0-5.657L19.657 16l7.757-7.757c1.562-1.562 1.562-4.095 0-5.657z" fill="%23676767"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #008cba;
+}
+
+.form-group input[type="submit"] {
+  background-color: #008cba;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-group input[type="submit"]:hover {
+  background-color: #005e7d;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 700px;
+  }
+
+  .form-container {
+    padding: 40px;
+  }
+
+  .form-header {
+    font-size: 36px;
+  }
+
+  .form-group input[type="submit"] {
+    padding: 15px 30px;
+  }
+}
+
+.form-soal {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.soal {
+  margin-bottom: 30px;
+}
+
+.soal p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.soal img {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+label {
+  font-size: 16px;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+button[type="submit"] {
+  background-color: #008cba;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #006f8f;
+}
+
+.form-soal fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form-soal legend {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.form-soal label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.form-soal input[type="radio"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.form-soal button[type="submit"] {
+  display: block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #008cba;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-soal button[type="submit"]:hover {
+  background-color: #0077a3;
+}
+
+/* Responsiveness */
+
+/* Media query untuk tampilan layar dengan lebar kurang dari 768px */
+@media only screen and (max-width: 767px) {
+  .container {
+    margin: 10px;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .sub-header {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .form-soal p {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .form-soal label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .form-soal input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  .form-soal button[type="submit"] {
+    padding: 10px 15px;
+    font-size: 18px;
+  }
+}
+
+/* label {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+input {
+  display: inline-block;
+  margin-right: 10px;
+  /* properti lain pada elemen input */
+/* } */
+
+/* .answer-text {
+  display: inline-block;
+  margin-left: 10px;
+} */

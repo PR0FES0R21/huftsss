@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Siswa | Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#023E8A" />
+
+    <!-- include jinja components -->
+    {% include 'components/student/link.html' %}
+
+</head>
+
+<body id="body">
+
+    <!-- Header -->
+    {% include 'components/student/header.html' %}
+    <!-- Aside -->
+    {% include 'components/student/aside.html' %}
+    <!-- Main -->
+    <div id="main">
+        <div class="dashboard-statictic container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-lg-4 mb-3 ds-container">
+                    <div class="card statistic-content shadow h-100 py-2 dashboard-statistik statistik-guru">
+                        <div class="card-body">
+                            <div class="row mx-2 no-gutters align-items-center">
+                                <div class="col">
+                                    <div class="text-xs font-weight-bold mb-1 statistic-title">
+                                        Total Ujian Diselesaikan
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="mb-0 ms-1">
+                                                <img src="{{ url_for('static', filename='images/icons/si-ujian.svg')}}"
+                                                    alt="" class="img-ds" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="statistik-value">512</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-info fw-bold">
+                                        <i class="bi bi-card-checklist fs-2"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4 mb-3 ds-container">
+                    <div class="card statistic-content shadow h-100 py-2 dashboard-statistik statistik-guru">
+                        <div class="card-body">
+                            <div class="row mx-2 no-gutters align-items-center">
+                                <div class="col">
+                                    <div class="text-xs font-weight-bold mb-1 statistic-title">
+                                        Total Mata Pelajaran
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="mb-0 ms-1">
+                                                <img src="{{ url_for('static', filename='images/icons/kelola-matapelajaran.svg') }}"
+                                                    class="img-ds">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="statistik-value">512</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-info fw-bold">
+                                        <i class="bi bi-diagram-3 fs-2"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4 mb-3 ds-container">
+                    <div class="card statistic-content shadow h-100 py-2 dashboard-statistik statistik-guru">
+                        <div class="card-body">
+                            <div class="row mx-2 no-gutters align-items-center">
+                                <div class="col">
+                                    <div class="text-xs font-weight-bold mb-1 statistic-title">
+                                        Nilai Rata Rata Siswa
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="mb-0 ms-1">
+                                                <img src="{{ url_for('static', filename='images/icons/si-pie.svg') }}"
+                                                    class="img-ds">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="statistik-value">512</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-info fw-bold">
+                                        <i class="bi bi-bar-chart fs-2"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="dashboard-content container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-8 order-md-1">
+                    <div class="user-hero align-items-center">
+                        <div class="row align-items-center ms-2">
+                            <div class="col-12 col-md-4 order-md-2 position-relative">
+                                <img class="position-absolute img-vector translate-middle top-50 start-50"
+                                    src="{{ url_for('static', filename='images/vectors/writing-notes2.svg') }}" alt="">
+                                <div class="light-effect bottom-50 start-50 translate-middle-x">.</div>
+                            </div>
+                            <div class="col-12 col-md-8 py-md-5">
+                                <div class="greeting pt-2 mt-md-0">
+                                    Selamat datang kembali, Sayoga Pratama! Semoga hari ini penuh prestasi!"
+                                </div>
+                                <div class="shortcut-action-button pb-3 pb-md-0">
+                                    <div class="btn btn-lihat-ujian">Lihat Ujian</div>
+                                    <div class="btn btn-evaluasi-nilai">Evaluasi Nilai</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3 order-md-3">
+                    <div class="progress-user">
+                        <div class="progress-header">
+                            <div class="progress-title">Penilaian Siswa</div>
+                        </div>
+                        <div class="progress-content">
+                            <div class="card-progress flex-row-d p-2">
+                                <div class="progress-icon me-2">
+                                    <img src="{{ url_for('static', filename='images/icons/si-progress-ujian.svg') }}">
+                                </div>
+                                <div class="progress-info">
+                                    <div class="progress-name my-2">
+                                        Nilai Rata Rata Ujian Harian
+                                    </div>
+                                    <div class="progress-value my-2">
+                                        78.7 Point
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-progress flex-row-d p-2">
+                                <div class="progress-icon me-2">
+                                    <img src="{{ url_for('static', filename='images/icons/si-progress-ujian.svg') }}">
+                                </div>
+                                <div class="progress-info">
+                                    <div class="progress-name my-2">
+                                        Nilai Rata Rata Ujian Harian
+                                    </div>
+                                    <div class="progress-value my-2">
+                                        78.7 Point
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-progress flex-row-d p-2">
+                                <div class="progress-icon me-2">
+                                    <img src="{{ url_for('static', filename='images/icons/si-progress-ujian.svg') }}">
+                                </div>
+                                <div class="progress-info">
+                                    <div class="progress-name my-2">
+                                        Nilai Rata Rata Ujian Harian
+                                    </div>
+                                    <div class="progress-value my-2">
+                                        78.7 Point
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3 order-md-4">
+                    <div class="widget">
+                        <div class="flex-row-d justify-content-between">
+                            <div class="cloud-img">
+                                <img src="" id="weater-image">
+                            </div>
+                            <div class="cloud-suhu">
+                                <span id="suhu">23.76°C</span>
+                            </div>
+                        </div>
+                        <div class="flex-row-d justify-content-between my-2">
+                            <div class="humidity-info">
+                                Kelembapan Saat Ini
+                            </div>
+                            <div class="humidity">
+                                <span id="humadity">40%</span>
+                            </div>
+                        </div>
+                        <div class="flex-row-d my-2 text-center">
+                            <div class="text-center" id="flipclock">
+                                <div class="digit" id="hourTens">
+                                    <div class="upper">0</div>
+                                </div>
+                                <div class="digit" id="hourOnes">
+                                    <div class="upper">0</div>
+                                </div>
+                                <div class="fs-1">:</div>
+                                <div class="digit" id="minuteTens">
+                                    <div class="upper">0</div>
+                                </div>
+                                <div class="digit" id="minuteOnes">
+                                    <div class="upper">0</div>
+                                </div>
+                                <div class="fs-1">:</div>
+                                <div class="digit" id="secondTens">
+                                    <div class="upper">0</div>
+                                </div>
+                                <div class="digit" id="secondOnes">
+                                    <div class="upper">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wind">
+                            <div class="flex-row px-5">
+                                <div class="col text-start">
+                                    <div class="text-name">
+                                        Kecepatan Angin
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <div class="text-value text-gradient" id="kecepatan-angin">
+                                        memuat...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-row px-5 wind text-start">
+                                <div class="col text-start">
+                                    <div class="text-name">
+                                        Index UV
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <div class="text-value text-gradient" id="index-uv">
+                                        Memuat...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-row px-5 wind text-start">
+                                <div class="col text-start">
+                                    <div class="text-name">
+                                        Temperature
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <div class="text-value text-gradient" id="temperature">
+                                        Memuat...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wind-location d-flex justify-content-center py-1 text-center">
+                                <div class="location-icon text-info">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div class="location-value" id="widget-location">
+                                    Memuat...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-4 mt-md-0 order-md-2 position-relative container-fluid">
+                    <div class="leaderboard-kelas position-absolute">
+                        <div class="leaderboard-kelas-header">
+                            <img src="{{ url_for('static', filename='images/vectors/si-trophy.svg') }}" class="img-ds">
+                            <span>Leaderboard Kelas</span>
+                        </div>
+                        <div class="leaderboard-kelas-content">
+                            <div class="card-body flex-row-d align-items-center mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 40px;
+                                    height: 40px; ">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-silver-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 40px;
+                                    height: 40px; ">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-bronze-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 40px;
+                                    height: 40px;">
+                                        <img src=" {{ url_for('static', filename='assets/images/user_profile/default_profile.jpg' )
+                                        }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body flex-row-d mb-3">
+                                <div class="medal">
+                                    <img src="{{ url_for('static', filename='images/icons/si-univ-medal.svg') }}">
+                                </div>
+                                <div class="user-rate flex-row-d">
+                                    <div class="user-profile mx-2" style="width: 35px;
+                                    height: 35px;">
+                                        <img
+                                            src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg') }}">
+                                    </div>
+                                    <div class="user-name">
+                                        Sayoga Pratama
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-kelas-footer border-top pt-3 text-center text-info fw-bold">
+                            Lihat Peringkat Anda
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- include jinja script components -->
+    <script src="{{ url_for('static', filename='js/utility/weater.js') }}"></script>
+    {% include 'components/student/script.html' %}
+    <script src="{{ url_for('static', filename='js/entities/student/index.js') }}"></script>
+
+    <script>
+        function flipNumber(elem, num) {
+            var upper = elem.querySelector('.upper');
+
+            upper.innerText = num;
+
+            elem.classList.add('flip');
+
+            setTimeout(function () {
+                elem.classList.remove('flip');
+            }, 500);
+        }
+
+        // Function to update the clock
+        function updateClock() {
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+
+            flipNumber(document.getElementById('hourTens'), Math.floor(hours / 10));
+            flipNumber(document.getElementById('hourOnes'), hours % 10);
+            flipNumber(document.getElementById('minuteTens'), Math.floor(minutes / 10));
+            flipNumber(document.getElementById('minuteOnes'), minutes % 10);
+            flipNumber(document.getElementById('secondTens'), Math.floor(seconds / 10));
+            flipNumber(document.getElementById('secondOnes'), seconds % 10);
+        }
+
+        // Initial update
+        updateClock();
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+
+    </script>
+</body>
+
+</html>

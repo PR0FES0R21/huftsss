@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+  <title>Dashboard | Admin</title>
+
+  <!-- include link.html dari coponents menggunakan jinja2 -->
+  {% include 'components/admin/link.html' %}
+
+  <style>
+    .table>thead {
+      background-color: #eef7ff;
+    }
+  </style>
+</head>
+
+<body id="body-pd" class="">
+  {% include 'components/admin/header.html' %} {% include
+  'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Dashboard</div>
+      <div class="breadcrumb-information">
+        Lihat ringkasan aktivitas dan data penting aplikasi ini.
+      </div>
+    </div>
+  </div>
+  <!--Container Main start-->
+  <div class="height-100 main">
+    <!-- dashboard Statistik -->
+    <div class="row">
+      <!-- Total Jumlah Siswa -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2 dashboard-statistik statistik-siswa">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold mb-1">
+                  Jumlah Seluruh Siswa
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="mb-0 mr-3">
+                      <img src="{{ url_for('static', filename='images/icons/da-total-siswa.svg')}}" alt=""
+                        class="img-ds" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="statistik-title">Total Siswa</div>
+                    <div class="statistik-value">{{ data.student_count }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- end total jumlah siswa -->
+
+      <!-- Total Jumlah guru -->
+      <div class="col-xl-3 col-md-6 mb-4 ds-container">
+        <div class="card border-left-info shadow h-100 py-2 dashboard-statistik statistik-guru">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold mb-1">
+                  Jumlah Seluruh Guru
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="mb-0 mr-3">
+                      <img src="{{ url_for('static', filename='images/icons/ds-total-guru.svg')}}" alt=""
+                        class="img-ds" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="statistik-title">Total Guru</div>
+                    <div class="statistik-value">{{ data.teacher_count }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end total jumlah Guru -->
+      <!-- Total Jumlah penguna aktif -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2 dashboard-statistik statistik-pengguna-aktif">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold mb-1">
+                  Jumlah Pengguna Aktif
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="mb-0 mr-3">
+                      <img src="{{ url_for('static', filename='images/icons/user-online.svg')}}" alt=""
+                        class="img-ds" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="statistik-title">User Online</div>
+                    <div class="statistik-value" id="active_user_count">{{ data.active_user_count }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end total jumlah penguna aktif -->
+      <!-- Total Jumlah kelas -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2 dashboard-statistik statistik-kelas">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold mb-1">
+                  Jumlah Seluruh Kelas
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="mb-0 mr-3">
+                      <img src="{{ url_for('static', filename='images/icons/ds-total-kelas.svg')}}" alt=""
+                        class="img-ds" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="statistik-title">Total Kelas</div>
+                    <div class="statistik-value">{{ data.class_count }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end total jumlah kelas -->
+    </div>
+    <!-- end dashboard statistik -->
+
+    <!-- main menu -->
+    <div class="container-fluid no-padding">
+      <div class="row no-padding">
+        <div class="col-md-6 col-lg-4 chart">
+          <div class="card custom-card">
+            <div class="card-body no-padding">
+              <div class="card-title">
+                <h5 class="chart-title">Jumlah Siswa Berdasarkan Jurusan</h5>
+              </div>
+              <div id="showJurusanComparison"></div>
+            </div>
+          </div>
+          <div class="widget-waktu">
+            <span class="jam clock mx-2" id="jam"></span> :
+            <span class="menit clock mx-2" id="menit"></span> :
+            <span class="detik clock mx-2" id="detik"></span>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="card custom-cards">
+            <div class="chart-body no-padding">
+              <div class="mb-3 custom-card">
+                <div class="card-title">
+                  <h5 class="chart-title">Pertumbuhan Siswa</h5>
+                </div>
+                <div class="card-content" id="pertumbuhanSiswaChart"></div>
+              </div>
+              <div class="custom-card browser-usage">
+                <div class="card-title">
+                  <h5 class="chart-title">Browser Yang Digunakan</h5>
+                </div>
+                <div class="card-content" id="browserUsageChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="card custom-card aktifitas-pengguna-card">
+            <div class="\no-padding">
+              <div class="card-title">
+                <h5 class="chart-title">Aktifitas Pengguna</h5>
+              </div>
+              <div class="card-content mx-2">
+                <div class="aktifitas-pengguna mb-2">
+                  <div class="user-profile">
+                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                      alt="profile aktifitas user" />
+                  </div>
+                  <div class="user-detail mx-2">
+                    <div class="nama">Sayoga Pratama</div>
+                    <div class="aktifitas">
+                      Login ke Aplikasi menggunakan chrome
+                    </div>
+                    <div class="waktu">
+                      <i class="bx bx-time-five"></i>
+                      2 menit yang lalu
+                    </div>
+                  </div>
+                </div>
+                <div class="aktifitas-pengguna mb-2">
+                  <div class="user-profile">
+                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                      alt="profile aktifitas user" />
+                  </div>
+                  <div class="user-detail mx-2">
+                    <div class="nama">Sayoga Pratama</div>
+                    <div class="aktifitas">
+                      Login ke Aplikasi menggunakan chrome
+                    </div>
+                    <div class="waktu">
+                      <i class="bx bx-time-five"></i>
+                      2 menit yang lalu
+                    </div>
+                  </div>
+                </div>
+                <div class="aktifitas-pengguna mb-2">
+                  <div class="user-profile">
+                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                      alt="profile aktifitas user" />
+                  </div>
+                  <div class="user-detail mx-2">
+                    <div class="nama">Sayoga Pratama</div>
+                    <div class="aktifitas">
+                      Login ke Aplikasi menggunakan chrome
+                    </div>
+                    <div class="waktu">
+                      <i class="bx bx-time-five"></i>
+                      2 menit yang lalu
+                    </div>
+                  </div>
+                </div>
+                <div class="aktifitas-pengguna mb-2">
+                  <div class="user-profile">
+                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                      alt="profile aktifitas user" />
+                  </div>
+                  <div class="user-detail mx-2">
+                    <div class="nama">Sayoga Pratama</div>
+                    <div class="aktifitas">
+                      Login ke Aplikasi menggunakan chrome
+                    </div>
+                    <div class="waktu">
+                      <i class="bx bx-time-five"></i>
+                      2 menit yang lalu
+                    </div>
+                  </div>
+                </div>
+                <div class="aktifitas-pengguna mb-2">
+                  <div class="user-profile">
+                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                      alt="profile aktifitas user" />
+                  </div>
+                  <div class="user-detail mx-2">
+                    <div class="nama">Sayoga Pratama</div>
+                    <div class="aktifitas">
+                      Login ke Aplikasi menggunakan chrome
+                    </div>
+                    <div class="waktu">
+                      <i class="bx bx-time-five"></i>
+                      2 menit yang lalu
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-aktifitas-user d-flex align-items-center">
+                <a class="text-info" href="/analitik">Halaman Analitik</a><i class="bx bx-chevron-right text-info"
+                  style="font-size: 1.5rem"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end aktifitas pengguna -->
+        <div class="container-fluid col-md-6 no-padding text-center">
+          <div class="d-none d-md-block d-lg-none">
+            <div class="col align-items-center">
+              <div class="informasi">
+                <div class="alert alert-info align-items-center" role="info">
+                  <i class="bx bxs-info-circle text-info fs-3"></i>
+                  <span class="fw-bold">Informasi</span>
+                  Website ini mungkin tidak sepenuhnya kompatibel dengan
+                  ukuran layar medium.
+                </div>
+              </div>
+              <div class="illustrator-informasi">
+                <img src="{{ url_for('static', filename='images/icons/oops.svg')}}" alt="oops" class="w-50" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table pengguna teratas -->
+    <div class="pengguna-teratas">
+      <div class="container-fluid mt-4 no-padding">
+        <div class="judul-table">
+          Siswa Dengan Nilai Tertinggi Pada Ujian Sebelumnya
+        </div>
+        <div>
+          <table id="table-data" class="table display nowrap table-striped table-bordered" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Kelas</th>
+                <th>Program Keahlian</th>
+                <th>Nilai</th>
+                <th>Rata Rata</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>XI TKJ 2</td>
+                <td>Teknik Komputer dan jaringan</td>
+                <td>
+                  <span class="table-nilai">80</span>
+                  <span class="table-nilai">92</span>
+                  <span class="table-nilai">98</span>
+                  <span class="table-nilai">79</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                </td>
+                <td>92.6</td>
+                <td class="text-center">
+                  <div class="more-action">
+                    <i class="bx bx-info-circle"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>X TP 1</td>
+                <td>Teknik Pemesinan</td>
+                <td>
+                  <span class="table-nilai">80</span>
+                  <span class="table-nilai">92</span>
+                  <span class="table-nilai">98</span>
+                  <span class="table-nilai">79</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                </td>
+                <td>92.6</td>
+                <td class="text-center">
+                  <a href="#">
+                    <div class="more-action">
+                      <i class="bx bx-info-circle"></i>
+                    </div>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>Michael Johnson</td>
+                <td>XII TKRO 1</td>
+                <td>Teknik Kendaraan Ringan</td>
+                <td>
+                  <span class="table-nilai">80</span>
+                  <span class="table-nilai">92</span>
+                  <span class="table-nilai">98</span>
+                  <span class="table-nilai">79</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                </td>
+                <td>92.6</td>
+                <td class="text-center">
+                  <div class="more-action">
+                    <i class="bx bx-info-circle"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Michael Johnson</td>
+                <td>XII TKRO 1</td>
+                <td>Teknik Kendaraan Ringan</td>
+                <td>
+                  <span class="table-nilai">80</span>
+                  <span class="table-nilai">92</span>
+                  <span class="table-nilai">98</span>
+                  <span class="table-nilai">79</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                </td>
+                <td>92.6</td>
+                <td class="text-center">
+                  <div class="more-action">
+                    <i class="bx bx-info-circle"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Michael Johnson</td>
+                <td>XII TKRO 1</td>
+                <td>Teknik Kendaraan Ringan</td>
+                <td>
+                  <span class="table-nilai">80</span>
+                  <span class="table-nilai">92</span>
+                  <span class="table-nilai">98</span>
+                  <span class="table-nilai">79</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                  <span class="table-nilai">44</span>
+                </td>
+                <td>92.6</td>
+                <td class="text-center">
+                  <div class="more-action">
+                    <i class="bx bx-info-circle"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- end table pengguna teratas -->
+
+    <!-- end main menu -->
+  </div>
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/utility/time-widget.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/entities/admin/index.js') }}"></script>
+  <script>
+    $("#table-data").DataTable({
+      order: [[0, "asc"]],
+      scrollX: true,
+      searching: false,
+      paging: false,
+      info: false,
+    });
+
+    document
+      .querySelector("#table-data_wrapper > div:nth-child(1)")
+      .classList.remove("mt-2");
+    document
+      .querySelector(
+        "#table-data_wrapper > div.row.mt-2.justify-content-md-center"
+      )
+      .classList.remove("mt-2");
+  </script>
+</body>
+
+</html>

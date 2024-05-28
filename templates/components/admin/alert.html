@@ -1,0 +1,50 @@
+<!-- alert konfirmasi -->
+<div id="overlay"></div>
+<div id="confirm-popup">
+  <div class="container-popup text-center">
+    <div class="icon-alert mb-3">
+      <i class="bx bx-info-circle text-warning"></i>
+    </div>
+    <div class="alert-title">
+      <p>Apakah Anda Yakin?</p>
+    </div>
+    <div class="alert-cntent pb-2">
+      <p>Data Yang Dihapus Tidak Dapat Dikembalikan</p>
+    </div>
+    <button class="btn btn-danger" id="batalkan-hapus-data">Batalkan</button>
+    <button class="btn btn-primary" id="confirmasi-hapus-data">
+      Ya, Hapus
+    </button>
+  </div>
+</div>
+
+<!-- alert confirmasi + input -->
+<div id="input-confirm-popup">
+  <div class="container-popup text-center">
+    <div class="alert-title">
+      <p>Semua Data Akan Dihapus!</p>
+    </div>
+    <div class="input-confirm-password mb-3">
+      <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping"
+          ><i class="bx bxs-lock-alt"></i
+        ></span>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password Konfirmasi"
+          aria-label="Username"
+          aria-describedby="addon-wrapping"
+          autocomplete="off"
+          id="security-password-confirmasi"
+        />
+      </div>
+    </div>
+    <button class="btn btn-danger me-2" id="batalkan-hapus-data-a">
+      Batalkan
+    </button>
+    <button class="btn btn-primary" id="confirmasi-hapus-data-a">
+      Konfirmasi
+    </button>
+  </div>
+</div>

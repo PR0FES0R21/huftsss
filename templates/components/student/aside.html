@@ -1,0 +1,93 @@
+<aside class="bsb-sidebar-1 offcanvas offcanvas-start" tabindex="-1" id="bsbSidebar1"
+  aria-labelledby="bsbSidebarLabel1">
+  <div class="offcanvas-header">
+    <a class="sidebar-brand mt-3" href="#!">
+      <img src="{{ url_for('static', filename='images/mainlogo.png') }}" id="bsbSidebarLabel1" class="img-fluid"
+        alt="BootstrapBrain Logo" width="135" height="44" />
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body pt-0">
+    <div class="menu-container">
+      <ul class="navbar-nav mt-3">
+        <!-- Daftar menu -->
+        <li class="nav-item">
+          <a class="nav-link p-3 rounded {% if request.endpoint == 'student_views.index' %}active{% endif %}"
+            href="{{ url_for('student_views.index') }}" role="button">
+            <div class="nav-link-icon text-primary">
+              <img src="{{ url_for('static', filename='images/icons/si-dashboard.svg') }}" alt="" />
+            </div>
+            <span class="nav-link-text fw-bold">Dashboards</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link p-3 {% if request.endpoint == 'student_views.daftar_ujian' %}active{% endif %}"
+            href="{{ url_for('student_views.daftar_ujian') }}" role="button">
+            <div class="nav-link-icon">
+              <img src="{{ url_for('static', filename='images/icons/si-ujian.svg') }}" alt="" />
+            </div>
+            <span class="nav-link-text">Ujian</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-3 {% if request.endpoint == 'student_views.hasil_ujian' %}active{% endif %}"
+            href="{{ url_for('student_views.hasil_ujian') }}" role="button">
+            <div class="nav-link-icon">
+              <img src="{{ url_for('static', filename='images/icons/si-hasil-ujian.svg') }}" alt="" />
+            </div>
+            <span class="nav-link-text">Hasil Ujian</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-3 {% if request.endpoint == 'student_views.evaluasi' %}active{% endif %}"
+            href="{{ url_for('student_views.evaluasi') }}" role="button">
+            <div class="nav-link-icon">
+              <img src="{{ url_for('static', filename='images/icons/si-evaluasi.svg') }}" style="width: 20px" />
+            </div>
+            <span class="nav-link-text">Evaluasi</span>
+          </a>
+        </li>
+      </ul>
+      <div class="pholimorphism py-2 mt-md-2">
+        <div class="text-center">
+          <img class="writing-notes-vector"
+            src="{{ url_for('static', filename='images/vectors/writing-notes.png') }}" />
+        </div>
+
+        <div class="row" style="width: 100%">
+          <div class="col-10 nav-vector">
+            <div>Tantangan adalah</div>
+            <div>peluang untuk berkembang</div>
+          </div>
+          <div class="col-2">
+            <i class="bi bi-box-fill fs-2 kotak"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile dan Logout -->
+    <div class="navbar-bottom">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link p-3 {% if request.endpoint == 'student_views.profile' %}active{% endif %}"
+            href="{{ url_for('student_views.profile') }}" role="button">
+            <div class="nav-link-icon text-light">
+              <img src="{{ url_for('static', filename='images/icons/si-profile.svg') }}" style="width: 20px" />
+            </div>
+            <span class="nav-link-text">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-3" href="#" role="button">
+            <div class="nav-link-icon">
+              <img src="{{ url_for('static', filename='images/icons/si-logout.svg') }}" style="width: 20px" />
+            </div>
+            <span class="nav-link-text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,849 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+#body {
+  background-color: #e8e8e8;
+}
+
+#main {
+  margin-top: 80px;
+}
+
+.navbar {
+  background-color: #f2f8ff;
+  box-shadow: 1px 0px 4px #c8e0ff;
+}
+
+.bsb-sidebar-1.offcanvas.offcanvas-start {
+  max-width: 300px !important;
+  background-color: #023e8a;
+}
+
+.bsb-sidebar-1.offcanvas .offcanvas-header .btn-close {
+  opacity: 0.3 !important;
+  background-color: #335b90;
+  box-shadow: 0px 0px 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bsb-sidebar-1.offcanvas .offcanvas-header .sidebar-brand img {
+  width: 90%;
+}
+
+.bsb-sidebar-1 .navbar-nav .nav-item .nav-link {
+  align-items: center;
+  display: flex;
+  font-size: 1.1rem;
+  color: #cacaca;
+}
+
+.bsb-sidebar-1 .navbar-nav .nav-item .nav-link.active {
+  background-color: rgba(134, 177, 232, 0.251);
+}
+
+.bsb-sidebar-1 .navbar-nav .nav-item .nav-link .nav-link-icon {
+  margin-right: 0.7rem;
+}
+
+.bsb-sidebar-1
+  .navbar-nav
+  .nav-item
+  .nav-link[data-bs-toggle="collapse"][aria-expanded="true"]:after {
+  transform: rotate(180deg);
+}
+
+a.nav-link i::before,
+a.nav-link i::before {
+  background-color: #eae8e8;
+  box-shadow: 0px 0px 5px 4px #d2d2d2;
+}
+
+.kotak::before {
+  background: linear-gradient(to right, #2196f3, #9c27b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+
+  box-shadow: none;
+}
+
+.offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.menu-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-vector div:nth-child(1) {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.nav-vector div:nth-child(1) {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.nav-vector div:nth-child(1),
+.nav-vector div:nth-child(2) {
+  background: linear-gradient(to right, #9c27b0, #e91e63);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.writing-notes-vector {
+  width: 110px;
+}
+
+.pholimorphism {
+  /* border-top: 1px solid #95baebce */
+  width: 100%;
+  background-color: #023e8a;
+  box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0px;
+}
+
+.light-effect {
+  width: 200px;
+  height: 200px;
+  background: rgba(272, 255, 255, 0.4);
+  border-radius: 50%;
+  filter: blur(50px);
+  position: relative;
+}
+
+.user-hero {
+  background-color: #0077b6;
+  border-radius: 4px;
+}
+
+.img-vector {
+  width: 265px;
+  max-width: 100%;
+  margin-top: -5px;
+}
+
+/***** main *****/
+
+/***** dashboard-statistic *****/
+.statistic-content {
+  background-color: #0077b6;
+}
+
+.statistic-title {
+  color: white;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.img-ds {
+  width: 30px;
+}
+
+.statistik-value {
+  color: white;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+.greeting {
+  color: white;
+  font-size: 16px;
+  font-family: "Poppins";
+  font-weight: 700;
+}
+
+.greeting::before {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 5px;
+  background-color: #ffd23f;
+  margin-bottom: 8px;
+  border-radius: 50px;
+}
+
+.btn-lihat-ujian {
+  background-color: rgba(255, 255, 255, 0.34);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  backdrop-filter: blur(44.6px);
+  color: white;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.btn-evaluasi-nilai {
+  background: #48cae4;
+  border-radius: 4px;
+  color: white;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  margin-left: 15px;
+}
+
+.shortcut-action-button {
+  margin-top: 20px;
+}
+
+/***** End dashboard-statistic *****/
+
+/***** leaderboard kelas *****/
+.leaderboard-kelas {
+  background-color: #f6f6f6;
+  border-radius: 5px;
+  height: 570px;
+  width: calc(100% - 25px);
+}
+
+.leaderboard-kelas-header span {
+  color: #4f594d;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin-left: 5px;
+}
+
+.leaderboard-kelas-header {
+  padding: 15px;
+  background-color: #f2f8ff;
+  border-bottom: 1px solid #d5e4f5;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.leaderboard-kelas-content {
+  padding: 10px 40px;
+  overflow-y: scroll;
+}
+
+.user-profile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #ffd23f;
+}
+
+.user-profile img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.user-name {
+  font-size: 17px;
+  font-weight: bold;
+  color: #606d5d;
+  white-space: nowrap;
+}
+
+.leaderboard-kelas-content {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.medal img {
+  width: 35px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #023e8a;
+}
+
+/***** End leaderboard-kelas *****/
+
+/***** progress *****/
+.progress-user {
+  background-color: #f6f6f6;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.progress-header {
+  padding-bottom: 5px;
+}
+
+.progress-header .progress-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #606d5d;
+}
+
+.card-progress {
+  background-color: rgba(166, 193, 238, 0.29);
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.progress-icon {
+  background-color: rgba(212, 239, 255, 1);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.progress-icon img {
+  width: 50px;
+}
+
+.progress-info .progress-name {
+  color: #606d5d;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+.progress-info .progress-value {
+  font-size: 14px;
+  color: #606d5d;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+/***** End progress *****/
+
+/***** widget *****/
+.widget {
+  background-color: #f6f6f6;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.cloud-suhu span {
+  color: #90e0ef;
+  font-size: 32px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.humidity,
+.humidity-info {
+  color: #0077b6;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+#flipclock {
+  display: flex;
+  flex-direction: row;
+  /* background-color: #9C27B0; */
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.digit {
+  width: 17%;
+}
+
+.upper {
+  background-color: rgba(0, 119, 182, 1);
+  margin: 0px 2px;
+  height: 70px;
+  font-size: 45px;
+  font-weight: bold;
+  border-radius: 4px;
+  color: #f2f8ff;
+}
+
+#weater-image {
+  width: 80px;
+}
+
+.wind {
+  background-color: #eaeaea;
+  border-radius: 4px;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #ff00f7, #5b28a7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0077b6;
+}
+
+.text-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/***** End widget *****/
+
+/***** End main *****/
+
+/***** ujian-siswa *****/
+
+.halaman-ujian-siswa {
+  border-radius: 5px;
+}
+
+/***** overview-halaman *****/
+.overview-halaman .overview-title {
+  color: #4f594d;
+  font-size: 22px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+.overview-halaman .overview-desc {
+  color: #4f594d;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+/***** End overview-halaman *****/
+
+/***** table *****/
+.table > thead {
+  background-color: rgba(144, 224, 239, 1);
+}
+
+.table-view-data {
+  background-color: #f2f8ff;
+  width: calc(100% - 10px);
+  margin-left: 5px;
+  border-radius: 4px;
+}
+
+/***** End table *****/
+
+/***** End ujian-siswa *****/
+
+/***** Evaluasi Nilai Siswa *****/
+.chart-container {
+  background-color: #f2f8ff;
+  border-radius: 10px;
+  border: 1px solid #e6fbff;
+}
+
+.header-chart {
+  padding: 7px 20px;
+}
+
+.title-header .title {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+
+.title-header .desc-header {
+  font-size: 13px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #77c2ff;
+}
+
+.content-chart {
+  background-color: #f2f8ff;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.chart-chart-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/***** End Evaluasi Nilai Siswa *****/
+
+/***** halaman pengerjaan soal *****/
+
+.header-ujian-container {
+  border-top: 15px solid #023e8a;
+  border-radius: 10px;
+  max-width: 700px;
+  width: 97%;
+}
+
+.data-peserta-ujian {
+  max-width: 400px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.header-ujian {
+  border-bottom: 1px solid #4f594d;
+  padding-bottom: 10px;
+
+  color: black;
+  font-size: 20px;
+  font-family: "Poppins";
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.data-peserta-ujian {
+  color: black;
+  font-size: 18px;
+  font-family: Inter;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.content-ujian {
+  border-radius: 10px;
+  max-width: 700px;
+  width: 97%;
+}
+
+.soal {
+  background-color: #ffff;
+  border-radius: 10px;
+  border: 1px solid #eeeeee;
+}
+
+.soal p {
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Roboto", Arial sans-serif;
+}
+
+.answer-text {
+  font-size: 15px;
+  margin: 5px 0px;
+  font-family: "Roboto", Arial sans-serif;
+  font-weight: 400;
+  color: rgb(32, 33, 36);
+  line-height: 20px;
+}
+
+.selesai-ujian button[type="submit"] {
+  background-color: #023e8a;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.point {
+  color: #b3b3b3b7;
+  padding-left: 10px;
+}
+
+/***** End halaman pengerjaan soal *****/
+
+/***** analitik-ujian-sisw *****/
+.anatilik-ujian-menu {
+  background-color: #fff;
+}
+
+.analitik-ujian-title {
+  color: black;
+  font-size: 20px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.analitik-ujian-desc {
+  color: black;
+  font-size: 13px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  margin-top: 10px;
+}
+
+.correct-answer-overview,
+.time-answer-overview {
+  background-color: #014cadef;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  width: 100%;
+  height: 100px;
+}
+
+.correct-answer-overview .icon i {
+  padding: 2px 3px 1px 3px;
+  border-radius: 20px;
+  /* background-color: #023E8A); */
+}
+
+.analitik-overview-title {
+  color: #f2f8ff;
+  font-size: 15px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+
+.analitik-overview-content .value {
+  color: #f2f8ff;
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  padding-left: 5px;
+}
+
+.graphic {
+  background-color: #e3efff;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px #979797;
+  padding: 5px;
+}
+
+.graphic .title-graphic {
+  color: #002f6c;
+  padding: 15px 25px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.graphic .content-graphic {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+/***** End analitik-ujian-sisw *****/
+
+/***** user profile *****/
+.profile-siswa {
+  width: 100%;
+  max-width: 1000px;
+  padding-top: 60px;
+}
+
+.user-profile-picture {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.user-profile-picture img {
+  max-width: 100%;
+  height: auto;
+}
+
+.user-data {
+  background-color: #023e8a;
+  margin: 10px;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 60px;
+}
+
+.user-profile-name {
+  margin-top: -50px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.user-profile-jurusan {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.update-profile,
+.update-password {
+  background-color: transparent;
+  border: 1px solid #f2f8ff;
+  margin: 0px 10px;
+  border-radius: 40px;
+  padding: 10px;
+  color: #f2f8ff;
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.update-password {
+  margin-top: 10px;
+}
+
+.container-detail-pribadi {
+  background-color: #f2f6fc;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  padding: 15px;
+  margin: 10px;
+}
+
+.detail-pribadi .icon {
+  padding: 3px 10px;
+  font-size: 30px;
+  border-radius: 7px;
+  margin-right: 10px;
+}
+
+.value .value-name,
+.value .value-content {
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.value .value-content {
+  font-size: 16px;
+  color: #616161;
+  font-weight: 400;
+}
+
+.icon-nis {
+  background-color: #c1fffd;
+}
+
+.icon-ttl {
+  background-color: #ffcdf1;
+}
+
+.icon-ttl i {
+  color: #ff89de;
+}
+
+.icon-mail {
+  background-color: #ceffef;
+}
+
+.icon-mail i {
+  color: #50e3c2;
+}
+
+.icon-phone {
+  background-color: #fff4cf;
+}
+
+.icon-phone i {
+  color: #ffd23f;
+}
+
+.icon-location {
+  background-color: rgba(249, 0, 0, 0.313);
+}
+
+.icon-location i {
+  color: red;
+}
+
+/***** End user profile *****/
+
+.dt-column-order::after {
+  color: #002f6c;
+}
+
+.dt-column-order::before {
+  color: #002f6c;
+}
+
+.radio-success {
+  accent-color: green;
+}
+
+.radio-danger {
+  accent-color: red;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+
+  /* Opasitas awal */
+  100% {
+    opacity: 0.5;
+  }
+
+  /* Opasitas setelah berkedip */
+}
+
+@media (max-width: 890px) {
+  .greeting {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-vector {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 476px) {
+  .writing-notes-vector {
+    width: 150px;
+  }
+
+  .pholimorphism {
+    margin-top: 50px;
+  }
+
+  .img-vector {
+    width: 245px;
+    max-width: 100%;
+  }
+
+  .greeting {
+    font-size: 16px;
+  }
+
+  .halaman-ujian-siswa {
+    width: calc(100% - 10px);
+    margin-left: 5px;
+  }
+
+  .header-ujian {
+    font-size: 16px;
+  }
+
+  .data-peserta-ujian {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1043px) {
+  .leaderboard-kelas {
+    height: 630px;
+  }
+
+  .leaderboard-kelas-content {
+    max-height: 500px;
+  }
+}

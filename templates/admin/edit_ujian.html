@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+
+  {% include 'components/admin/link.html' %}
+
+  <title>Admin | Ubah Ujian</title>
+</head>
+
+<body id="body-pd" class="">
+
+  {% include 'components/admin/alert.html' %}
+
+  {% include 'components/admin/header.html' %}
+  {% include 'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="d-flex align-items-center">
+        <a href="{{ admin_url_for('admin_views.kelola_ujian') }}" class="breadcrumb-title">Kelola Ujian</a>
+        <i class='bx bx-chevron-right'></i>
+        <div class="breadcrumb-title">Edit Ujian</div>
+      </div>
+      <div class="breadcrumb-information">
+        Kelola ujian yang tersedia dan tambahkan, edit, atau hapus soal ujian.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <div class="bg-light rounded-2">
+      <div class="container-ujian p-3 p-md-5">
+        <div class="form-title">
+          <div class="ujian-title">
+            Halaman Edit Ujian
+          </div>
+          <div class="ujian-desc">
+            Anda dapat memperbarui informasi penting seperti nama ujian, jenis, kelas, dan detail lainnya. Halaman ini
+            memudahkan Anda untuk menyesuaikan atau memperbaiki informasi ujian tanpa kerumitan. Jangan ragu untuk
+            membuat perubahan yang diperlukan untuk memastikan data ujian Anda tetap terbaru dan akurat."
+          </div>
+        </div>
+        <div class="form-content">
+          <form class="row g-3 needs-validation" method="POST" action="/api/update/ujian" novalidate>
+            <div class="">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id" value="{{ data.id }}">
+              <label for="nama-ujian" class="form-label">Nama Ujian</label>
+              <input type="text" name="nama-ujian" class="form-control" id="nama-ujian"
+                placeholder="Silahkan Masukkan Nama Ujian" required autocomplete="off"
+                value="{{ data.exam_data['nama_ujian'] }}" />
+              <div class="form-text" id="basic-addon4">Contoh: UH MTK 2024</div>
+
+              <label for="jenis-ujian" class="form-label mt-3">Jenis Ujian</label>
+              <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="jenis-ujian" name="jenis-ujian"
+                required>
+                <option value="" {% if data.exam_data['jenis_ujian']=='' %}selected{% endif %}>-- Pilih Jenis Ujian --
+                </option>
+                <option value="UH" {% if data.exam_data['jenis_ujian']=='UH' %}selected{% endif %}>UH (Ujian Harian)
+                </option>
+                <option value="PTS" {% if data.exam_data['jenis_ujian']=='PTS' %}selected{% endif %}>PTS (Penilaian
+                  Tengah
+                  Semester)</option>
+                <option value="PAS" {% if data.exam_data['jenis_ujian']=='PAS' %}selected{% endif %}>PAS (Penilaian
+                  Akhir
+                  Semester)</option>
+              </select>
+
+              <label for="mata-pelajaran" class="form-label mt-3">Mata Pelajaran</label>
+              <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="mata-pelajaran"
+                name="mata-pelajaran" required>
+                <option value="" {% if data.exam_data['mata_pelajaran']=='' %}selected{% endif %}>-- Pilih Mata
+                  Pelajaran --
+                </option>
+                <option value="matematika" {% if data.exam_data['mata_pelajaran']=='matematika' %}selected{% endif %}>
+                  Matematika
+                </option>
+                <option value="kimia" {% if data.exam_data['mata_pelajaran']=='kimia' %}selected{% endif %}>Kimia
+                </option>
+                <option value="informatika" {% if data.exam_data['mata_pelajaran']=='informatika' %}selected{% endif %}>
+                  Informatika</option>
+              </select>
+              <div class="form-text" id="basic-addon4">Mata Pelajaran yang Akan Diujikan</div>
+
+              <label for="jenjang-kelas" class="form-label mt-4">Jenjang Kelas</label>
+              <select class="form-select" aria-label="jenjang-kelas" id="jenjang-kelas" name="jenjang-kelas" required>
+                <option value="" {% if data.exam_data['jenjang_kelas']=='' %}selected{% endif %}>-- Pilih Jenjang Kelas
+                  --
+                </option>
+                <option value="X" {% if data.exam_data['jenjang_kelas']=='X' %}selected{% endif %}>X (10)</option>
+                <option value="XI" {% if data.exam_data['jenjang_kelas']=='XI' %}selected{% endif %}>XI (11)</option>
+                <option value="XII" {% if data.exam_data['jenjang_kelas']=='XII' %}selected{% endif %}>XII (12)</option>
+              </select>
+
+              <label for="program-keahlian" class="form-label mt-4">Program Keahlian</label>
+              <select class="form-select" aria-label="program-keahlian" id="program-keahlian" name="program-keahlian"
+                required>
+                <option value="all" {% if data.exam_data['program_keahlian']=='all' %}selected{% endif %}>-- Semua
+                  Program
+                  Keahlian --</option>
+                <option value="TKJ" {% if data.exam_data['program_keahlian']=='TKJ' %}selected{% endif %}>Teknik
+                  Komputer dan
+                  Jaringan</option>
+                <option value="TKR" {% if data.exam_data['program_keahlian']=='TKR' %}selected{% endif %}>Teknik
+                  Kendaraan Ringan
+                </option>
+                <option value="TBSM" {% if data.exam_data['program_keahlian']=='TBSM' %}selected{% endif %}>Teknik
+                  Bisnis Sepeda
+                  Motor</option>
+                <option value="TP" {% if data.exam_data['program_keahlian']=='TP' %}selected{% endif %}>Teknik Pemesinan
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="tanggal-ujian" class="form-label mt-3">Tanggal Ujian</label>
+              <div class="input-group mb-3">
+                <input type="text" name="tanggal-ujian" class="form-control datepicker" id="tanggal-ujian"
+                  placeholder="Tanggal Waktu Ujian" required required autocomplete="off" />
+                <button class="btn btn-outline-secondary" type="button" id="tanggalLahirIcon">
+                  <i class="fa-regular fa-calendar"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="waktu-pengerjaan" class="form-label mt-3">Waktu Pengerjaan (Menit)</label>
+              <input type="number" name="waktu-pengerjaan" class="form-control" id="waktu-pengerjaan"
+                placeholder="Masukan Waktu Pengerjaan Untuk Ujian ini" value="{{ data.exam_data['waktu_pengerjaan'] }}"
+                required required autocomplete="off" />
+              <div class="form-text" id="basic-addon4">Masukan Waktu Pengerjaan dalam menit contoh: 30</div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="metode-jawaban" class="form-label mt-3">Metode Jawaban</label>
+              <select class="form-select" aria-label="metode-jawaban" id="metode-jawaban" name="metode-jawaban"
+                required>
+                <option value="ABCD" {% if data.exam_data['metode_jawaban']=='ABCD' %}selected{% endif %}>ABCD</option>
+                <option value="ABC" {% if data.exam_data['metode_jawaban']=='ABC' %}selected{% endif %}>ABC</option>
+                <option value="ABCDE" {% if data.exam_data['metode_jawaban']=='ABCDE' %}selected{% endif %}>ABCDE
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="metode-penilaian" class="form-label mt-3">Metode Penilaian</label>
+              <select class="form-select" aria-label="metode-penilaian" id="metode-penilaian" name="metode-penilaian"
+                required>
+                <option value="standard" {% if data.exam_data['metode_penilaian']=='standard' %}selected{% endif %}>
+                  Standard
+                </option>
+                <option value="bobot" {% if data.exam_data['metode_penilaian']=='bobot' %}selected{% endif %}>Bobot
+                </option>
+              </select>
+              <div class="form-text" id="basic-addon4">Penilaian standard adalah membagi jumlah soal dengan 100, dan
+                hasilnya adalah bobot nilai per satu soal</div>
+            </div>
+
+            <!-- Radio Buttons -->
+            <div class="mt-3 flex-row-d">
+              <div class="label fw-bold me-3 text-primary">Acak Soal?</div>
+              <div class="checkbox">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-soal" id="acak-soal-ya" value="ya" {% if
+                    data.exam_data['acak_soal']=='ya' %}checked{% endif %}>
+                  <label class="form-check-label" for="acak-soal-ya">Ya</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-soal" id="acak-soal-no" value="tidak" {% if
+                    data.exam_data['acak_soal']=='tidak' %}checked{% endif %}>
+                  <label class="form-check-label" for="acak-soal-no">Tidak</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 flex-row-d">
+              <div class="label fw-bold me-3 text-primary">Acak Jawaban?</div>
+              <div class="checkbox">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-jawaban" id="acak-jawaban-ya" value="Ya" {% if
+                    data.exam_data['acak_jawaban']=='Ya' %}checked{% endif %}>
+                  <label class="form-check-label" for="acak-jawaban-ya">Ya</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-jawaban" id="acak-jawaban-no" value="tidak" {%
+                    if data.exam_data['acak_jawaban']=='tidak' %}checked{% endif %}>
+                  <label class="form-check-label" for="acak-jawaban-no">Tidak</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-4 mb-3">
+              <a type="button" href="{{ admin_url_for('admin_views.kelola_ujian') }}"
+                class="btn btn-secondary close mt-3 me-3">Batal</a>
+              <button type="submit" class="btn btn-primary mt-3">Ubah Data</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <scrip src="{{ url_for('static', filename='js/entities/admin/kj-ubah-data.js') }}">
+    </script>
+
+    <script>
+      console.log("{{ data.exam_data['tanggal_ujian'] }}");
+      flatpickr(`#tanggal-ujian`, {
+        dateFormat: 'Y-m-d',
+        defaultDate: "{{ data.exam_data['tanggal_ujian'] }}"
+      });
+    </script>
+</body>
+
+</html>

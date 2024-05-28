@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+
+  {% include 'components/admin/link.html' %}
+
+  <title>Admin | Tambah Ujian</title>
+</head>
+
+<body id="body-pd" class="">
+
+  {% include 'components/admin/header.html' %}
+  {% include 'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="d-flex align-items-center">
+        <a href="{{ admin_url_for('admin_views.kelola_ujian') }}" class="breadcrumb-title">Kelola Ujian</a>
+        <i class='bx bx-chevron-right'></i>
+        <div class="breadcrumb-title">Tambah Ujian</div>
+      </div>
+      <div class="breadcrumb-information">
+        Kelola ujian yang tersedia dan tambahkan, edit, atau hapus soal ujian.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <div class="bg-light rounded-2">
+      <div class="container-ujian p-3 p-md-5">
+        <div class="form-title">
+          <div class="ujian-title">
+            Halaman Tambah Ujian
+          </div>
+          <div class="ujian-desc">
+            Pada halaman ini, guru dapat membuat ujian baru dengan mengisi detail penting seperti nama ujian, jenis
+            ujian, jenjang pendidikan, kelas yang akan mengikuti ujian, dan informasi lain yang relevan. Guru dapat
+            mempersiapkan kerangka dasar ujian dengan mudah dan cepat di halaman ini.
+          </div>
+        </div>
+        <div class="form-content">
+          <form class="row g-3 needs-validation" method="POST" action="/api/add/ujian" novalidate>
+            <div class="">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <label for="nama-ujian" class="form-label">Nama Ujian</label>
+              <input type="text" name="nama-ujian" class="form-control" id="nama-ujian"
+                placeholder="Silahkan Masukkan Nama Ujian" required autocomplete="off" />
+              <div class="form-text" id="basic-addon4">Contoh: UH MTK 2024</div>
+
+              <label for="jenis-ujian" class="form-label mt-3">Jenis Ujian</label>
+              <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="jenis-ujian" name="jenis-ujian"
+                required>
+                <option value="" selected>-- Pilih Jenis Ujian --</option>
+                <option value="UH">UH (Ujian Harian)</option>
+                <option value="PTS">PTS (Penilaian Tengah Semester)</option>
+                <option value="PAS">PAS (Penilaian Akhir Semester)</option>
+              </select>
+
+              <label for="mata-pelajaran" class="form-label mt-3">Mata Pelajaran</label>
+              <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="mata-pelajaran"
+                name="mata-pelajaran" required>
+                <option value="" selected>-- Pilih Mata Pelajaran --</option>
+                <option class="text-capitalize" value="matematika">Matematika</option>
+                <option class="text-capitalize" value="kimia">Kimia</option>
+                <option class="text-capitalize" value="informatika">Informatika</option>
+              </select>
+              <div class="form-text" id="basic-addon4">Mata Pelajaran yang Akan Diujikan</div>
+
+              <label for="jenjang-kelas" class="form-label mt-4">Jenjang Kelas</label>
+              <select class="form-select" aria-label="jenjang-kelas" id="jenjang-kelas" name="jenjang-kelas" required>
+                <option value="" selected>-- Pilih Jenjang Kelas --</option>
+                <option value="X">X (10)</option>
+                <option value="XI">XI (11)</option>
+                <option value="XII">XII (12)</option>
+              </select>
+
+              <label for="program-keahlian" class="form-label mt-4">Program Keahlian</label>
+              <select class="form-select" aria-label="program-keahlian" id="program-keahlian" name="program-keahlian"
+                required>
+                <option value="Semua" selected>-- Semua Program Keahlian --</option>
+                <option value="TKJ">Teknik Komputer dan Jaringan</option>
+                <option value="TKR">Teknik Kendaraan Ringan</option>
+                <option value="TBSM">Teknik Bisnis Sepeda Motor</option>
+                <option value="TP">Teknik Pemesinan</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="tanggal-ujian" class="form-label mt-3">Tanggal Ujian</label>
+              <div class="input-group mb-3">
+                <input type="text" name="tanggal-ujian" class="form-control datepicker" id="tanggal-ujian"
+                  placeholder="Tanggal Waktu Ujian" required required autocomplete="off" />
+                <button class="btn btn-outline-secondary" type="button" id="tanggalLahirIcon">
+                  <i class="fa-regular fa-calendar"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="waktu-pengerjaan" class="form-label mt-3">Waktu Pengerjaan (Menit)</label>
+              <input type="number" name="waktu-pengerjaan" class="form-control" id="waktu-pengerjaan"
+                placeholder="Masukan Waktu Pengerjaan Untuk Ujian ini" required required autocomplete="off" />
+              <div class="form-text" id="basic-addon4">Masukan Waktu Pengerjaan dalam menit contoh: 30</div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="metode-jawaban" class="form-label mt-3">Metode Jawaban</label>
+              <select class="form-select" aria-label="metode-jawaban" id="metode-jawaban" name="metode-jawaban"
+                required>
+                <option value="ABCD" selected>ABCD</option>
+                <option value="ABC">ABC</option>
+                <option value="ABCDE">ABCDE</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="metode-penilaian" class="form-label mt-3">Metode Penilaian</label>
+              <select class="form-select" aria-label="metode-penilaian" id="metode-penilaian" name="metode-penilaian"
+                required>
+                <option value="standard" selected>Standard</option>
+                <option value="bobot">Bobot</option>
+              </select>
+              <div class="form-text" id="basic-addon4">Penilaian standard adalah membagi jumlah soal dengan 100, dan
+                hasilnya adalah bobot nilai per satu soal</div>
+            </div>
+
+
+            <!-- Radio Buttons -->
+            <div class="mt-3 flex-row-d">
+              <div class="label fw-bold me-3 text-primary">Acak Soal?</div>
+              <div class="checkbox">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-soal" id="acak-soal-ya" value="ya" checked>
+                  <label class="form-check-label" for="acak-soal-ya">Ya</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-soal" id="acak-soal-no" value="tidak">
+                  <label class="form-check-label" for="aacak-soal-no">Tidak</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3 flex-row-d">
+              <div class="label fw-bold me-3 text-primary">Acak Jawaban?</div>
+              <div class="checkbox">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-jawaban" id="acak-jawaban-ya" value="Ya"
+                    checked>
+                  <label class="form-check-label" for="acak-jawaban-ya">Ya</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="acak-jawaban" id="acak-jawaban-no" value="tidak">
+                  <label class="form-check-label" for="acak-jawaban-no">Tidak</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end mt-4 mb-3">
+              <a type="button" href="{{ admin_url_for('admin_views.kelola_ujian') }}"
+                class="btn btn-secondary close mt-3 me-3">
+                Batal
+              </a>
+              <button type="submit" id="submit-form" class="btn btn-primary mt-3">
+                Tambahkan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/kj-tambah-data.js') }}"></script>
+  </script>
+  <script>
+    flatpickr("#tanggal-ujian", {
+      dateFormat: "d-m-Y"
+    });
+  </script>
+</body>
+
+</html>

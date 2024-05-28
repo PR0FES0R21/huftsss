@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#5F88D2" />
+
+    {% include 'components/admin/link.html' %}
+
+    <title>Dashboard | Kelola Soal Ujian</title>
+    <style>
+        .table-view-data {
+            border: none;
+        }
+    </style>
+</head>
+
+<body id="body-pd" class="">
+
+    <!-- modal tambah dan edit data -->
+    <div id="infoModal" class="modal fade-in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                        Tambah Data Guru
+                    </h1>
+                    <button type="button" class="btn-close out" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-soal" class="row g-3">
+                        <div class="col-12">
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <input type="hidden" name="id_ujian" value="{{ data.id_exam }}">
+                            <label for="soal" class="form-label">Pertanyaan</label>
+                            <textarea name="soal" class="form-control" id="soal"
+                                placeholder="Masukkan Pertanyaan atau Soal" required autocomplete="off"
+                                rows="5"></textarea>
+                            <div class="invalid-feedback">Pertanyaan Wajid diisi!</div>
+
+                            <label for="jawaban_a" class="form-label mt-3">Jawaban A</label>
+                            <textarea name="jawaban_a" class="form-control" id="jawaban_a"
+                                placeholder="Masukkan Jawaban Untuk Kolom A" required required autocomplete="off"
+                                rows="2"></textarea>
+                            <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+                            <label for="jawaban_b" class="form-label mt-3">Jawaban B</label>
+                            <textarea name="jawaban_b" class="form-control" id="jawaban_b"
+                                placeholder="Masukkan Jawaban Untuk Kolom B" required required autocomplete="off"
+                                rows="2"></textarea>
+                            <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+                            <label for="jawaban_c" class="form-label mt-3">Jawaban C</label>
+                            <textarea name="jawaban_c" class="form-control" id="jawaban_c"
+                                placeholder="Masukkan Jawaban Untuk Kolom C" required required autocomplete="off"
+                                rows="2"></textarea>
+                            <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+                            <label for="jawaban_d" class="form-label mt-3">Jawaban D</label>
+                            <textarea name="jawaban_d" class="form-control" id="jawaban_d"
+                                placeholder="Masukkan Jawaban Untuk Kolom D" required required autocomplete="off"
+                                rows="2"></textarea>
+                            <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+                            <label for="kunci_jawaban" class="form-label mt-3">Kunci Jawaban</label>
+                            <select class="form-select" aria-label="kunci_jawaban" id="kunci_jawaban"
+                                name="kunci_jawaban" required>
+                                <option value="" selected>-- Pilih Kunci Jawaban --</option>
+                                <option value="a">A</option>
+                                <option value="b">B</option>
+                                <option value="c">C</option>
+                                <option value="d">D</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-end border-top mt-5">
+                            <button type="button" class="btn btn-secondary close mt-3 me-3" data-bs-dismiss="modal">
+                                Batal
+                            </button>
+                            <button type="submit" class="btn btn-primary mt-3" id="add-soal">
+                                Tambahkan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'components/admin/alert.html' %}
+
+    <header class="header" id="header">
+        <div class="header_toggle">
+            <i class="bx bx-menu" id="header-toggle"></i>
+        </div>
+        <div class="header-profile flex-row">
+            <div class="text-end">
+                <div class="profile-name inter-600">Sayoga Pratama</div>
+                <div class="role">Administrator</div>
+            </div>
+            <div class="header_img ms-3">
+                <img src="{{ url_for('static', filename='images/icons/profile-demo.png')}}" alt="Profile" />
+            </div>
+        </div>
+    </header>
+
+    {% include 'components/admin/aside.html' %}
+    <div class="row breadcumb">
+        <div class="breadumb-navigation-container">
+            <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+                alt="Home icon" />
+        </div>
+        <div class="col breadcrumb-navigation">
+            <div class="d-flex align-items-center">
+                <a href="{{ admin_url_for('admin_views.kelola_ujian') }}" class="breadcrumb-title">Kelola Ujian</a>
+                <i class='bx bx-chevron-right'></i>
+                <div class="breadcrumb-title">Tambah Ujian</div>
+            </div>
+            <div class="breadcrumb-information">
+                Kelola ujian yang tersedia dan tambahkan, edit, atau hapus soal ujian.
+            </div>
+        </div>
+    </div>
+
+    <!-- main -->
+    <div class="main height-100" style="width: calc(100% + 20px); margin-left: -10px;">
+        <div class=""></div>
+        <!-- table seluruh data -->
+        <div class="p-md-4" style="background-color: white; border-radius: 4px;">
+            <div class="container-soal-page-information p-4 p-md-0">
+                <div class="soal-page-title">Kelola Soal</div>
+                <div class="soal-page-desc">Silakan tambahkan soal untuk ujian yang dipilih di sini. Halaman ini
+                    memudahkan Anda untuk menyusun bank soal dengan cepat dan mudah. Dengan menambahkan soal baru, Anda
+                    dapat memastikan variasi dan relevansi dalam ujian Anda.
+                </div>
+            </div>
+
+            <div class="container-fluid mt-3 no-padding">
+                <div class="row">
+                    <!-- Col Pertama -->
+                    <div class="col-12 d-flex col-sm-6 full-width-sm">
+                        <div class="flex-row-d container-informasi-halaman justify-content-between">
+                            <div class="informasi-halaman">
+                                <div class="title-informasi">Total Semua Soal</div>
+                                <div class="value-informasi" id="question_count_data">{{ data.quest_count }}</div>
+                            </div>
+                            <img class="me-3" src="{{ url_for('static', filename='images/icons/i-total-soal.svg')}}"
+                                alt="" />
+                        </div>
+                    </div>
+                    <!-- Col Kedua -->
+                    <div class="col-12 col-sm-6 d-flex justify-content-end">
+                        <div class="action-buttons flex-row-d mt-2">
+                            <button class="delete-button" id="hapus-data-soal-a">
+                                Hapus Semua data <i class="bx bx-trash"></i>
+                            </button>
+                            <button class="add-button" id="tombol-tambah-soal">
+                                Tambah data soal <i class="bx bx-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-view-data">
+                <div class="row view-data-table-title-container">
+                    <div class="col-12 col-sm-4 view-table-data-title">
+                        Semua Data Soal
+                    </div>
+                    <div class="col-12 col-sm-8 d-flex justify-content-sm-end">
+                        <button class="import btn btn-secondary btn-sm mx-2">
+                            <i class="bx bx-export"></i><span>Export CSV</span>
+                        </button>
+                        <button class="export btn btn-primary btn-sm">
+                            <i class="bx bxs-file-export"></i><span>Import CSV</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="view-table-data-content mx-2 pb-2">
+                    <table id="table-data" class="table display nowrap table-striped table-bordered"
+                        style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>Pertanyaan</th>
+                                <th>Jawaban A</th>
+                                <th>Jawaban B</th>
+                                <th>Jawaban C</th>
+                                <th>Jawaban D</th>
+                                <th>Kunci Jawaban</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- end table data -->
+    </div>
+    <!-- end main section -->
+
+    {% include 'components/admin/script.html' %}
+    <script src="{{ url_for('static', filename='js/entities/admin/kj-kelola-soal.js') }}"></script>
+    <script>
+        var csrf_token = "{{ csrf_token() }}"
+    </script>
+</body>
+
+</html>

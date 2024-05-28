@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+
+  {% include 'components/admin/link.html' %}
+
+  <title>Dashboard | Kelola Ujian</title>
+</head>
+
+<body id="body-pd" class="">
+
+  {% include 'components/admin/alert.html' %}
+  {% include 'components/admin/aside.html' %}
+  {% include 'components/admin/header.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Kelola Ujian</div>
+      <div class="breadcrumb-information">
+        Kelola ujian yang tersedia dan tambahkan, edit, atau hapus soal ujian.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <!-- overview section -->
+    <div class="overview">
+      <div class="overview-title">Informasi Kelola Ujian</div>
+      <div class="overview-description mb-3 mb-md-0">
+        Halaman ini memungkinkan admin untuk mengelola ujian yang ada dalam
+        aplikasi. Admin dapat membuat, mengedit, dan menghapus ujian serta
+        soal-soal yang terkait.
+      </div>
+      <div class="overview-list-content">
+        <ul class="d-none d-md-block">
+          <li>
+            Admin dapat membuat ujian baru dengan langkah-langkah sebagai
+            berikut:
+          </li>
+          <li>
+            Admin diminta untuk memasukkan nama ujian, seperti "Ujian Akhir
+            Sekolah".
+          </li>
+          <li>
+            Setelah itu, admin dapat menentukan tanggal pelaksanaan, durasi
+            ujian, dan informasi umum lainnya terkait ujian.
+          </li>
+          <li>
+            Admin juga memiliki kemampuan untuk mengedit detail ujian jika ada
+            perubahan yang diperlukan, seperti mengubah judul ujian atau
+            mengganti tanggal pelaksanaan.
+          </li>
+          <li>
+            Untuk penambahan, pengeditan, dan penghapusan soal-soal, admin
+            harus bekerja sama dengan guru yang bertanggung jawab atas mata
+            pelajaran yang terkait. Dengan demikian, proses pengelolaan ujian
+            menjadi lebih terstruktur dan sesuai dengan peran masing-masing
+            pengguna dalam aplikasi.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end overview section -->
+    <div class="container-fluid mt-3 no-padding">
+      <div class="row">
+        <!-- Col Pertama -->
+        <div class="col-12 d-flex col-sm-6 full-width-sm">
+          <div class="flex-row-d container-informasi-halaman justify-content-between">
+            <div class="informasi-halaman">
+              <div class="title-informasi">Total Semua Ujian</div>
+              <div class="value-informasi" id="exam_count_data">{{ data.exam_count }}</div>
+            </div>
+            <img class="me-3" src="{{ url_for('static', filename='images/icons/i-total-ujian.svg')}}" alt="" />
+          </div>
+        </div>
+        <!-- Col Kedua -->
+        <div class="col-12 col-sm-6 d-flex justify-content-end">
+          <div class="action-buttons flex-row-d mt-2">
+            <button class="delete-button" id="hapus-data-ujian-a">
+              Hapus Semua data <i class="bx bx-trash"></i>
+            </button>
+            <a class="add-button" id="tombol-tambah-ujian" href="{{ admin_url_for('admin_views.kelola_ujian_add') }}">
+              Tambah data ujian <i class="bx bx-plus"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table seluruh data -->
+    <div class="table-view-data">
+      <div class="row view-data-table-title-container">
+        <div class="col-12 col-sm-4 view-table-data-title">
+          Semua Data Ujian
+        </div>
+        <div class="col-12 col-sm-8 d-flex justify-content-sm-end">
+          <!-- filter -->
+          <div class="toggle-container">
+            <button class="toggle-button fw-medium" id="tombol-filter">
+              <i class="bx bx-filter-alt"></i> Filter
+            </button>
+            <div class="toggle-box" id="toggleBox">
+              <div class="toggle-box-container">
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-kelas">
+                  <option value="semua kelas" selected>Semua Kelas</option>
+                  <option value="X TKJ 1">X TKJ 1</option>
+                  <option value="XII TBSM">XII TBSM</option>
+                  <option value="XII TKR1">XII TKR1</option>
+                  <option value="XII TKR2">XII TKR2</option>
+                  <option value="XII TP1">XII TP1</option>
+                  <option value="XII TP2">XII TP2</option>
+                </select>
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-jenjang">
+                  <option value="" selected>Berdasarkan Jenjang</option>
+                  <option value="X (10)">X (10)</option>
+                  <option value="XII (11)">XII (11)</option>
+                  <option value="XII (12)">XII (12)</option>
+                </select>
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-jurusan">
+                  <option value="" selected>Berdasarkan Jurusan</option>
+                  <option value="Teknik Komputer">Teknik Komputer</option>
+                  <option value="Teknik Pemesinan">Teknik Pemesinan</option>
+                  <option value="Teknik Kendaraan Ringan">
+                    Teknik Kendaraan Ringan
+                  </option>
+                  <option value="Teknik Sepeda Motor">
+                    Teknik Sepeda Motor
+                  </option>
+                </select>
+                <div class="btn btn-primary btn-sm w-100" id="apply-button">
+                  Terapkan
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end filter -->
+          <button class="import btn btn-secondary btn-sm mx-2">
+            <i class="bx bx-export"></i><span>Export CSV</span>
+          </button>
+          <button class="export btn btn-primary btn-sm">
+            <i class="bx bxs-file-export"></i><span>Import CSV</span>
+          </button>
+        </div>
+      </div>
+      <div class="view-table-data-content mx-2 pb-2">
+        <table id="table-data" class="table display nowrap table-striped table-bordered" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Nama Ujian</th>
+              <th>Jenis Ujian</th>
+              <th>Program Keahlian</th>
+              <th>Jenjang</th>
+              <th>Mata pelajaran</th>
+              <th>Tanggal Dibuat</th>
+              <th>Pembuat</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end table data -->
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/kelola-ujian.js') }}"></script>
+  <script>
+    var csrf_token = "{{ csrf_token() }}";
+  </script>
+</body>
+
+</html>

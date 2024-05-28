@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+
+  {% include 'components/admin/link.html' %}
+
+  <title>Dashboard | Kelola Kelas</title>
+</head>
+
+<body id="body-pd" class="">
+
+  <div id="infoModal" class="modal fade-in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Tambah Data Kelas
+          </h1>
+          <button type="button" class="btn-close out" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3 needs-validation" novalidate id="form-kelas">
+            <div class="col-12">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id" id="id">
+              <label for="nama-kelas" class="form-label">Nama Kelas</label>
+              <input type="text" name="nama-kelas" class="form-control" id="nama-kelas" placeholder="Masukan Nama Kelas"
+                required autocomplete="off" />
+              <div class="invalid-feedback">Kode Mapel Wajid diisi!</div>
+
+              <label for="wali-kelas" class="form-label mt-3">Wali Kelas</label>
+              <input type="text" name="wali-kelas" class="form-control" id="wali-kelas"
+                placeholder="Masukkan Nama Wali Kelas" required required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+              <label for="jenjang" class="form-label mt-3">Jenjang</label>
+              <select class="form-select" aria-label="jenjang" id="jenjang" name="jenjang" required>
+                <option value="" selected>-- Pilih Jenjang Kelas --</option>
+                <option value="X (10)">X (10)</option>
+                <option value="XI (11)">XI (11)</option>
+                <option value="XII (12)">XII (12)</option>
+              </select>
+
+              <label for="ruang-kelas" class="form-label mt-3">Ruang Kelas</label>
+              <input type="number" name="ruang-kelas" class="form-control" id="ruang-kelas"
+                placeholder="Masukan Ruang Kelas Contoh: 01" required required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+              <label for="jurusan" class="form-label mt-3">Program Keahlian</label>
+              <select class="form-select" aria-label="jurusan" id="jurusan" name="jurusan" required>
+                <option value="" selected>-- Program Keahlian --</option>
+                <option value="TKJ">TKJ (Teknik Komputer dan Jaringan)</option>
+                <option value="TBSM">TBSM (Teknik Bisnis Sepeda Motor)</option>
+                <option value="TP">TP (Teknik Pemesinan)</option>
+                <option value="TKRO">TKRO (Teknik Kendaraan Ringan Otomotif)</option>
+              </select>
+            </div>
+
+            <label for="jumlah-siswa" class="form-label mt-3">Jumlah Murid</label>
+            <input type="number" name="jumlah-siswa" class="form-control" id="jumlah-siswa"
+              placeholder="Jumlah Murid Untuk Satu Kelas" required required autocomplete="off" />
+            <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+            <div class="col-12 d-flex justify-content-end border-top mt-5">
+              <button type="button" class="btn btn-secondary close mt-3 me-3" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button type="submit" id="submit_form_kelas" class="btn btn-primary mt-3">
+                Tambahkan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'components/admin/alert.html' %}
+  {% include 'components/admin/header.html' %}
+  {% include 'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Kelola Kelas</div>
+      <div class="breadcrumb-information">
+        Lihat daftar kelas yang terdaftar dalam aplikasi dan tambahkan, edit,
+        atau hapus kelas.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <!-- overview section -->
+    <div class="overview">
+      <div class="overview-title">Informasi Kelola Kelas</div>
+      <div class="overview-description">
+        Di halaman Kelola Kelas, admin dapat mengelola daftar kelas yang
+        terdaftar di sekolah dengan mudah
+      </div>
+      <div class="overview-list-content">
+        <ul>
+          <li>
+            Admin dapat melihat, menambahkan, dan mengedit informasi kelas
+            seperti nama kelas, tingkat kelas, dan informasi terkait lainnya
+            untuk memastikan data kelas selalu terkini dan terorganisir.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end overview section -->
+    <div class="container-fluid mt-3 no-padding">
+      <div class="row">
+        <!-- Col Pertama -->
+        <div class="col-12 d-flex col-sm-6 full-width-sm">
+          <div class="flex-row-d container-informasi-halaman justify-content-between">
+            <div class="informasi-halaman">
+              <div class="title-informasi">Total Semua Kelas</div>
+              <div class="value-informasi" id="class_count_data">{{ data.class_count }}</div>
+            </div>
+
+            <img class="me-3" src="{{ url_for('static', filename='images/icons/i-total-guru.svg')}}" alt="" />
+          </div>
+        </div>
+        <!-- Col Kedua -->
+        <div class="col-12 col-sm-6 d-flex justify-content-end">
+          <div class="action-buttons flex-row-d mt-2">
+            <button class="delete-button" id="hapus-data-kelas-a">
+              Hapus Semua data <i class="bx bx-trash"></i>
+            </button>
+            <button class="add-button" id="tambah-data-kelas">
+              Tambah data kelas <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table seluruh data -->
+    <div class="table-view-data">
+      <div class="row view-data-table-title-container">
+        <div class="col-12 col-sm-4 view-table-data-title">
+          Semua Data Kelas
+        </div>
+        <div class="col-12 col-sm-8 d-flex justify-content-sm-end">
+          <button class="import btn btn-secondary btn-sm mx-2">
+            <i class="bx bx-export"></i><span>Export CSV</span>
+          </button>
+          <button class="export btn btn-primary btn-sm">
+            <i class="bx bxs-file-export"></i><span>Import CSV</span>
+          </button>
+        </div>
+      </div>
+      <div class="view-table-data-content mx-2 pb-2">
+        <table id="table-data" class="table display nowrap table-striped table-bordered" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Wali Kelas</th>
+              <th>Nama Kelas</th>
+              <th>Jumlah Murid</th>
+              <th>Ruang Kelas</th>
+              <th>Jenjang Kelas</th>
+              <th>Program Keahlian</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end table data -->
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/kelola_kelas.js') }}"></script>
+  <script>
+    DataTable.types().forEach((type) => {
+      DataTable.type(type, "detect", () => false);
+    });
+    var csrf_token = "{{ csrf_token() }}";
+  </script>
+</body>
+
+</html>

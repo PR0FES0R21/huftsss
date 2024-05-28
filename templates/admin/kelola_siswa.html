@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#5F88D2" />
+  {% include 'components/admin/link.html' %}
+  <title>Dashboard | Kelola Siswa</title>
+</head>
+
+<body id="body-pd" class="">
+  <div id="infoModal" class="modal fade-in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Tambah Data Guru
+          </h1>
+          <button type="button" class="btn-close out" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form-add-siswa" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-6">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="id" id="id">
+              <label for="nama" class="form-label">Nama Siswa</label>
+              <input type="text" name="nama" class="form-control" id="nama" placeholder="Silahkan Masukkan Nama Siswa"
+                required autocomplete="off" />
+              <div class="invalid-feedback">Nama Siswa Wajib Diisi!</div>
+
+              <label for="nis" class="form-label mt-3">NIS</label>
+              <input type="number" name="nis" class="form-control" id="nis" placeholder="Masukkan NIS" required required
+                autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+              <label for="tanggal_lahir" class="form-label mt-3">Tanggal Lahir</label>
+              <div class="input-group mb-3">
+                <input type="text" name="tanggal_lahir" class="form-control datepicker" id="tanggal_lahir"
+                  placeholder="Pilih Tanggal Lahir" required required autocomplete="off" />
+                <button class="btn btn-outline-secondary" type="button" id="tanggalLahirIcon">
+                  <i class="fa-regular fa-calendar"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback">Bidang ini wajib diisi</div>
+
+              <!-- Radio Buttons -->
+              <div class="mt-3">
+                <label class="form-label d-block">Jenis Kelamin</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="jenis_kelamin" id="Laki Laki" value="Laki Laki"
+                    required>
+                  <label class="form-check-label" for="Laki Laki">Laki-Laki</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan"
+                    required>
+                  <label class="form-check-label" for="perempuan">Perempuan</label>
+                </div>
+                <div class="invalid-feedback">Pilih salah satu jenis kelamin.</div>
+              </div>
+            </div>
+
+            <!-- kanan -->
+            <div class="col-md-6">
+              <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
+              <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon"
+                placeholder="Masukan Nomor Telepon" required />
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+              <label for="email" class="form-label mt-3">Email</label>
+              <input type="email" name="email" class="form-control" id="email" placeholder="Silahkan Masukan Email"
+                required required autocomplete="off" />
+
+              <label for="kelas" class="form-label mt-3">Kelas</label>
+              <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required>
+                <option value="" selected>-- Pilih Kelas --</option>
+                <option value="X">X (10)</option>
+                <option value="XI">XI (11)</option>
+                <option value="XII">XII (12)</option>
+              </select>
+
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+              <label for="program_keahlian" class="form-label mt-3">Program Keahlian</label>
+              <select class="form-select" aria-label="program_keahlian" id="program_keahlian" name="program_keahlian"
+                required>
+                <option value="" selected>-- Pilih Program Keahlian --</option>
+                <option value="TP">Teknik Pemesinan</option>
+                <option value="TKRO">Teknik Kendaraan Ringan Otomotif</option>
+                <option value="TBSM">Teknik Bisnis Sepeda Motor</option>
+                <option value="TKJ">Teknik Komputer dan Jaringan</option>
+              </select>
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end border-top mt-5">
+              <button type="button" class="btn btn-secondary close mt-3 me-3" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary mt-3" id="submit-form">
+                Tambahkan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'components/admin/alert.html' %}
+  {% include 'components/admin/header.html' %}
+  {% include 'components/admin/aside.html' %}
+  <div class="row breadcumb">
+    <div class="breadumb-navigation-container">
+      <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"
+        alt="Home icon" />
+    </div>
+    <div class="col breadcrumb-navigation">
+      <div class="breadcrumb-title">Kelola Siswa</div>
+      <div class="breadcrumb-information">
+        Kelola data siswa yang terdaftar dalam aplikasi.
+      </div>
+    </div>
+  </div>
+
+  <!-- main -->
+  <div class="main height-100">
+    <!-- overview section -->
+    <div class="overview">
+      <div class="overview-title">Informasi Kelola Siswa</div>
+      <div class="overview-description mb-3 mb-md-0">
+        Halaman ini memungkinkan admin untuk mengelola akun dan data siswa
+        dalam aplikasi. Admin dapat menambah, mengubah, dan menghapus akun
+        siswa
+      </div>
+      <div class="overview-list-content">
+        <ul class="d-none d-md-block">
+          <li>
+            Untuk menambahkan akun siswa baru, admin diminta untuk memasukkan
+            NIS, Nama Lengkap dan Data Lainya. Secara otomatis, password untuk
+            akun baru akan diatur sebagai "12345678" untuk sementara.
+          </li>
+          <li>
+            Siswa dapat melakukan login ke aplikasi menggunakan NIS dan
+            Password Default. Password default yang digunakan pada saat
+            pertama kali login adalah "12345678".
+          </li>
+          <li>
+            Setelah berhasil login, siswa akan diinstruksikan untuk melengkapi
+            profil pribadinya. Disarankan bagi siswa untuk segera mengubah
+            password default ("12345678") menjadi password yang lebih aman dan
+            personal.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end overview section -->
+    <div class="container-fluid mt-3 no-padding">
+      <div class="row">
+        <!-- Col Pertama -->
+        <div class="col-12 d-flex col-sm-6 full-width-sm">
+          <div class="flex-row-d container-informasi-halaman justify-content-between">
+            <div class="informasi-halaman">
+              <div class="title-informasi">Total Semua Siswa</div>
+              <div class="value-informasi" id="student_count_data">{{ data.student_count }}</div>
+            </div>
+            <img class="me-3" src="{{ url_for('static', filename='images/icons/i-total-siswa.svg')}}" alt="" />
+          </div>
+        </div>
+        <!-- Col Kedua -->
+        <div class="col-12 col-sm-6 d-flex justify-content-end">
+          <div class="action-buttons flex-row-d mt-2">
+            <button class="delete-button" id="hapus-semua-data-siswa">
+              Hapus Semua data <i class="bx bx-trash"></i>
+            </button>
+            <button class="add-button" id="tambah-data-siswa" data-type="Siswa">
+              Tambah data siswa <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table seluruh data -->
+    <div class="table-view-data">
+      <div class="row view-data-table-title-container">
+        <div class="col-12 col-sm-4 view-table-data-title">
+          Semua Data Siswa
+        </div>
+        <div class="col-12 col-sm-8 d-flex justify-content-sm-end">
+          <!-- filter -->
+          <div class="toggle-container">
+            <button class="toggle-button fw-medium" id="tombol-filter">
+              <i class="bx bx-filter-alt"></i> Filter
+            </button>
+            <div class="toggle-box" id="toggleBox">
+              <div class="toggle-box-container">
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-kelas">
+                  <option value="semua kelas" selected>Semua Kelas</option>
+                  <optgroup label="Kelas X (10)">
+                    <option value="X TP 1">X Teknik Pemesinan 1</option>
+                    <option value="X TP 2">X Teknik Pemesinan 2</option>
+                    <option value="X TKR 1">X Teknik Kendaraan Ringan 1</option>
+                    <option value="X TKR 2">X Teknik Kendaraan Ringan 2</option>
+                    <option value="X TBSM 1">X Teknik Bisnis Sepeda Motor 1</option>
+                    <option value="X TBSM 2">X Teknik Bisnis Sepeda Motor 2</option>
+                    <option value="X TKJ 1">X Teknik Komputer dan Jaringan 1</option>
+                    <option value="X TKJ 2">X Teknik Komputer dan Jaringan 2</option>
+                  </optgroup>
+
+                  <optgroup label="Kelas XI (11)">
+                    <option value="XI TP 1">XI Teknik Pemesinan 1</option>
+                    <option value="XI TP 2">XI Teknik Pemesinan 2</option>
+                    <option value="XI TKR 1">XI Teknik Kendaraan Ringan 1</option>
+                    <option value="XI TKR 2">XI Teknik Kendaraan Ringan 2</option>
+                    <option value="XI TBSM 1">XI Teknik Bisnis Sepeda Motor 1</option>
+                    <option value="XI TBSM 2">XI Teknik Bisnis Sepeda Motor 2</option>
+                    <option value="XI TKJ 1">XI Teknik Komputer dan Jaringan 1</option>
+                    <option value="XI TKJ 2">XI Teknik Komputer dan Jaringan 2</option>
+                  </optgroup>
+                  <optgroup label="Kelas XII (12)">
+                    <option value="XII TP 1">XII Teknik Pemesinan 1</option>
+                    <option value="XII TP 2">XII Teknik Pemesinan 2</option>
+                    <option value="XII TKR 1">XII Teknik Kendaraan Ringan 1</option>
+                    <option value="XII TKR 2">XII Teknik Kendaraan Ringan 2</option>
+                    <option value="XII TBSM 1">XII Teknik Bisnis Sepeda Motor 1</option>
+                    <option value="XII TBSM 2">XII Teknik Bisnis Sepeda Motor 2</option>
+                    <option value="XII TKJ 1">XII Teknik Komputer dan Jaringan 1</option>
+                    <option value="XII TKJ 2">XII Teknik Komputer dan Jaringan 2</option>
+                  </optgroup>
+
+                </select>
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-jenjang">
+                  <option value="" selected>Berdasarkan Jenjang</option>
+                  <option value="X">X (10)</option>
+                  <option value="XI">XI (11)</option>
+                  <option value="XII">XII (12)</option>
+                </select>
+                <select class="form-select mb-2 filter-select" aria-label="Default select example" id="select-jurusan">
+                  <option value="" selected>Berdasarkan Program Keahlian</option>
+                  <option value="TKJ">Teknik Komputer</option>
+                  <option value="TP">Teknik Pemesinan</option>
+                  <option value="TKR">
+                    Teknik Kendaraan Ringan
+                  </option>
+                  <option value="TBSM">
+                    Teknik Sepeda Motor
+                  </option>
+                </select>
+                <div class="btn btn-primary btn-sm w-100" id="apply-button">
+                  Terapkan
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end filter -->
+          <button class="import btn btn-secondary btn-sm mx-2">
+            <i class="bx bx-export"></i><span>Export CSV</span>
+          </button>
+          <button class="export btn btn-primary btn-sm">
+            <i class="bx bxs-file-export"></i><span>Import CSV</span>
+          </button>
+        </div>
+      </div>
+      <div class="view-table-data-content mx-2 pb-2">
+        <table id="table-data" class="table display nowrap table-striped table-bordered" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>NIS</th>
+              <th>Kelas</th>
+              <th>Program Keahlian</th>
+              <th>Email</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end table data -->
+  </div>
+  <!-- end main section -->
+
+  {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='js/entities/admin/kelola-siswa.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/utility/data.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/utility/filter.js') }}"></script>
+  <script>
+    flatpickr("#tanggal_lahir", {
+      dateFormat: "d-m-Y"
+    });
+
+    var csrf_token = "{{ csrf_token() }}";
+
+  </script>
+</body>
+
+</html>

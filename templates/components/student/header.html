@@ -1,0 +1,19 @@
+<header id="header-demo" class="fixed-top">
+    <nav class="navbar bg-body-tertiary px-3">
+        <div class="nav-item me-3">
+            <a class="nav-link" href="#!" data-bs-toggle="offcanvas" data-bs-target="#bsbSidebar1"
+                aria-controls="bsbSidebar1">
+                <i class="bi-list fs-2"></i>
+            </a>
+        </div>
+        <div class="header-profile flex-row">
+            <div class="text-end">
+                <div class="profile-name inter-600 text-capitalize">{{ data.name }}</div>
+                <div class="role">{{ data.position }}</div>
+            </div>
+            <div class="header_img ms-3">
+                <img src="{{ url_for('static', filename='images/icons/profile-demo.png')}}" alt="Profile" />
+            </div>
+        </div>
+    </nav>
+</header>
