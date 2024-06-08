@@ -1,4 +1,5 @@
 from app import mongo
+from flask import jsonify
 
 class SubjectModel:
 
@@ -16,10 +17,10 @@ class SubjectModel:
     def get_subject_data(self, query = None) -> list:
         if query is None:
             data_list = list(mongo.db.subjects.find())
-            return [self.convert_object_id(data) for data in data_list]
+            return jsonify([self.convert_object_id(data) for data in data_list])
             
         data_list = list(mongo.db.subjects.find(query))
-        return [self.convert_object_id(data) for data in data_list]
+        return jsonify([self.convert_object_id(data) for data in data_list])
     
     def update_subject(self, data:dict) -> dict:
         result = mongo.db.subjects.update_one({'_id': data['_id']}, {'$set': data})
@@ -28,7 +29,6 @@ class SubjectModel:
         return{'status': 400,'message': 'Tidak ada data yang diubah'}
     
     def delete_subject(self, id:str) -> dict:
-        print(id)
         result = mongo.db.subjects.delete_one({'_id': id})
         if result.deleted_count > 0:
             return {'status': 200, 'message': 'Data mata pelajaran berhasil dihapus'}

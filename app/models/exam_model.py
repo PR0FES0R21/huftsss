@@ -1,5 +1,6 @@
 from app import mongo
 from bson import ObjectId
+from flask import jsonify
 
 class ExamModel:
     
@@ -17,7 +18,7 @@ class ExamModel:
     def get_exam_data(self, query = None) -> list:
         if query is None:
             data_list = list(mongo.db.exams.find())
-            return [self.convert_object_id(data) for data in data_list]
+            return jsonify([self.convert_object_id(data) for data in data_list])
             
         data_list = mongo.db.exams.find_one(query)
         return self.convert_object_id(data_list)
@@ -55,11 +56,11 @@ class ExamModel:
     
     def get_exam_data_by_category(self, pipelines):
         result = list(mongo.db.exams.aggregate(pipelines))
-        return [self.convert_objectId(data) for data in result]
+        return jsonify([self.convert_objectId(data) for data in result])
     
     def get_exam_data_by_category_done(self, pipelines):
         result = list(mongo.db.exam_logs.aggregate(pipelines))
-        return [self.convert_objectId(data) for data in result]
+        return jsonify([self.convert_objectId(data) for data in result])
     
     def get_exam_logs_data(self, query):
         return mongo.db.exam_logs.find_one(query)    
@@ -82,7 +83,6 @@ class ExamModel:
             return {'status': 200, 'inserted_id': str(result['_id'])}
         
     def validate_record_data(self, query):
-        print('========================model==================')
         data_list = mongo.db.exam_record.find_one(query)
         if data_list:
             return self.convert_objectId(data_list)

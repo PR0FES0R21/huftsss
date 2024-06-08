@@ -72,6 +72,10 @@ class AdminView:
     @admin_required
     def kelola_guru(self):
 
+        instance_subject_controller = SubjectController()
+        subject_data = instance_subject_controller.get_subject_data(None)
+        print(subject_data)
+
         teacher_count = self.admin_controller.get_user_count('teacher')
         data = {
             'name': current_user.name,

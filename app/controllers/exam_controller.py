@@ -200,7 +200,6 @@ class ExamController:
         
     def submit_exam(self, data_exam, exam_id, record_id, user_id, nilai):
         query = {'_id': ObjectId(record_id),'exam_id': ObjectId(exam_id),'user_id': ObjectId(user_id)}
-        print('==============================controller====================================')
         result = self.exam_model.validate_record_data(query)
         if not result:
             return {'status': 403, 'message': 'Anda Tidak Memiliki Akses ke Ujian ini'}

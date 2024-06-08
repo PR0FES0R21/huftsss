@@ -1,5 +1,6 @@
 from app import mongo
 from typing import Dict, Union, Optional, List, Any
+from flask import jsonify
 
 class TeacherModel:
         
@@ -11,7 +12,7 @@ class TeacherModel:
     def get_teacher_data(self, query:Optional[Dict[str, any]] = None) -> list:
         if query is None:
             data_list = list(mongo.db.teachers.find())
-            return [self.convert_object_id(data) for data in data_list]
+            return jsonify([self.convert_object_id(data) for data in data_list])
             
         data_list = mongo.db.teachers.find_one(query)
         return self.convert_object_id(data_list)

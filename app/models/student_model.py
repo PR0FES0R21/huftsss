@@ -2,6 +2,7 @@
 from app import mongo
 from bson import ObjectId
 from typing import Dict, Union, Optional, List, Any
+from flask import jsonify
 
 class StudentModel:
 
@@ -13,7 +14,7 @@ class StudentModel:
     def get_student_data(self, query = None) -> List[Dict[str, Any]]:
         if query is None:
             data_list = list(mongo.db.students.find())
-            return [self.convert_object_id(data) for data in data_list]
+            return jsonify([self.convert_object_id(data) for data in data_list])
             
         data_list = mongo.db.students.find_one(query)
         return self.convert_object_id(data_list)
@@ -53,4 +54,4 @@ class StudentModel:
         if not query:
             return {'status': 400, 'message': 'Terjadi Kesalahan'}
         data_list = list(mongo.db.students.find(query))
-        return [self.convert_object_id(data) for data in data_list]
+        return jsonify([self.convert_object_id(data) for data in data_list])

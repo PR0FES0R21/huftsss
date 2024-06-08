@@ -1,5 +1,6 @@
 from app import mongo
 from bson import ObjectId, json_util
+from flask import jsonify
 
 class AdminModel():
 
@@ -11,7 +12,7 @@ class AdminModel():
     def get_admin_data(self, query = None):
         if query is None:
             data_list = list(mongo.db.admins.find())
-            return [self.convert_object_id(data) for data in data_list]
+            return jsonify([self.convert_object_id(data) for data in data_list])
             
         data_list = mongo.db.admins.find_one(query)
         return self.convert_object_id(data_list)
@@ -51,7 +52,6 @@ class AdminModel():
             }
         ]
         result = list(mongo.db.exam_history.aggregate(pipelines))
-        # Konversi ObjectId menjadi string sebelum mengembalikan
         r = [self.convert_object_id(data) for data in result]
         print(r)
 
