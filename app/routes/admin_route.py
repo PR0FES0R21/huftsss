@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify
 from app.controllers.admin_controller import AdminController as ac
 from app.controllers.question_controller import QuestionController as qc
 from app.controllers.exam_controller import ExamController 
@@ -74,13 +74,13 @@ class AdminView:
 
         instance_subject_controller = SubjectController()
         subject_data = instance_subject_controller.get_subject_data(None)
-        print(subject_data)
 
         teacher_count = self.admin_controller.get_user_count('teacher')
         data = {
             'name': current_user.name,
             'position': current_user.position,
-            'teacher_count': teacher_count
+            'teacher_count': teacher_count,
+            'subject_data': subject_data
         }
         return render_template('admin/kelola_guru.html', data=data)
     

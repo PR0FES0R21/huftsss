@@ -1,5 +1,4 @@
 from app import mongo
-from flask import jsonify
 
 class QuestionModel:
 
@@ -23,10 +22,10 @@ class QuestionModel:
     def get_question_data(self, query = None) -> list:
         if query is None:
             data_list = list(mongo.db.questions.find())
-            return jsonify([self.convert_object_id(data) for data in data_list])
+            return [self.convert_object_id(data) for data in data_list]
             
         data_list = list(mongo.db.questions.find(query))
-        return jsonify([self.convert_object_id(data) for data in data_list])
+        return [self.convert_object_id(data) for data in data_list]
     
     def update_question(self, data:dict) -> dict:
         result = mongo.db.questions.update_one({'_id': data['_id']}, {'$set': data})

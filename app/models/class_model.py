@@ -1,5 +1,4 @@
 from app import mongo
-from flask import jsonify
 
 class ClassModel:
     def __init__(self):
@@ -22,7 +21,7 @@ class ClassModel:
             data_list = list(mongo.db.clases.find())
         else:
             data_list = list(mongo.db.clases.find(query))
-        return jsonify([self.convert_object_id(data) for data in data_list])
+        return [self.convert_object_id(data) for data in data_list]
     
     def get_class_count(self) -> int:
         return mongo.db.clases.count_documents({})

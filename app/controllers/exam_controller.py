@@ -212,9 +212,9 @@ class ExamController:
         data = {
             'exam_id': ObjectId(exam_id),
             'user_id': ObjectId(user_id),
+            'waktu_mulai': result['start_time'],
             'nilai_ujian': nilai,
             'mata_pelajaran': 'Iformatika',
-            'waktu_mulai': result['start_time'],
             'waktu_selesai': int(time.time()),
             'nilai_rata_rata': 78
         }

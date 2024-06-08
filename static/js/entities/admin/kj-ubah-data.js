@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    console.log('object');
     (function () {
         'use strict'
     

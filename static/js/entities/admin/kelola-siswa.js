@@ -197,6 +197,7 @@ const set_update = (id) => {
         success: response => {
             // inisiasi data dari response
             const datas = response
+            console.log(response);
             // format tanggal lahir
             const tanggal_lahir = datas.tanggal_lahir
 

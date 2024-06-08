@@ -76,10 +76,11 @@
               <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="mapelYangDiajar"
                 name="mataPelajaran" required>
                 <option value="" selected>-- Pilih Mata Pelajaran --</option>
-                <option value="1">Bahasa Indonesia</option>
-                <option value="2">Matematika</option>
-                <option value="3">MIPA</option>
+                {% for subject in data.subject_data %}
+                <option value="{{ subject['_id'] }}">{{ subject['nama_mapel'] }}</option>
+                {% endfor %}
               </select>
+
               <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
 
               <label for="nomorTeleponGuru" class="form-label mt-3">Nomor Telepon</label>

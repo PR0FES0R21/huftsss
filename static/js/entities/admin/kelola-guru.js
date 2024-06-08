@@ -247,7 +247,7 @@ const set_update = (id) => {
             id: id
         },
         success: response => {
-            const datas = response
+            const datas = response[0]
             const tanggal_lahir = datas.tanggal_lahir
             // inisiasi target
             $('#idGuru').val(datas._id)

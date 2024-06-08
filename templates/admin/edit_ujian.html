@@ -109,7 +109,7 @@
                 <option value="TKJ" {% if data.exam_data['program_keahlian']=='TKJ' %}selected{% endif %}>Teknik
                   Komputer dan
                   Jaringan</option>
-                <option value="TKR" {% if data.exam_data['program_keahlian']=='TKR' %}selected{% endif %}>Teknik
+                <option value="TKRO" {% if data.exam_data['program_keahlian']=='TKR' %}selected{% endif %}>Teknik
                   Kendaraan Ringan
                 </option>
                 <option value="TBSM" {% if data.exam_data['program_keahlian']=='TBSM' %}selected{% endif %}>Teknik
@@ -211,16 +211,15 @@
   <!-- end main section -->
 
   {% include 'components/admin/script.html' %}
-  <scrip src="{{ url_for('static', filename='js/entities/admin/kj-ubah-data.js') }}">
-    </script>
+  <script src="{{ url_for('static', filename='js/entities/admin/kj-ubah-data.js') }}">
+  </script>
 
-    <script>
-      console.log("{{ data.exam_data['tanggal_ujian'] }}");
-      flatpickr(`#tanggal-ujian`, {
-        dateFormat: 'Y-m-d',
-        defaultDate: "{{ data.exam_data['tanggal_ujian'] }}"
-      });
-    </script>
+  <script>
+    flatpickr(`#tanggal-ujian`, {
+      dateFormat: 'Y-m-d',
+      defaultDate: "{{ data.exam_data['tanggal_ujian'] }}"
+    });
+  </script>
 </body>
 
 </html>
