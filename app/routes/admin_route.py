@@ -4,7 +4,9 @@ from app.controllers.question_controller import QuestionController as qc
 from app.controllers.exam_controller import ExamController 
 from app.controllers.class_controller import ClassController
 from app.controllers.subject_controller import SubjectController
+from app.controllers.teacher_controller import TeacherController
 from flask_login import current_user, login_required
+from .socket_route import get_active_user_ssr
 
 admin_view = Blueprint('admin_views', __name__)
 
@@ -52,6 +54,7 @@ class AdminView:
         teacher_count = self.admin_controller.get_user_count('teacher')
         student_count = self.admin_controller.get_user_count('student')
 
+        active_user = get_active_user_ssr()
         cc = ClassController()
         class_count = cc.get_class_count()
 
@@ -60,8 +63,7 @@ class AdminView:
             'position': current_user.position,
             'teacher_count': teacher_count,
             'student_count': student_count,
-            'active_user_count': logger_data['total_data'],
-            'active_user_data': logger_data['all_data'],
+            'active_user_count': active_user['active_user'],
             'class_count': class_count
         }
         return render_template('admin/index.html', data=data)
@@ -88,10 +90,13 @@ class AdminView:
     @admin_required
     def kelola_siswa(self):
         student_count = self.admin_controller.get_user_count('student')
+        instance_class_controller = ClassController()
+        class_data = instance_class_controller.get_class_data()
         data = {
             'name': current_user.name,
             'position': current_user.position,
-            'student_count': student_count
+            'student_count': student_count,
+            'class_data': class_data
         }
         return render_template('admin/kelola_siswa.html', data=data)
     
@@ -110,9 +115,17 @@ class AdminView:
     @login_required
     @admin_required
     def kelola_ujian_add(self):
+        instance_class_controller = ClassController()
+        instance_subject_controller = SubjectController()
+
+        class_data = instance_class_controller.get_class_data()
+        subject_data = instance_subject_controller.get_subject_data(None)
+
         data = {
             'name': current_user.name,
             'position': current_user.position,
+            'class_data': class_data,
+            'subjects_data': subject_data
         }
         return render_template('admin/tambah_ujian.html', data=data)
     
@@ -121,11 +134,17 @@ class AdminView:
     def kelola_ujian_ubah(self):
         id = request.args.get('id')
         ec = ExamController()
+        instance_subject_controller = SubjectController()
+        subject_data = instance_subject_controller.get_subject_data(None)
+        instance_class_controller = ClassController()
+        class_data = instance_class_controller.get_class_data()
         data = {
             'id': id,
             'exam_data': ec.get_exam_data_by_id(id),
             'name': current_user.name,
             'position': current_user.position,
+            'subjects': subject_data,
+            'classes': class_data
         }
         return render_template('admin/edit_ujian.html', data=data)
     
@@ -145,16 +164,21 @@ class AdminView:
     def kelola_kelas(self):
         cc = ClassController()
         class_count = cc.get_class_count()
+
+        instance_teacher_controller = TeacherController()
+        teacher_data = instance_teacher_controller.get_teacher_data(None)
         data = {
             'name': current_user.name,
             'position': current_user.position,
-            'class_count': class_count
+            'class_count': class_count,
+            'teacher_data': teacher_data
         }
         return render_template('admin/kelola_kelas.html', data=data)
     
     def kelola_mapel(self):
         sc = SubjectController()
         subject_count = sc.get_subject_count()
+
         data = {
             'name': current_user.name,
             'position': current_user.position,

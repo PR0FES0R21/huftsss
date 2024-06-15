@@ -35,22 +35,23 @@ class StudentView:
         self.student_views.add_url_rule('/logout', view_func=self.logout, methods=['GET'])
         self.student_views.add_url_rule('kerjakan_ujian', view_func=self.kerjakan_ujian, methods=['GET', 'POST'])
 
+    def get_student_data(self):
+        data = {
+            'name': current_user.name,
+            'position': current_user.position
+        }
+        return data
+
     @login_required
     @student_required
     def index(self):
-        data = {
-            'name': current_user.name,
-            'position': current_user.position + ' ' + current_user.departemen
-        }
+        data = self.get_student_data()
         return render_template('student/index.html', data=data)
     
     @login_required
     @student_required
     def daftar_ujian(self):
-        data = {
-            'name': current_user.name,
-            'position': current_user.position + ' ' + current_user.departemen
-        }
+        data = self.get_student_data()
         return render_template('student/daftar_ujian.html', data=data)
     
     @login_required
@@ -61,10 +62,7 @@ class StudentView:
         quest_data = self.question_controller.get_question_data_by_exam_id(exam_id)
         
         if request.method == 'GET':
-            data = {
-                'name': current_user.name,
-                'position': current_user.position + ' ' + current_user.departemen
-            }
+            data = self.get_student_data()
             if not exam_id:
                 return redirect(url_for('student_views.index'))
             random.shuffle(quest_data)
@@ -136,19 +134,13 @@ class StudentView:
     @login_required
     @student_required
     def hasil_ujian(self):
-        data = {
-            'name': current_user.name,
-            'position': current_user.position + ' ' + current_user.departemen
-        }
+        data = self.get_student_data()
         return render_template('student/hasil_ujian.html', data=data)
     
     @login_required
     @student_required
     def evaluasi(self):
-        data = {
-            'name': current_user.name,
-            'position': current_user.position + ' ' + current_user.departemen
-        }
+        data = self.get_student_data()
         return render_template('student/evaluasi.html', data=data)
     
     @login_required

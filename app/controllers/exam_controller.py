@@ -33,6 +33,7 @@ class ExamController:
             'mata_pelajaran': escape(data['mata-pelajaran']),
             'jenjang_kelas': escape(data['jenjang-kelas']),
             'program_keahlian': escape(data['program-keahlian']),
+            'kelas': escape(data['kelas']),
             'tanggal_ujian': escape(data['tanggal-ujian']),
             'waktu_pengerjaan': escape(data['waktu-pengerjaan']),
             'metode_jawaban': escape(data['metode-jawaban']),
@@ -54,7 +55,7 @@ class ExamController:
             'nama_ujian': escape(exam['nama-ujian']),
             'jenis_ujian': escape(exam['jenis-ujian']),
             'mata_pelajaran': escape(exam['mata-pelajaran']),
-            'jenjang_kelas': escape(exam['jenjang-kelas']),
+            'kelas': escape(exam['kelas']),
             'program_keahlian': escape(exam['program-keahlian']),
             'tanggal_ujian': escape(exam['tanggal-ujian']),
             'waktu_pengerjaan': escape(exam['waktu-pengerjaan']),
@@ -83,15 +84,22 @@ class ExamController:
         self.question_model.delete_all_question()
         return self.exam_model.delete_all_exam()
     
-    def get_exam_data_by_category(self, user_id, departemen, position):
+    def get_exam_data_by_category(self, user_id, departemen, position, level):
         if not self.checking_service.is_valid_object_id(user_id):
             return {'status': 400, 'message': 'ID tidak valid'}
         
         pipelines = [
             {
                 '$match': {
-                    'program_keahlian': departemen,
-                    'jenjang_kelas': position
+                    'program_keahlian': {
+                        '$in': ['all', departemen]
+                    },
+                    'jenjang_kelas': {
+                        '$in': ['all', level]
+                    },
+                    'kelas': {
+                        '$in': ['all', position]
+                    }
                 }
             },
             {
@@ -108,7 +116,7 @@ class ExamController:
                         '$cond': {
                             'if': {
                                 '$and': [
-                                    {'$gt': [{'$size': '$exam_logs'}, 0]}, #true
+                                    {'$gt': [{'$size': '$exam_logs'}, 0]},
                                     {
                                         '$gt': [
                                             {

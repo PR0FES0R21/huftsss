@@ -23,17 +23,6 @@ const get_info_user = async () => {
 }
 
 const socket = io();
-socket.on('user_logger', data => {
-    get_track_data()
+socket.on('active_users', data => {
+    $('#active_user_count').text(data.count)
 });
-
-const get_track_data = () => {
-    $.ajax({
-        type: 'get',
-        url: '/api/tracking/get/user_online',
-        data: {},
-        success: response => {
-            $('#active_user_count').text(response.total_data)
-        }
-    })
-}

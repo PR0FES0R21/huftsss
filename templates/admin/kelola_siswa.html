@@ -34,6 +34,11 @@
                 autocomplete="off" />
               <div class="invalid-feedback">Bidang ini wajib diisi!</div>
 
+              <label for="nis" class="form-label mt-3">Tempat Lahir</label>
+              <input type="text" name="tempat_lahir" class="form-control" id="tempat_lahir"
+                placeholder="Tempat Lahir Siswa" required required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
               <label for="tanggal_lahir" class="form-label mt-3">Tanggal Lahir</label>
               <div class="input-group mb-3">
                 <input type="text" name="tanggal_lahir" class="form-control datepicker" id="tanggal_lahir"
@@ -75,9 +80,9 @@
               <label for="kelas" class="form-label mt-3">Kelas</label>
               <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required>
                 <option value="" selected>-- Pilih Kelas --</option>
-                <option value="X">X (10)</option>
-                <option value="XI">XI (11)</option>
-                <option value="XII">XII (12)</option>
+                {% for class in data.class_data %}
+                <option value="{{ class['nama_kelas'] }}">{{ class['nama_kelas'] }}</option>
+                {% endfor %}
               </select>
 
               <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
@@ -89,6 +94,15 @@
                 <option value="TKRO">Teknik Kendaraan Ringan Otomotif</option>
                 <option value="TBSM">Teknik Bisnis Sepeda Motor</option>
                 <option value="TKJ">Teknik Komputer dan Jaringan</option>
+              </select>
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+              <label for="jenjang_kelas" class="form-label mt-3">Jenjang Kelas</label>
+              <select class="form-select" aria-label="jenjang_kelas" id="jenjang_kelas" name="jenjang_kelas" required>
+                <option value="" selected>-- Pilih Jenjang Kelas --</option>
+                <option value="X">X (10)</option>
+                <option value="XI">XI (11)</option>
+                <option value="XII">XII (12)</option>
               </select>
               <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
             </div>

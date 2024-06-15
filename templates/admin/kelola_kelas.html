@@ -33,9 +33,12 @@
               <div class="invalid-feedback">Bidang ini wajid diisi!</div>
 
               <label for="wali-kelas" class="form-label mt-3">Wali Kelas</label>
-              <input type="text" name="wali-kelas" class="form-control" id="wali-kelas"
-                placeholder="Masukkan Nama Wali Kelas" required required autocomplete="off" />
-              <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+              <select class="form-select" aria-label="wali-kelas" id="wali-kelas" name="wali-kelas" required>
+                <option value="" selected>-- Pilih Wali kelas --</option>
+                {% for teacher in data.teacher_data %}
+                <option value="{{ teacher['nama'] }}">{{ teacher['nama'] }}</option>
+                {% endfor %}
+              </select>
 
               <label for="jenjang" class="form-label mt-3">Jenjang</label>
               <select class="form-select" aria-label="jenjang" id="jenjang" name="jenjang" required>

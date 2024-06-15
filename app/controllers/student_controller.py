@@ -40,12 +40,14 @@ class StudentController:
         data = {
             "nama": escape(student['nama']),
             "nis": escape(student['nis']),
+            "tempat_lahir": escape(student['tempat_lahir']),
             "tanggal_lahir": escape(student['tanggal_lahir']),
             "jenis_kelamin": escape(student['jenis_kelamin']),
             "kelas": escape(student['kelas']),
             "nomor_telepon": escape(student['nomor_telepon']),
             "email": escape(student['email']),
             "program_keahlian": escape(student['program_keahlian']),
+            "jenjang_kelas": escape(student['jenjang_kelas']),
             "peran": "student",
             "profile_pengguna": "default_profile.jpg",
             "password": password_hash
@@ -60,12 +62,14 @@ class StudentController:
             "_id": ObjectId(student['id']),
             "nama": escape(student['nama']),
             "nis": escape(student['nis']),
+            "tempat_lahir": escape(student['tempat_lahir']),
             "tanggal_lahir": escape(student['tanggal_lahir']),
             "jenis_kelamin": escape(student['jenis_kelamin']),
             "kelas": escape(student['kelas']),
             "nomor_telepon": escape(student['nomor_telepon']),
             "email": escape(student['email']),
-            "program_keahlian": escape(student['program_keahlian'])
+            "program_keahlian": escape(student['program_keahlian']),
+            "jenjang_kelas": escape(student['jenjang_kelas'])
         }
         return self.student_model.update_student(data)
     

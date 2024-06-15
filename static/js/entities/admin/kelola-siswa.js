@@ -205,6 +205,7 @@ const set_update = (id) => {
             $('#id').val(datas._id)
             $('#nama').val(datas.nama)
             $('#nis').val(datas.nis)
+            $('#tempat_lahir').val(datas.tempat_lahir)
             flatpickr(`#tanggal_lahir`, {
                 dateFormat: 'Y-m-d',
                 defaultDate: tanggal_lahir
@@ -214,9 +215,10 @@ const set_update = (id) => {
             $('#email').val(datas.email)
             $('#kelas').val(datas.kelas)
             $('#program_keahlian').val(datas.program_keahlian)
+            $('#jenjang_kelas').val(datas.jenjang_kelas)
 
             $('form').attr('id', `form-update-siswa`);
-            showModal('Guru', 'Ubah')
+            showModal('Siswa', 'Ubah')
 
         },
         error:(xhr, status, error) => {

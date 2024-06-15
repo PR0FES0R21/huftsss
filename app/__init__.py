@@ -126,7 +126,7 @@ def create_app():
         if admin_data:
             return User(admin_data['_id'], admin_data['peran'], admin_data['nama'], admin_data['jabatan'], platform)
         elif student_data:
-            return User(student_data['_id'], student_data['peran'], student_data['nama'], student_data['kelas'], platform, student_data['program_keahlian'])
+            return User(student_data['_id'], student_data['peran'], student_data['nama'], student_data['kelas'], platform, student_data['program_keahlian'], student_data['jenjang_kelas'])
         elif teacher_data:
             return User(teacher_data['_id'], teacher_data['peran'], teacher_data['nama'],student_data['jabatan'], platform)
         else:

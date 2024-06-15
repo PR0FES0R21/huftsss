@@ -104,13 +104,20 @@ class ApiBlueprint:
             
         elif entities == 'ujian':
             if current_user.role != 'admin':
+                exam_data = None
+                
                 if type == 'daftar':
-                    exam_data = self.exam_controller.get_exam_data_by_category(current_user.id, current_user.departemen, current_user.position)
-                if type == 'daftar_selesai':
+                    exam_data = self.exam_controller.get_exam_data_by_category(
+                        current_user.id, current_user.departemen, current_user.position, current_user.level
+                    )
+                    print(exam_data)
+                elif type == 'daftar_selesai':
                     exam_data = self.exam_controller.get_exam_data_by_category_done(current_user.id)
+                
                 if exam_data:
                     return jsonify(exam_data)
-                return jsonify({'status': 403, 'message': 'not found'})
+                else:
+                    return jsonify({'status': 403, 'message': 'not found'})
             
             if type == 'count':
                 return jsonify({'status': 200, 'data': self.exam_controller.get_exam_count()})
@@ -267,7 +274,8 @@ class ApiBlueprint:
             data = {
                 'id_exam': escape(id_exam),
                 'program_keahlian': current_user.departemen,
-                'jenjang_kelas': current_user.position
+                'jenjang_kelas': current_user.level,
+                'kelas': current_user.position
             }
             
             result = self.exam_controller.launch_exam(data, current_user.id)

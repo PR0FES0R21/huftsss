@@ -80,13 +80,11 @@
                 <option value="" {% if data.exam_data['mata_pelajaran']=='' %}selected{% endif %}>-- Pilih Mata
                   Pelajaran --
                 </option>
-                <option value="matematika" {% if data.exam_data['mata_pelajaran']=='matematika' %}selected{% endif %}>
-                  Matematika
-                </option>
-                <option value="kimia" {% if data.exam_data['mata_pelajaran']=='kimia' %}selected{% endif %}>Kimia
-                </option>
-                <option value="informatika" {% if data.exam_data['mata_pelajaran']=='informatika' %}selected{% endif %}>
-                  Informatika</option>
+                {% for subject in data.subjects %}
+                <option value="{{ subject['nama_mapel'] }}" {% if
+                  subject['nama_mapel']==data.exam_data['mata_pelajaran'] %}selected{% endif %}>{{ subject['nama_mapel']
+                  }}</option>
+                {% endfor %}
               </select>
               <div class="form-text" id="basic-addon4">Mata Pelajaran yang Akan Diujikan</div>
 
@@ -117,6 +115,15 @@
                   Motor</option>
                 <option value="TP" {% if data.exam_data['program_keahlian']=='TP' %}selected{% endif %}>Teknik Pemesinan
                 </option>
+              </select>
+
+              <label for="kelas" class="form-label mt-4">Kelas</label>
+              <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required>
+                <option value="Semua" selected>-- Semua Kelas --</option>
+                {% for class in data.classes %}
+                <option class="text-capitalize" value="{{ class['nama_kelas'] }}" {% if
+                  class['nama_kelas']==data.exam_data['kelas'] %}selected{% endif %}>{{ class['nama_kelas'] }}</option>
+                {% endfor %}
               </select>
             </div>
 

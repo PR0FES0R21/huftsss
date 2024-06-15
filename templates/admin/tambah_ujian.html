@@ -68,9 +68,9 @@
               <select class="form-select" aria-label="Mata Pelajaran Yang Diajar" id="mata-pelajaran"
                 name="mata-pelajaran" required>
                 <option value="" selected>-- Pilih Mata Pelajaran --</option>
-                <option class="text-capitalize" value="matematika">Matematika</option>
-                <option class="text-capitalize" value="kimia">Kimia</option>
-                <option class="text-capitalize" value="informatika">Informatika</option>
+                {% for subject in data.subjects_data %}
+                <option class="text-capitalize" value="{{ subject['nama_mapel'] }}">{{ subject['nama_mapel'] }}</option>
+                {% endfor %}
               </select>
               <div class="form-text" id="basic-addon4">Mata Pelajaran yang Akan Diujikan</div>
 
@@ -90,6 +90,14 @@
                 <option value="TKRO">Teknik Kendaraan Ringan</option>
                 <option value="TBSM">Teknik Bisnis Sepeda Motor</option>
                 <option value="TP">Teknik Pemesinan</option>
+              </select>
+
+              <label for="kelas" class="form-label mt-4">Kelas</label>
+              <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required>
+                <option value="Semua" selected>-- Semua Kelas --</option>
+                {% for class in data.class_data %}
+                <option value="{{ class['nama_kelas'] }}">{{ class['nama_kelas'] }}</option>
+                {% endfor %}
               </select>
             </div>
 

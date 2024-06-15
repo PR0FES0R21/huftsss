@@ -77,7 +77,7 @@
                 name="mataPelajaran" required>
                 <option value="" selected>-- Pilih Mata Pelajaran --</option>
                 {% for subject in data.subject_data %}
-                <option value="{{ subject['_id'] }}">{{ subject['nama_mapel'] }}</option>
+                <option value="{{ subject['nama_mapel'] }}">{{ subject['nama_mapel'] }}</option>
                 {% endfor %}
               </select>
 
