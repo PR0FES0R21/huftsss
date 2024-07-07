@@ -6,15 +6,48 @@ class TeacherModel:
     def convert_object_id(self, data):
         if data and '_id' in data:
             data['_id'] = str(data['_id'])
+        if data and 'id_mapel' in data:
+            data['id_mapel'] = str(data['id_mapel'])
         return data
     
-    def get_teacher_data(self, query:Optional[Dict[str, any]] = None) -> list:
-        if query is None:
-            data_list = list(mongo.db.teachers.find())
-            return [self.convert_object_id(data) for data in data_list]
-            
-        data_list = mongo.db.teachers.find_one(query)
-        return self.convert_object_id(data_list)
+    def get_teacher_data(self, query: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        pipeline = [
+            {
+                "$lookup": {
+                    'from': 'subjects',
+                    'localField': 'id_mata_pelajaran',
+                    'foreignField': '_id',
+                    'as': 'subject_details'
+                }
+            },
+            {
+                "$unwind": "$subject_details"
+            },
+            {
+                "$project": {
+                    "nama": 1,
+                    "nktam": 1,
+                    "tanggal_lahir": 1,
+                    "jenis_kelamin": 1,
+                    "jabatan": 1,
+                    "mata_pelajaran": "$subject_details.nama_mapel",
+                    "nomor_telepon": 1,
+                    "email": 1,
+                    "peran": 1,
+                    "profile_pengguna": 1,
+                    "id_mapel": "$subject_details._id"
+                }
+            }
+        ]
+        if query != None:
+            match_stage = {
+                "$match": query
+            }
+            pipeline.insert(0, match_stage)   
+    
+        data_list = list(mongo.db.teachers.aggregate(pipeline))
+        print(data_list)
+        return [self.convert_object_id(data) for data in data_list]
     
     @staticmethod
     def get_user_count() -> int:

@@ -123,11 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
     })
-    
-    const batalkanHapusSoal = document.getElementById('batalkan-hapus-data')
-    batalkanHapusSoal.addEventListener('click', () => {
-        closeAlert();
-    })
 })
 
 const set_update = (id) => {
@@ -157,33 +152,53 @@ const set_update = (id) => {
 
 const delete_data = (id) => {
     showAlert();
-    
+
     const confirmasiHapusData = document.getElementById('confirmasi-hapus-data');
-    confirmasiHapusData.addEventListener('click', function a(event) {
+    const batalkanHapusSoal = document.getElementById('batalkan-hapus-data');
+
+    const confirmHandler = function(event) {
         confirmasiHapusData.disabled = true;
-        confirmasiHapusData.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+        confirmasiHapusData.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+
         $.ajax({
             url: '/api/delete/soal',
             type: 'POST',
             beforeSend: xhr => {
-                xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                xhr.setRequestHeader('X-CSRFToken', csrf_token);
             },
             data: {
                 id: id
             },
             success: response => {
-                if (response.status == 200) {
-                    set_count_data(`/api/get/count/soal?id=${id_exam}`, '#question_count_data')
-                    success(response.message)
+                if (response.status === 200) {
+                    set_count_data(`/api/get/count/soal?id=${id_exam}`, '#question_count_data');
+                    success(response.message);
                     $('#table-data').DataTable().ajax.reload();
                 } else {
-                    success(response.message, 'center', 'error')
+                    success(response.message, 'center', 'error');
                 }
                 closeAlert();
                 confirmasiHapusData.disabled = false;
-                confirmasiHapusData.innerHTML = 'Ya, Hapus'
+                confirmasiHapusData.innerHTML = 'Ya, Hapus';
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
+            },
+            error: (xhr, status, error) => {
+                success('Terjadi Kesalahan', 'center', 'error');
+                closeAlert();
+                confirmasiHapusData.disabled = false;
+                confirmasiHapusData.innerHTML = 'Ya, Hapus';
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
             }
-        })
-        confirmasiHapusData.removeEventListener('click', a);
-    })
-}
+        });
+    };
+
+    const cancelHandler = function(event) {
+        closeAlert();
+        confirmasiHapusData.disabled = false;
+        confirmasiHapusData.innerHTML = 'Ya, Hapus';
+        confirmasiHapusData.removeEventListener('click', confirmHandler);
+    };
+
+    confirmasiHapusData.addEventListener('click', confirmHandler);
+    batalkanHapusSoal.addEventListener('click', cancelHandler);
+};

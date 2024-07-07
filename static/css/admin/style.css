@@ -822,7 +822,8 @@ a {
 }
 
 #confirm-popup,
-#input-confirm-popup {
+#input-confirm-popup,
+#play-confirm-popup {
   display: none;
   position: fixed;
   top: 50%;
@@ -844,7 +845,8 @@ a {
 }
 
 #confirm-popup .alert-title p,
-#input-confirm-popup .alert-title p {
+#input-confirm-popup .alert-title p,
+#play-confirm-popup .alert-title p {
   font-size: 24px;
   font-weight: 600;
   color: #545454;

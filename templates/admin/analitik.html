@@ -12,20 +12,7 @@
 </head>
 
 <body id="body-pd" class="">
-  <header class="header" id="header">
-    <div class="header_toggle">
-      <i class="bx bx-menu" id="header-toggle"></i>
-    </div>
-    <div class="header-profile flex-row">
-      <div class="text-end">
-        <div class="profile-name inter-600">Sayoga Pratama</div>
-        <div class="role">Administrator</div>
-      </div>
-      <div class="header_img ms-3">
-        <img src="{{ url_for('static', filename='images/icons/profile-demo.png')}}" alt="Profile" />
-      </div>
-    </div>
-  </header>
+  {% include 'components/admin/header.html' %}
   {% include 'components/admin/aside.html' %}
   <div class="row breadcumb">
     <div class="breadumb-navigation-container">

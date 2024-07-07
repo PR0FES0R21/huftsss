@@ -28,8 +28,9 @@
               <input type="hidden" name="id" id="id">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <label for="kode-mapel" class="form-label">Kode Mapel</label>
-              <input type="text" name="kode-mapel" class="form-control" id="kode-mapel"
-                placeholder="Masukan Kode Mata Pelajaran" required autocomplete="off" />
+              <input type="text" name="kode-mapel" class="form-control" id="kode-mapel" placeholder="MPX-MT11-TKJ"
+                required autocomplete="off" />
+              <div class="form-text" id="basic-addon4">Kode Mata Pelajaran Harus Unik (tidak duplikat)</div>
               <div class="invalid-feedback">Kode Mapel Wajid diisi!</div>
 
               <label for="nama-mapel" class="form-label mt-3">Nama Mapel</label>

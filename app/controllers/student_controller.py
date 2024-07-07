@@ -50,7 +50,9 @@ class StudentController:
             "jenjang_kelas": escape(student['jenjang_kelas']),
             "peran": "student",
             "profile_pengguna": "default_profile.jpg",
-            "password": password_hash
+            "password": password_hash,
+            "tahun_mulai": escape(student['tahun_mulai']),
+            "tahun_selesai": escape(student['tahun_selesai'])
         }
         return self.student_model.add_student(data)
     

@@ -1,12 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    var platform = navigator.userAgentData?.platform;
-
-    if(platform) {
-        var encodedData = btoa(JSON.stringify(platform));
-    }
-    console.log(encodedData);
-
     document.getElementById('show-paswd').addEventListener('click', () => {
         var passwordInput = document.getElementById("password");
         var checkbox = document.getElementById("show-paswd");
@@ -23,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // jika username atau passwordnya kosong, maka akan muncul alert
         if($('#username').val() == '' || $('#password').val() == '') {
-            alertBs5('warning', 'Username atau Password tidak boleh kosong');
+            alertBs5('warning', 'Silahkan Masukan Username Atau Password');
             return;
         }
         const formData = $('#login-form').serialize();
@@ -31,9 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'POST',
             url: '/auth/login',
             data: formData,
-            headers: {
-                'X-Data': encodedData
-            },
             success: response => {
                 if(response.status == 200) {
                     alertBs5('success', response.message);

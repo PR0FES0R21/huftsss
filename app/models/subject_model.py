@@ -8,6 +8,9 @@ class SubjectModel:
         return data
     
     def add_subject(self, data:dict) -> dict:
+        print(data)
+        if self.get_subject_data({'kode_mapel': data['kode_mapel']}):
+            return {'status': 400, 'message': 'Mata Pelajaran Sudah Ada!'}
         result = mongo.db.subjects.insert_one(data)
         if result.inserted_id:
             return {'status': 200, 'message': 'Mata pelajaran berhasil ditambahkan'} 

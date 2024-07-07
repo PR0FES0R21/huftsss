@@ -1,7 +1,6 @@
 from app.models.teacher_model import TeacherModel
 from bson.objectid import ObjectId
 from app.services.checking import Checking
-from flask import jsonify
 from app.services.auth_service import AuthService
 from markupsafe import escape
 
@@ -19,8 +18,8 @@ class TeacherController:
     
     def get_teacher_data_by_id(self, id):
         if not self.check_service.is_valid_object_id(id):
-            return jsonify({'status': 400, 'message': 'Id Tidak Valid'})
-        return jsonify(self.get_teacher_data({'_id': ObjectId(id)}))
+            return {'status': 400, 'message': 'Id Tidak Valid'}
+        return self.get_teacher_data({'_id': ObjectId(id)})
     
     def add_teacher(self, teacher):
         password = escape(teacher['nktam'])
@@ -36,7 +35,7 @@ class TeacherController:
             "tanggal_lahir": escape(teacher['tanggalLahirGuru']),
             "jenis_kelamin": escape(teacher['jkGuru']),
             "jabatan": escape(teacher['jabatan']),
-            "mata_pelajaran": escape(teacher['mataPelajaran']),
+            "id_mata_pelajaran": ObjectId(teacher['mataPelajaran']),
             "nomor_telepon": escape(teacher['nomorTeleponGuru']),
             "email": escape(teacher['emailGuru']),
             "peran": "teacher",
@@ -46,6 +45,8 @@ class TeacherController:
         return self.teacher_model.add_teacher(data)
     
     def update_teacher(self, teacher):
+        print('========================= controller =====================')
+        print(teacher)
         if not self.check_service.is_valid_object_id(teacher['idGuru']):
             return {'status': 400, 'message': 'Id Tidak Valid'}
         
@@ -56,7 +57,7 @@ class TeacherController:
             "tanggal_lahir": escape(teacher['tanggalLahirGuru']),
             "jenis_kelamin": escape(teacher['jkGuru']),
             "jabatan": escape(teacher['jabatan']),
-            "mata_pelajaran": escape(teacher['mataPelajaran']),
+            "id_mata_pelajaran": ObjectId(teacher['mataPelajaran']),
             "nomor_telepon": escape(teacher['nomorTeleponGuru']),
             "email": escape(teacher['emailGuru']),
             "peran": "teacher",

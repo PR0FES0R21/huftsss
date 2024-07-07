@@ -2,6 +2,10 @@ body {
   user-select: none;
 }
 
+tbody {
+  user-select: text;
+}
+
 .no-padding {
   padding-right: 0;
   padding-left: 0;

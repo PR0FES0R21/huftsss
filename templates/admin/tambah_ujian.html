@@ -50,6 +50,16 @@
           <form class="row g-3 needs-validation" method="POST" action="/api/add/ujian" novalidate>
             <div class="">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <label for="semester" class="form-label mt-4">Semester</label>
+              <select class="form-select" aria-label="semester" id="semester" name="semester" required>
+                <option value="" selected>-- Pilih Semester --
+                </option>
+                <option value="semester 1">Semester
+                  1</option>
+                <option value="semester 2">
+                  Semester 2</option>
+              </select>
+
               <label for="nama-ujian" class="form-label">Nama Ujian</label>
               <input type="text" name="nama-ujian" class="form-control" id="nama-ujian"
                 placeholder="Silahkan Masukkan Nama Ujian" required autocomplete="off" />
@@ -76,7 +86,7 @@
 
               <label for="jenjang-kelas" class="form-label mt-4">Jenjang Kelas</label>
               <select class="form-select" aria-label="jenjang-kelas" id="jenjang-kelas" name="jenjang-kelas" required>
-                <option value="" selected>-- Pilih Jenjang Kelas --</option>
+                <option value="Semua" selected>-- Semua Jenjang Kelas --</option>
                 <option value="X">X (10)</option>
                 <option value="XI">XI (11)</option>
                 <option value="XII">XII (12)</option>
@@ -93,7 +103,7 @@
               </select>
 
               <label for="kelas" class="form-label mt-4">Kelas</label>
-              <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required>
+              <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required disabled>
                 <option value="Semua" selected>-- Semua Kelas --</option>
                 {% for class in data.class_data %}
                 <option value="{{ class['nama_kelas'] }}">{{ class['nama_kelas'] }}</option>
@@ -195,6 +205,7 @@
       dateFormat: "d-m-Y"
     });
   </script>
+
 </body>
 
 </html>

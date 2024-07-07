@@ -93,37 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     applyButton.addEventListener('click', () => {
         applyFilter();
     })
-    
-    function handleMulaiUjian(event) {
-        const button = event.currentTarget;
-        const id = button.getAttribute('data-id');
-        getData(id, 'soal')
-        .then(data => {
-            success(`Ujian ${data.namau} Dimulai`, 'top-right')
-            button.removeEventListener('click', handleMulaiUjian);
-            button.classList.remove('btn-secondary', 'tombol-mulai-ujian');
-            button.classList.add('btn-info');
-            button.innerHTML = `
-            <div class="loader">
-                <i class="fa-solid fa-spinner"></i>
-            </div>`
-
-            setTimeout(() => {
-                button.classList.remove('btn-info')
-                button.classList.add('btn-success', 'lihat-hasil-ujian')
-                button.innerHTML = `<i class="fa-solid fa-chart-column"></i>`
-                button.setAttribute('onclick', `window.location.href = '/lihat/hasil/ujian?id=${id}'`);
-            }, 3000)
-        })
-        .catch(error => {
-            success(error, 'top-right', 'error')
-        })
-    }
-
-    const tombolMulaiUjian = document.querySelectorAll('.tombol-mulai-ujian')
-    tombolMulaiUjian.forEach(button => {
-        button.addEventListener('click', handleMulaiUjian);
-    });
 })
 
 const set_update = (id) => {
@@ -133,9 +102,12 @@ const delete_data = (id) => {
     showAlert();
 
     const confirmasiHapusData = document.getElementById('confirmasi-hapus-data');
-    confirmasiHapusData.addEventListener('click', function a(event) {
+    const batalHapusData = document.getElementById('batalkan-hapus-data');
+
+    const confirmHandler = function(event) {
         confirmasiHapusData.disabled = true;
         confirmasiHapusData.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+
         $.ajax({
             url: '/api/delete/ujian',
             type: 'POST',
@@ -155,36 +127,108 @@ const delete_data = (id) => {
                 }
                 closeAlert();
                 confirmasiHapusData.disabled = false;
-                confirmasiHapusData.innerHTML = 'Konfirmasi'
+                confirmasiHapusData.innerHTML = 'Konfirmasi';
+            },
+            error: (xhr, status, error) => {
+                success('Failed to delete data', 'center', 'error');
+                closeAlert();
+                confirmasiHapusData.disabled = false;
+                confirmasiHapusData.innerHTML = 'Konfirmasi';
+            },
+            complete: () => {
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
+                batalHapusData.removeEventListener('click', cancelHandler);
             }
-        })
-        confirmasiHapusData.removeEventListener('click', a);
-    })
+        });
+    };
+
+    const cancelHandler = function(event) {
+        closeAlert();
+        confirmasiHapusData.removeEventListener('click', confirmHandler);
+        batalHapusData.removeEventListener('click', cancelHandler);
+    };
+
+    confirmasiHapusData.addEventListener('click', confirmHandler);
+    batalHapusData.addEventListener('click', cancelHandler);
 }
+
+
 
 const setting_data = (id) => {
     window.location.href = `/admin/kelola_ujian/kelola_soal?id=${id}`
 }
 
 const play_data = (id) => {
+    const confirm_popup = document.getElementById('play-confirm-popup');
+    const overlay = document.getElementById('overlay');
+    confirm_popup.style.display = 'block';
+    overlay.style.display = 'block';
+    const data_name = document.getElementsByClassName('btn-play')[0].getAttribute('data-name');
+    const kode_mapel = document.getElementById('kode_mapel');
+    kode_mapel.innerHTML = 'Kode: <strong>' + data_name + '</strong>';
+    kode_mapel.setAttribute('data-kode-mapel', data_name);
+    kode_mapel.setAttribute('data-id', id);
+    
+    // Ensure the handler is added once
+    konfirmasi_mulai_ujian.removeEventListener('click', confirmHandler);
+    konfirmasi_mulai_ujian.addEventListener('click', confirmHandler);
+}
+
+const konfirmasi_mulai_ujian = document.getElementById("confirmasi-mulai-ujian");
+
+const confirmHandler = (event) => {
+    const kode_konfirmasi = document.getElementById('mapel_name').value;
+    const data_name = document.getElementById('kode_mapel').getAttribute('data-kode-mapel');
+    const confirm_popup = document.getElementById('play-confirm-popup');
+    const overlay = document.getElementById('overlay');
+    const id = document.getElementById('kode_mapel').getAttribute('data-id');
+
+    if (kode_konfirmasi !== data_name) {
+        success('Kode Yang Anda Masukan Salah', 'center', 'info');
+        return;
+    }
+
+    konfirmasi_mulai_ujian.disabled = true;
+    konfirmasi_mulai_ujian.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`;
 
     $.ajax({
         url: `/api/ujian/set_active`,
         type: 'GET',
         beforeSend: xhr => {
-            xhr.setRequestHeader('X-CSRFToken', csrf_token)
+            xhr.setRequestHeader('X-CSRFToken', csrf_token);
         },
         data: {
-            id: id
+            id: id,
         },
         success: response => {
             if (response.status === 200) {
-                console.log('oke');
                 success(response.message);
                 $('#table-data').DataTable().ajax.reload();
             } else {
                 success(response.message, 'center', 'error');
             }
+            resetConfirmButton();
+        },
+        error: (xhr, status, error) => {
+            success('Failed to start the exam', 'center', 'error');
+            resetConfirmButton();
         }
-    })
-}
+    });
+};
+
+document.getElementById('batalkan-mulai-ujian').addEventListener('click', () => {
+    document.getElementById('play-confirm-popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    konfirmasi_mulai_ujian.removeEventListener('click', confirmHandler);
+});
+
+const resetConfirmButton = () => {
+    const confirm_popup = document.getElementById('play-confirm-popup');
+    const overlay = document.getElementById('overlay');
+    konfirmasi_mulai_ujian.disabled = false;
+    konfirmasi_mulai_ujian.innerHTML = `Konfirmasi`;
+    confirm_popup.style.display = 'none';
+    overlay.style.display = 'none';
+    document.getElementById('mapel_name').value = '';
+    konfirmasi_mulai_ujian.removeEventListener('click', confirmHandler);
+};

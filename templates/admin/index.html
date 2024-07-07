@@ -9,6 +9,7 @@
 
   <!-- include link.html dari coponents menggunakan jinja2 -->
   {% include 'components/admin/link.html' %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <style>
     .table>thead {
@@ -191,90 +192,48 @@
               <div class="card-title">
                 <h5 class="chart-title">Aktifitas Pengguna</h5>
               </div>
-              <div class="card-content mx-2">
+              <div id="activity-container" class="card-content mx-2">
+                {% for actifity in data.tracking_data %}
                 <div class="aktifitas-pengguna mb-2">
                   <div class="user-profile">
-                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                    <img
+                      src="{{ url_for('static', filename='assets/images/user_profile/' + actifity['user_data']['user_profile'])}}"
                       alt="profile aktifitas user" />
                   </div>
                   <div class="user-detail mx-2">
-                    <div class="nama">Sayoga Pratama</div>
+                    <div class="nama text-capitalize">{{actifity['user_data']['nama']}}</div>
                     <div class="aktifitas">
-                      Login ke Aplikasi menggunakan chrome
+                      {{ actifity['user_data']['actifity'] }} menggunakan {{ actifity['device_info']['browser_name'] }}
                     </div>
-                    <div class="waktu">
+                    <div id="time-ago" class="waktu">
                       <i class="bx bx-time-five"></i>
-                      2 menit yang lalu
+                      <span class="time-ago" data-timestamp="{{ actifity['waktu_aktifitas'] }}">
+                        {{ actifity['time_ago'] }}
+                      </span>
                     </div>
                   </div>
                 </div>
-                <div class="aktifitas-pengguna mb-2">
-                  <div class="user-profile">
-                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
-                      alt="profile aktifitas user" />
-                  </div>
-                  <div class="user-detail mx-2">
-                    <div class="nama">Sayoga Pratama</div>
-                    <div class="aktifitas">
-                      Login ke Aplikasi menggunakan chrome
-                    </div>
-                    <div class="waktu">
-                      <i class="bx bx-time-five"></i>
-                      2 menit yang lalu
-                    </div>
-                  </div>
-                </div>
-                <div class="aktifitas-pengguna mb-2">
-                  <div class="user-profile">
-                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
-                      alt="profile aktifitas user" />
-                  </div>
-                  <div class="user-detail mx-2">
-                    <div class="nama">Sayoga Pratama</div>
-                    <div class="aktifitas">
-                      Login ke Aplikasi menggunakan chrome
-                    </div>
-                    <div class="waktu">
-                      <i class="bx bx-time-five"></i>
-                      2 menit yang lalu
-                    </div>
-                  </div>
-                </div>
-                <div class="aktifitas-pengguna mb-2">
-                  <div class="user-profile">
-                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
-                      alt="profile aktifitas user" />
-                  </div>
-                  <div class="user-detail mx-2">
-                    <div class="nama">Sayoga Pratama</div>
-                    <div class="aktifitas">
-                      Login ke Aplikasi menggunakan chrome
-                    </div>
-                    <div class="waktu">
-                      <i class="bx bx-time-five"></i>
-                      2 menit yang lalu
-                    </div>
-                  </div>
-                </div>
-                <div class="aktifitas-pengguna mb-2">
-                  <div class="user-profile">
-                    <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
-                      alt="profile aktifitas user" />
-                  </div>
-                  <div class="user-detail mx-2">
-                    <div class="nama">Sayoga Pratama</div>
-                    <div class="aktifitas">
-                      Login ke Aplikasi menggunakan chrome
-                    </div>
-                    <div class="waktu">
-                      <i class="bx bx-time-five"></i>
-                      2 menit yang lalu
-                    </div>
-                  </div>
-                </div>
+                {% endfor %}
+
+                <!-- <div class=" aktifitas-pengguna mb-2">
+                        <div class="user-profile">
+                          <img src="{{ url_for('static', filename='assets/images/user_profile/default_profile.jpg')}}"
+                            alt="profile aktifitas user" />
+                        </div>
+                        <div class="user-detail mx-2">
+                          <div class="nama">Sayoga Pratama</div>
+                          <div class="aktifitas">
+                            Login ke Aplikasi menggunakan chrome
+                          </div>
+                          <div class="waktu">
+                            <i class="bx bx-time-five"></i>
+                            2 menit yang lalu
+                          </div>
+                        </div>
+                    </div> -->
               </div>
               <div class="footer-aktifitas-user d-flex align-items-center">
-                <a class="text-info" href="/analitik">Halaman Analitik</a><i class="bx bx-chevron-right text-info"
+                <a class="text-info" href="/admin/analitik">Halaman Analitik</a><i class="bx bx-chevron-right text-info"
                   style="font-size: 1.5rem"></i>
               </div>
             </div>
@@ -462,6 +421,9 @@
         "#table-data_wrapper > div.row.mt-2.justify-content-md-center"
       )
       .classList.remove("mt-2");
+
+    csrf_token = "{{ csrf_token() }}";
+
   </script>
 </body>
 

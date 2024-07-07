@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#5F88D2" />
+
+    {% include 'components/admin/link.html' %}
+
+    <title>Dashboard | Kelola Mata Pelajaran</title>
+
+    <style>
+        body {
+            background: #f2f6fc;
+        }
+
+        #checkbox {
+            display: none;
+        }
+
+        .toggle {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition-duration: .5s;
+            margin-left: -20px;
+            margin-top: 3px;
+        }
+
+        .toggle-active {
+            background-color: #fff;
+        }
+
+        .toggle {
+            display: none;
+        }
+
+        .bars {
+            width: 100%;
+            height: 4px;
+            background-color: rgb(176, 92, 255);
+            border-radius: 4px;
+        }
+
+        #bar2 {
+            transition-duration: .8s;
+        }
+
+        #bar1,
+        #bar3 {
+            width: 70%;
+        }
+
+        #checkbox:checked+.toggle .bars {
+            position: absolute;
+            transition-duration: .5s;
+        }
+
+        #checkbox:checked+.toggle #bar2 {
+            transform: scaleX(0);
+            transition-duration: .5s;
+        }
+
+        #checkbox:checked+.toggle #bar1 {
+            width: 100%;
+            transform: rotate(45deg);
+            transition-duration: .5s;
+        }
+
+        #checkbox:checked+.toggle #bar3 {
+            width: 100%;
+            transform: rotate(-45deg);
+            transition-duration: .5s;
+        }
+
+        #checkbox:checked+.toggle {
+            transition-duration: .5s;
+            transform: rotate(180deg);
+        }
+
+
+        @media (max-width: 991px) {
+            .toggle {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body id="body-pd" class="">
+    {% include 'components/admin/header.html' %}
+    {% include 'components/admin/aside.html' %}
+    <!-- main -->
+    <div class="height-100 main">
+        <div class="profile-main-title">
+            Pengaturan Akun
+        </div>
+        <div class="profile">
+            <div class="profile-container position-relative">
+                <div class="sidebar-profile visible" id="sidebar-profile">
+                    <div class="burger-menu float-end fs-1 text-success" style="margin-left: -20px; cursor: pointer;"
+                        id="toggle-hide">
+                        <i class="bi bi-x"></i>
+                    </div>
+                    <div class="sidebar-menu" data-type="profile">
+                        <a class="active">Profile</a>
+                    </div>
+                    <div class="sidebar-menu" data-type="aktifitas-pengguna">
+                        <a>Aktifitas Pengguna</a>
+                    </div>
+                    <div class="sidebar-menu" data-type="pengaturan-sekolah">
+                        <a>Pengaturan</a>
+                    </div>
+                </div>
+
+                <div class="content-profile" id="profile">
+                    <div class="burger-menu position-absolute fs-1 text-success toggle-show"
+                        style="margin-left: -20px; cursor: pointer;">
+                        <i class="bi bi-text-left"></i>
+                    </div>
+                    <div class="informasi-menu informasi-pribadi">
+                        <div class="content-sub-menu">
+                            <div class="sub-menu active" data-type="informasi-pribadi">
+                                <a>
+                                    <i class="bi bi-person-check text-success"></i>
+                                    <span class="ms-1">Informasi Pribadi</span>
+                                </a>
+                            </div>
+                            <div class="sub-menu" data-type="pengaturan-profile">
+                                <a>
+                                    <i class="bi bi-gear text-success"></i>
+                                    <span class="ms-1">Pengaturan Profile</span>
+                                </a>
+                            </div>
+                            <div class="sub-menu" data-type="keamanan">
+                                <a>
+                                    <i class="bi bi-shield-lock text-success"></i>
+                                    <span class="ms-1">keamanan</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="m-informasi-pribadi">
+                        <div class="m-informasi-pribadi">
+                            <div class="container-ip">
+                                <div class="main-name"><span>{{ data.user_profile['nama'] }}</span> - <span>{{
+                                        data.user_profile['jabatan'] if data.user_profile['jabatan'] else
+                                        data.user_profile['kelas'] }}</span>
+                                </div>
+                                <div class="main-profile-content mt-3">
+                                    <div class="label-data-profile">
+                                        <div class="data-profile">
+                                            Nama Lengkap
+                                        </div>
+                                        <div class="data-profile">
+                                            NIS
+                                        </div>
+                                        <div class="data-profile">
+                                            Tanggal Lahir
+                                        </div>
+                                        <div class="data-profile">
+                                            Tempat Lahir
+                                        </div>
+                                        <div class="data-profile">
+                                            Jenis Kelamin
+                                        </div>
+                                        <div class="data-profile">
+                                            Alamat Tinggal
+                                        </div>
+                                        <div class="data-profile">
+                                            Nomor Telepon
+                                        </div>
+                                        <div class="data-profile">
+                                            Email
+                                        </div>
+                                    </div>
+                                    <div class="value-data-profile">
+                                        <div class="data-profile">
+                                            {{ data.user_profile['nama'] if data.user_profile['nama'] else '-' }}
+                                        </div>
+                                        <div class="data-profile">
+                                            {% if data.user_profile['nis'] %}
+                                            {{ data.user_profile['nis'] }}
+                                            {% elif data.user_profile['nktam'] %}
+                                            {{ data.user_profile['nktam'] }}
+                                            {% else %}
+                                            -
+                                            {% endif %}
+                                        </div>
+                                        <div class="data-profile">
+                                            {{ data.user_profile['tanggal_lahir'] if
+                                            data.user_profile['tanggal_lahir'] else '-' }}
+                                        </div>
+                                        <div class="data-profile">
+                                            {{ data.user_profile['tempat_lahir'] if
+                                            data.user_profile['tempat_lahir'] else '-' }}
+                                        </div>
+                                        <div class="data-profile">
+                                            {{ data.user_profile['jenis_kelamin'] if
+                                            data.user_profile['jenis_kelamin'] else '-' }}
+                                        </div>
+                                        <div class="data-profile">
+                                            {{ data.user_profile['alamat'] if data.user_profile['alamat'] else '-'
+                                            }}
+                                        </div>
+                                        <div class="data-profile">
+                                            {{ data.user_profile['nomor_telepon'] if
+                                            data.user_profile['nomor_telepon'] else '-' }}
+                                        </div>
+                                        <div class="data-profile">
+                                            {{ data.user_profile['email'] if data.user_profile['email'] else '-'
+                                            }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer-profile">
+                                    <div class="info-smester">
+                                        smester 2
+                                    </div>
+                                    <div class="footer-profile-info">
+                                        SMK Muhammadiyah 2 Kalirejo Tahun Ajaran 2021/2022 | 2
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-informasi-pribadi" style="border-left: 5px solid #fed6e3;">
+                            <div class="container-ip">
+                                <div class="main-profile-content">
+                                    <div class="label-data-profile">
+                                        <div class="data-profile">
+                                        </div>
+                                        <div class="data-profile">
+                                            Jenjang Kelas
+                                        </div>
+
+                                        <div class="data-profile">
+                                            Program Keahlian
+                                        </div>
+                                        <div class="data-profile">
+                                        </div>
+                                    </div>
+                                    <div class="value-data-profile">
+                                        <div class="data-profile">
+                                            {{ data.user_profile['jenjang_kelas'] }}
+                                        </div>
+                                        <div class="data-profile">
+                                            Teknik Komputer dan Jaringan
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pengaturan-profile">
+                        <div class="container-pengaturan-profile">
+                            <div class="profile-title-main">
+                                <div class="profile-title">
+                                    Pengaturan Profile
+                                </div>
+                                <div class="profile-desc">
+                                    Kelola informasi pribadi, kata sandi, foto profil, dan
+                                    temukan bantuan jika diperlukan.
+                                </div>
+                            </div>
+                            <div class="profile-content-main mt-5">
+                                <form action="/tambah/data" class="row g-3 needs-validation" novalidate>
+                                    <div class="col-md-6">
+                                        <label for="namaGuru" class="form-label">Nama</label>
+                                        <input type="text" name="nama" class="form-control" id="namaGuru"
+                                            placeholder="Silahkan Masukkan Nama Guru" required autocomplete="off" />
+                                        <div class="invalid-feedback">Nama Guru Wajib Diisi!</div>
+
+                                        <label for="nktam" class="form-label mt-3">NKTAM/NIS</label>
+                                        <input type="text" name="nktam" class="form-control" id="nktam"
+                                            placeholder="Masukkan NKTAM" required required autocomplete="off" />
+                                        <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+                                        <label for="tanggal-lahir" class="form-label mt-3">Tanggal
+                                            Lahir</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="tanggal-lahir" class="form-control datepicker"
+                                                id="tanggal-lahir" placeholder="Pilih Tanggal Lahir" required required
+                                                autocomplete="off" />
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="tanggalLahirIcon">
+                                                <i class="fa-regular fa-calendar"></i>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback">Bidang ini wajib diisi</div>
+
+                                        <label for="tempat-lahir" class="form-label mt-2">Tempat Lahir</label>
+                                        <input type="text" name="tempat-lahir" class="form-control" id="tempat-lahir"
+                                            placeholder="Masukkan tempat-lahir" required required autocomplete="off" />
+                                        <div class="invalid-feedback">Bidang ini wajib diisi!</div>
+
+                                        <!-- Radio Buttons -->
+                                        <div class="mt-3">
+                                            <label class="form-label d-block">Jenis Kelamin</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="jkGuru" id="lakiLaki"
+                                                    value="Laki-Laki" required>
+                                                <label class="form-check-label" for="lakiLaki">Laki-Laki</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="jkGuru"
+                                                    id="perempuan" value="Perempuan" required>
+                                                <label class="form-check-label" for="perempuan">Perempuan</label>
+                                            </div>
+                                            <div class="invalid-feedback">Pilih salah satu jenis kelamin.</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- kanan -->
+                                    <div class="col-md-6">
+                                        <label for="jabatan" class="form-label">Jabatan</label>
+                                        <input type="text" name="jabatan" class="form-control" id="jabatan"
+                                            placeholder="Jabatan Guru" required />
+                                        <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+                                        <label for="Alamat Tinggal" class="form-label mt-3">Alamat Tinggal</label>
+                                        <input type="text" name="Alamat Tinggal" class="form-control"
+                                            id="Alamat Tinggal" placeholder="Alamat Tinggal" required />
+                                        <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+                                        <label for="nomorTeleponGuru" class="form-label mt-3">Nomor
+                                            Telepon</label>
+                                        <input type="number" name="nomorTeleponGuru" class="form-control"
+                                            id="nomorTeleponGuru" placeholder="Masukan Nomor Telepon" required required
+                                            autocomplete="off" />
+
+
+                                        <label for="emailGuru" class="form-label mt-3">Email</label>
+                                        <input type="emailGuru" name="emailGuru" class="form-control" id="emailGuru"
+                                            placeholder="Silahkan Masukan Email" required required autocomplete="off" />
+
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end border-top mt-5">
+                                        <button type="submit" class="btn btn-primary mt-3">
+                                            Perbarui Profile
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="keamanan">
+                        <div class="keamanan-profile-main">
+                            <div class="keamanan-profile-title">
+                                <div class="keamanan-title">Ubah Kata Sandi</div>
+                                <div class="keamanan-desc">
+                                    Kata sandi Anda harus paling tidak 6 karakter dan harus menyertakan kombinasi angka,
+                                    huruf, dan karakter khusus (!$@%).
+                                </div>
+                            </div>
+                            <div class="keamanan-profile-content mt-3">
+                                <form>
+                                    <div class="mb-3">
+                                        <input type="password" class="form-control" name="current-password"
+                                            id="current-password" placeholder="Kata Sandi Saat Ini">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="password" class="form-control" name="new-password"
+                                            id="new-password" placeholder="Kata Sandi Baru">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="password" class="form-control" name="confirmasi-password"
+                                            id="confirmasi-password" placeholder="Masukan Lagi Kata Sandi Baru">
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Tampilkan Kata Sandi</label>
+                                    </div>
+                                    <button type="submit" class="btn w-100 mt-2" name="submit"
+                                        style="background-color: #7899D6;">Ubah Kata
+                                        Sandi</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pengaturan-profile">
+                        <h1>test</h1>
+                    </div>
+                </div>
+                <div class="content-profile" id="aktifitas-pengguna">
+                    <div class="user-actifity-container">
+                        <div class="burger-menu fs-1 text-success toggle-show"
+                            style="margin-left: 0px; cursor: pointer;">
+                            <i class="bi bi-text-left"></i>
+                        </div>
+                        <div class="user-actifit-title">
+                            Aktifitas Pengguna
+                        </div>
+                        <div class="user-actifit-desc">Lihat riwayat aktifitas pengguna di sini. Riwayat pengguna
+                            memberikan Anda visibilitas atas semua tindakan yang dilakukan didalam aplikasi ini.
+                        </div>
+                        <div class="block-user-actifity mt-3">
+                            Data Tracking
+                        </div>
+                        <div class="actifity-record-container">
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                            <div class="actifity-record">
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-person-bounding-box"></i>
+                                    </div>
+                                    <div class="name me-2">Sayoga Pratama</div>
+                                    <div class="ip-address">
+                                        192.168.45.8
+                                    </div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="device me-2">Android</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="icon me-2">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div class="location me-2 bg-info-subtle"> -63036253793,106.3678377</div>
+                                </div>
+                                <div class="flex-row-d">
+                                    <div class="date me-2">05/06/2024</div>
+                                    <div class="time me-2">12.54</div>
+                                    <div class="actifity me-2">Login.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- end main section -->
+
+    {% include 'components/admin/script.html' %}
+    <script src="{{ url_for('static', filename='js/entities/admin/profile.js') }}"></script>
+    <script>
+        flatpickr("#tanggal-lahir", {
+            dateFormat: "d-m-Y"
+        });
+    </script>
+</body>
+
+</html>

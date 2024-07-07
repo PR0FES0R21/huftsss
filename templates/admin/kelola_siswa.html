@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#5F88D2" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/yearpickr/yearpicker.css') }}">
   {% include 'components/admin/link.html' %}
   <title>Dashboard | Kelola Siswa</title>
 </head>
@@ -64,18 +65,28 @@
                 </div>
                 <div class="invalid-feedback">Pilih salah satu jenis kelamin.</div>
               </div>
+
+              <label for="nomor_telepon" class="form-label mt-4" style="padding-top: 3px;">Nomor Telepon</label>
+              <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon"
+                placeholder="Masukan Nomor Telepon" required />
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
             </div>
 
             <!-- kanan -->
             <div class="col-md-6">
-              <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
-              <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon"
-                placeholder="Masukan Nomor Telepon" required />
-              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
-
-              <label for="email" class="form-label mt-3">Email</label>
+              <label for="email" class="form-label">Email</label>
               <input type="email" name="email" class="form-control" id="email" placeholder="Silahkan Masukan Email"
                 required required autocomplete="off" />
+
+              <label for="tahun_mulai" class="form-label mt-3">Tahun Mulai</label>
+              <input type="text" name="tahun_mulai" class="form-control year-picker" id="tahun_mulai"
+                placeholder="Tahun Masuk Siswa" required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
+
+              <label for="tahun_selesai" class="form-label mt-3">Tahun Selesai</label>
+              <input type="text" name="tahun_selesai" class="form-control year-picker" id="tahun_selesai"
+                placeholder="Tahun Selesai Siswa" required autocomplete="off" />
+              <div class="invalid-feedback">Bidang ini Wajid diisi!.</div>
 
               <label for="kelas" class="form-label mt-3">Kelas</label>
               <select class="form-select" aria-label="kelas" id="kelas" name="kelas" required>
@@ -297,6 +308,7 @@
   <!-- end main section -->
 
   {% include 'components/admin/script.html' %}
+  <script src="{{ url_for('static', filename='vendor/yearpickr/yearpicker.js') }}"></script>
   <script src="{{ url_for('static', filename='js/entities/admin/kelola-siswa.js') }}"></script>
   <script src="{{ url_for('static', filename='js/utility/data.js') }}"></script>
   <script src="{{ url_for('static', filename='js/utility/filter.js') }}"></script>
@@ -306,6 +318,9 @@
     });
 
     var csrf_token = "{{ csrf_token() }}";
+
+    $(".year-picker").yearpicker()
+
 
   </script>
 </body>

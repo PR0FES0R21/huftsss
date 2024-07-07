@@ -39,4 +39,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
             window.history.replaceState({}, document.title, window.location.pathname);
         }, 4000);
     }
+
+    // Ambil elemen-elemen dropdown yang diperlukan
+    var jenjangKelasDropdown = document.getElementById('jenjang-kelas');
+    var programKeahlianDropdown = document.getElementById('program-keahlian');
+    var kelasDropdown = document.getElementById('kelas');
+
+    // Tambahkan event listener untuk mendeteksi perubahan pada dropdown jenjang kelas dan program keahlian
+    jenjangKelasDropdown.addEventListener('change', updateKelasDropdownStatus);
+    programKeahlianDropdown.addEventListener('change', updateKelasDropdownStatus);
+
+    // Fungsi untuk mengupdate status dropdown kelas
+    function updateKelasDropdownStatus() {
+      // Ambil nilai yang dipilih pada dropdown jenjang kelas dan program keahlian
+        var selectedJenjangKelas = jenjangKelasDropdown.value;
+        var selectedProgramKeahlian = programKeahlianDropdown.value;
+
+        // Cek apakah salah satu atau kedua dropdown dipilih sebagai 'Semua'
+        if (selectedJenjangKelas === 'Semua' || selectedProgramKeahlian === 'Semua') {
+            // Nonaktifkan dropdown kelas
+            kelasDropdown.disabled = true;
+            kelasDropdown.value = 'Semua'
+        } else {
+            // Aktifkan dropdown kelas
+            kelasDropdown.disabled = false;
+        }
+    }
 })

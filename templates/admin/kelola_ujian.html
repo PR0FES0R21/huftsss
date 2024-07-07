@@ -14,8 +14,29 @@
 <body id="body-pd" class="">
 
   {% include 'components/admin/alert.html' %}
-  {% include 'components/admin/aside.html' %}
   {% include 'components/admin/header.html' %}
+  {% include 'components/admin/aside.html' %}
+  <div id="play-confirm-popup">
+    <div class="container-popup text-center">
+      <div class="alert-title">
+        <p>Mulai Ujian Sekarang?</p>
+      </div>
+      <p id="kode_mapel"></p>
+      <div class="input-confirm-password mb-3">
+        <div class="input-group flex-nowrap">
+          <span class="input-group-text" id="addon-wrapping"><i class="bx bxs-lock-alt"></i></span>
+          <input type="password" class="form-control" placeholder="Masukan kode diatas" aria-label="mapel_name"
+            aria-describedby="addon-wrapping" autocomplete="off" id="mapel_name" />
+        </div>
+      </div>
+      <button class="btn btn-danger me-2" id="batalkan-mulai-ujian">
+        Batalkan
+      </button>
+      <button class="btn btn-primary" id="confirmasi-mulai-ujian">
+        Konfirmasi
+      </button>
+    </div>
+  </div>
   <div class="row breadcumb">
     <div class="breadumb-navigation-container">
       <img src="{{ url_for('static', filename='images/icons/Home Icon.svg')}}" class="breadcrumb-icon"

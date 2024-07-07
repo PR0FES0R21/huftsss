@@ -17,22 +17,14 @@ class AuthView:
         self.auth_views.add_url_rule('/logout', view_func=self.logout, methods=['GET'])
 
     def login(self):
-        
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
 
-            encoded_data = request.headers.get('X-Data')
-            # Melakukan decode dari Base64 dan mendekripsi data JSON
-            if encoded_data:
-                decoded_data = json.loads(base64.b64decode(encoded_data).decode('utf-8'))
-            else:
-                decoded_data = None
-
             if not username or not password:
-                return jsonify({'status': 400, 'message': 'Username atau Password tidak boleh kosong'})
+                return jsonify({'status': 400, 'message': 'Silahkan Masukan Username Atau Password'})
             
-            return self.auth_controller.login_validation(username, password, decoded_data)
+            return self.auth_controller.login_validation(username, password)
             
         return render_template('auth/login.html')
 

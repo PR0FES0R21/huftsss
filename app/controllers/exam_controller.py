@@ -27,13 +27,15 @@ class ExamController:
     
     def add_exam(self, data, pembuat):
         date_created = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        kelas = data['kelas'] if 'kelas' in data else 'Semua'
         data = {
+            "semester": escape(data['semester']),
             'nama_ujian': escape(data['nama-ujian']),
             'jenis_ujian': escape(data['jenis-ujian']),
             'mata_pelajaran': escape(data['mata-pelajaran']),
             'jenjang_kelas': escape(data['jenjang-kelas']),
             'program_keahlian': escape(data['program-keahlian']),
-            'kelas': escape(data['kelas']),
+            'kelas': kelas,
             'tanggal_ujian': escape(data['tanggal-ujian']),
             'waktu_pengerjaan': escape(data['waktu-pengerjaan']),
             'metode_jawaban': escape(data['metode-jawaban']),
@@ -49,13 +51,15 @@ class ExamController:
         return encode_result
     
     def update_exam(self, exam:dict) -> str:
-
+        kelas = escape(exam['kelas']) if 'kelas' in exam else 'Semua'
         data = {
             "_id": ObjectId(exam['id']),
+            "semester": escape(exam['semester']),
             'nama_ujian': escape(exam['nama-ujian']),
             'jenis_ujian': escape(exam['jenis-ujian']),
             'mata_pelajaran': escape(exam['mata-pelajaran']),
-            'kelas': escape(exam['kelas']),
+            'jenjang_kelas': escape(exam['jenjang-kelas']),
+            'kelas': kelas,
             'program_keahlian': escape(exam['program-keahlian']),
             'tanggal_ujian': escape(exam['tanggal-ujian']),
             'waktu_pengerjaan': escape(exam['waktu-pengerjaan']),
@@ -91,15 +95,20 @@ class ExamController:
         pipelines = [
             {
                 '$match': {
-                    'program_keahlian': {
-                        '$in': ['all', departemen]
-                    },
-                    'jenjang_kelas': {
-                        '$in': ['all', level]
-                    },
-                    'kelas': {
-                        '$in': ['all', position]
-                    }
+                    '$and': [
+                        {'$or': [
+                            {'program_keahlian': 'Semua'}, 
+                            {'program_keahlian': departemen}
+                        ]},
+                        {'$or': [
+                            {'jenjang_kelas': 'Semua'}, 
+                            {'jenjang_kelas': level}
+                        ]},
+                        {'$or': [
+                            {'kelas': 'Semua'}, 
+                            {'kelas': position}
+                        ]}
+                    ]
                 }
             },
             {
@@ -183,12 +192,26 @@ class ExamController:
 
     def launch_exam(self, data, user_id):
         # Ekstraksi data ujian dari data yang diterima
-        exam_id = data.get('id_exam')
+        exam_id = ObjectId(data.get('id_exam'))
         program_keahlian = data.get('program_keahlian')
         jenjang_kelas = data.get('jenjang_kelas')
 
         # Cek apakah data ujian tersedia di database
-        exam_data = {'_id': ObjectId(exam_id), 'program_keahlian': program_keahlian, 'jenjang_kelas': jenjang_kelas}
+        exam_data = {
+            '_id': exam_id,
+            '$and': [
+                {
+                    '$or': [
+                        {'program_keahian': program_keahlian},
+                        {'program_keahian': 'Semua'},
+                    ],
+                    '$or': [
+                        {'jenjang_kelas': jenjang_kelas},
+                        {'jenjang_kelas': 'Semua'}
+                    ]
+                }
+            ]
+        }
         if not self.get_exam_data(exam_data):
             return {'status': 400, 'message': 'Data ujian tidak ditemukan'}
 

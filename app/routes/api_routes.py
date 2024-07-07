@@ -11,6 +11,7 @@ from app.services.auth_service import AuthService as asv
 from flask_login import login_required, current_user
 from app import socket
 from flask_socketio import emit
+import json
 
 api_view = Blueprint('api_view', __name__, url_prefix='/api')
 
@@ -89,6 +90,7 @@ class ApiBlueprint:
             
             if request.args.get('id'):
                 teacher_data = self.teacher_controller.get_teacher_data_by_id(request.args.get('id'))
+                return jsonify(teacher_data)
             teacher_data = self.teacher_controller.get_teacher_data(None)
             return jsonify(teacher_data)
 
@@ -211,6 +213,9 @@ class ApiBlueprint:
         elif entities == 'siswa':
             result = self.student_controller.update_student(data)
         elif entities == 'ujian':
+            print('------------------- exam (routes) --------------')
+            print(data)
+            print('-------------------- end routes ------------------')
             result = self.exam_controller.update_exam(data)
             return redirect(url_for('admin_views.kelola_ujian_ubah', id=data['id'], r=result))
         elif entities == 'soal':

@@ -179,16 +179,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         })
     })
-    const hapusData = document.querySelectorAll('.hapus-data-mapel');
-    hapusData.forEach(button => {
-        button.addEventListener('click', () => {
-            showAlert()
-        })
-    })
-    const cancleHapus = document.getElementById('batalkan-hapus-data');
-    cancleHapus.addEventListener('click', () => {
-        closeAlert();
-    })
+    // const hapusData = document.querySelectorAll('.hapus-data-mapel');
+    // hapusData.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         showAlert()
+    //     })
+    // })
+    // const cancleHapus = document.getElementById('batalkan-hapus-data');
+    // cancleHapus.addEventListener('click', () => {
+    //     closeAlert();
+    // })
 
     const tombolFilter = document.getElementById('tombol-filter');
     tombolFilter.addEventListener('click', () => {
@@ -226,16 +226,20 @@ const set_update = (id) => {
 }
 
 const delete_data = (id) => {
-    showAlert()
+    showAlert();
+
     const confirmasiHapus = document.getElementById('confirmasi-hapus-data');
-    confirmasiHapus.addEventListener('click', function a() {
+    const batalkanHapus = document.getElementById('batalkan-hapus-data');
+
+    const confirmHandler = function() {
         confirmasiHapus.disabled = true;
-        confirmasiHapus.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+        confirmasiHapus.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+
         $.ajax({
-            url: `/api/delete/mapel`,
+            url: '/api/delete/mapel',
             type: 'POST',
             beforeSend: xhr => {
-                xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                xhr.setRequestHeader('X-CSRFToken', csrf_token);
             },
             data: {
                 id: id
@@ -250,9 +254,26 @@ const delete_data = (id) => {
                     success(response.message, 'center', 'error');
                 }
                 confirmasiHapus.disabled = false;
-                confirmasiHapus.innerHTML = 'Ya, Hapus'
+                confirmasiHapus.innerHTML = 'Ya, Hapus';
+                confirmasiHapus.removeEventListener('click', confirmHandler);
+            },
+            error: (xhr, status, error) => {
+                success('Terjadi Kesalahan', 'center', 'error');
+                closeAlert();
+                confirmasiHapus.disabled = false;
+                confirmasiHapus.innerHTML = 'Ya, Hapus';
+                confirmasiHapus.removeEventListener('click', confirmHandler);
             }
-        })
-        confirmasiHapus.removeEventListener('click', a)
-    })
-}
+        });
+    };
+
+    const cancelHandler = function() {
+        closeAlert();
+        confirmasiHapus.disabled = false;
+        confirmasiHapus.innerHTML = 'Ya, Hapus';
+        confirmasiHapus.removeEventListener('click', confirmHandler);
+    };
+
+    confirmasiHapus.addEventListener('click', confirmHandler);
+    batalkanHapus.addEventListener('click', cancelHandler);
+};

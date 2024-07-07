@@ -1,10 +1,7 @@
-from flask import Blueprint, redirect, url_for
+from flask import Blueprint, redirect, url_for, jsonify
 from flask_socketio import emit
 from app import socket
-from flask_login import current_user
-from app import mongo
-from flask_login import login_required
-import time
+from flask_login import current_user, login_required
 
 socket_view = Blueprint('socket_views', __name__)
 
@@ -42,7 +39,7 @@ def disconnect():
 @socket_view.route('/active_users')
 def get_active_users():
     active_users = len(connected_users)
-    return {'active_users': active_users}
+    return jsonify({'active_users': active_users})
 
 def get_active_user_ssr():
     active_users = len(connected_users)

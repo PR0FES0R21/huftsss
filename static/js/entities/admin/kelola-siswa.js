@@ -139,6 +139,7 @@ $(document).ready(function() {
 const tombolTambahSiswa = document.getElementById('tambah-data-siswa');
 tombolTambahSiswa.addEventListener('click', () => {
     $('form').attr('id', 'form-add-siswa');
+    $('form')[0].reset()
     showModal('Siswa', 'Tambah');
 })
 
@@ -156,7 +157,6 @@ const add_siswa = () => {
     }
 
     const formData = $('#form-add-siswa').serialize();
-    console.log(formData);
     $.ajax({
         type: 'POST',
         url: '/api/add/siswa',
@@ -197,7 +197,6 @@ const set_update = (id) => {
         success: response => {
             // inisiasi data dari response
             const datas = response
-            console.log(response);
             // format tanggal lahir
             const tanggal_lahir = datas.tanggal_lahir
 
@@ -213,6 +212,8 @@ const set_update = (id) => {
             $(`input[name="jenis_kelamin"][value="${datas.jenis_kelamin}"]`).prop('checked', true)
             $('#nomor_telepon').val(datas.nomor_telepon)
             $('#email').val(datas.email)
+            $('#tahun_mulai').val(datas.tahun_mulai)
+            $('#tahun_selesai').val(datas.tahun_selesai)
             $('#kelas').val(datas.kelas)
             $('#program_keahlian').val(datas.program_keahlian)
             $('#jenjang_kelas').val(datas.jenjang_kelas)
@@ -269,39 +270,63 @@ const update_siswa = () => {
         }
     })
 }
-const batalkanHapusData = document.getElementById('batalkan-hapus-data');
-batalkanHapusData.addEventListener('click', () => {
-    closeAlert();
-})
 const delete_data = (id) => {
     showAlert();
-    x = document.getElementById('confirmasi-hapus-data')
-    x.disabled = false;
-    x.innerHTML = 'Ya, Hapus';
-    x.addEventListener('click', function a(event) {
-        x.disabled = true;
-        x.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`;
+
+    const confirmasiHapusData = document.getElementById('confirmasi-hapus-data');
+    const batalkanHapusData = document.getElementById('batalkan-hapus-data');
+
+    confirmasiHapusData.disabled = false;
+    confirmasiHapusData.innerHTML = 'Ya, Hapus';
+
+    const confirmHandler = function(event) {
+        confirmasiHapusData.disabled = true;
+        confirmasiHapusData.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+
         $.ajax({
             url: '/api/delete/siswa',
             beforeSend: xhr => {
-                xhr.setRequestHeader('X-CSRFToken', csrf_token)
+                xhr.setRequestHeader('X-CSRFToken', csrf_token);
             },
             method: 'POST',
             data: { id: id },
             success: response => {
                 if (response.status == 200) {
-                    set_count_data('/api/get/count/siswa', '#student_count_data')
-                    success('Data siswa Berhasil Dihapus')
+                    set_count_data('/api/get/count/siswa', '#student_count_data');
+                    success('Data siswa Berhasil Dihapus');
                     $('#table-data').DataTable().ajax.reload();
-                } else if( response.status == 400 ){
-                    success(response.message, 'center', 'info')
+                } else if (response.status == 400) {
+                    success(response.message, 'center', 'info');
                 } else {
-                    success('Terjadi Kesalahan')
+                    success('Terjadi Kesalahan');
                 }
-                closeAlert()
+                closeAlert();
+                confirmasiHapusData.disabled = false;
+                confirmasiHapusData.innerHTML = 'Ya, Hapus';
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
             },
-        })
+            error: (xhr, status, error) => {
+                success('Terjadi Kesalahan', 'center', 'error');
+                closeAlert();
+                confirmasiHapusData.disabled = false;
+                confirmasiHapusData.innerHTML = 'Ya, Hapus';
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
+            }
+        });
+    };
 
-        x.removeEventListener('click', a)
-    })
+    const cancelHandler = function(event) {
+        closeAlert();
+        confirmasiHapusData.disabled = false;
+        confirmasiHapusData.innerHTML = 'Ya, Hapus';
+        confirmasiHapusData.removeEventListener('click', confirmHandler);
+    };
+
+    confirmasiHapusData.addEventListener('click', confirmHandler);
+    batalkanHapusData.addEventListener('click', cancelHandler);
+};
+
+
+const view_data = (id) => {
+    window.location.href = `/admin/profile?entities=student&id=${id}`
 }

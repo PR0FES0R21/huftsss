@@ -53,6 +53,16 @@
             <div class="">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <input type="hidden" name="id" value="{{ data.id }}">
+              <label for="semester" class="form-label mt-4">Semester</label>
+              <select class="form-select" aria-label="semester" id="semester" name="semester" required>
+                <option value="">-- Pilih Semester --
+                </option>
+                <option value="semester 1" {% if data.exam_data['semester']=='semester 1' %}selected{% endif %}>Semester
+                  1</option>
+                <option value="semester 2" {% if data.exam_data['jenjang_kelas']=='semester 2' %}selected{% endif %}>
+                  Semester 2</option>
+              </select>
+
               <label for="nama-ujian" class="form-label">Nama Ujian</label>
               <input type="text" name="nama-ujian" class="form-control" id="nama-ujian"
                 placeholder="Silahkan Masukkan Nama Ujian" required autocomplete="off"
@@ -90,7 +100,9 @@
 
               <label for="jenjang-kelas" class="form-label mt-4">Jenjang Kelas</label>
               <select class="form-select" aria-label="jenjang-kelas" id="jenjang-kelas" name="jenjang-kelas" required>
-                <option value="" {% if data.exam_data['jenjang_kelas']=='' %}selected{% endif %}>-- Pilih Jenjang Kelas
+                <option value="Semua" {% if data.exam_data['jenjang_kelas']=='Semua' %}selected{% endif %}>-- Semua
+                  Jenjang
+                  Kelas
                   --
                 </option>
                 <option value="X" {% if data.exam_data['jenjang_kelas']=='X' %}selected{% endif %}>X (10)</option>
@@ -101,13 +113,13 @@
               <label for="program-keahlian" class="form-label mt-4">Program Keahlian</label>
               <select class="form-select" aria-label="program-keahlian" id="program-keahlian" name="program-keahlian"
                 required>
-                <option value="all" {% if data.exam_data['program_keahlian']=='all' %}selected{% endif %}>-- Semua
+                <option value="Semua" {% if data.exam_data['program_keahlian']=='Semua' %}selected{% endif %}>-- Semua
                   Program
                   Keahlian --</option>
                 <option value="TKJ" {% if data.exam_data['program_keahlian']=='TKJ' %}selected{% endif %}>Teknik
                   Komputer dan
                   Jaringan</option>
-                <option value="TKRO" {% if data.exam_data['program_keahlian']=='TKR' %}selected{% endif %}>Teknik
+                <option value="TKRO" {% if data.exam_data['program_keahlian']=='TKRO' %}selected{% endif %}>Teknik
                   Kendaraan Ringan
                 </option>
                 <option value="TBSM" {% if data.exam_data['program_keahlian']=='TBSM' %}selected{% endif %}>Teknik

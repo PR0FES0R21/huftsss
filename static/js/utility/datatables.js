@@ -32,7 +32,7 @@ const settingsButton = (row, entities) => {
 
 const playButton = (row, entities) => {
     return `
-        <button class="btn btn-sm btn-secondary btn-play hapus-data-${entities}" onclick="play_data('${row._id}')">
+        <button class="btn btn-sm btn-secondary btn-play hapus-data-${entities}" onclick="play_data('${row._id}')" data-name="${row.nama_ujian}">
             <i class="bi bi-play"></i>
         </button>
     `;
@@ -155,4 +155,16 @@ const datatables = (columns, entities, endpoint, defs = false, callback1 = false
         },
     });
     
+}
+
+function formatDate(date) {
+    var day = date.getDate();
+    var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    var hours = ('0' + date.getHours()).slice(-2); // Format dua digit untuk jam
+    var minutes = ('0' + date.getMinutes()).slice(-2); // Format dua digit untuk menit
+    var seconds = ('0' + date.getSeconds()).slice(-2); // Format dua digit untuk detik
+    return day + ' ' + monthNames[monthIndex] + ' ' + year + ' ' + hours + '.' + minutes + '.' + seconds;
 }

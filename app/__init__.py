@@ -10,6 +10,10 @@ import random
 
 mongo = PyMongo()
 socket = SocketIO()
+login_manager = LoginManager()
+
+dotenv_path = join(dirname(dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
 
 def create_app():
 
@@ -21,7 +25,6 @@ def create_app():
     # @ lokasi upload folder, dan token csrf
     # @ note: secret key, dan csrf token diambil dari .evn 
     #-----------------------------------------------------------
-    app = Flask(__name__, template_folder='../templates', static_folder='../static')
     app = Flask(__name__, template_folder='../templates', static_folder='../static')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -43,8 +46,6 @@ def create_app():
     # @ catatan: nama database dimasukan ke url setelah /
     # @ inisiasi pymongo kedalam app
     #----------------------------------------------------------
-    dotenv_path = join(dirname(dirname(__file__)), '.env')
-    load_dotenv(dotenv_path)
     app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
     mongo.init_app(app)
 
@@ -102,7 +103,6 @@ def create_app():
     # --------------------------------------------------------
     # @ Deskripsi: Mengatur login manager untuk manajemen sesi pengguna
     # --------------------------------------------------------
-    login_manager = LoginManager()
     login_manager.login_view = 'auth_views.login'
     login_manager.init_app(app)
     
@@ -124,11 +124,11 @@ def create_app():
         teacher_data = teacher_model.get_teacher_data({'_id': user_id})
 
         if admin_data:
-            return User(admin_data['_id'], admin_data['peran'], admin_data['nama'], admin_data['jabatan'], platform)
+            return User(admin_data['_id'], admin_data['peran'], admin_data['nama'], admin_data['jabatan'])
         elif student_data:
-            return User(student_data['_id'], student_data['peran'], student_data['nama'], student_data['kelas'], platform, student_data['program_keahlian'], student_data['jenjang_kelas'])
+            return User(student_data['_id'], student_data['peran'], student_data['nama'], student_data['kelas'], student_data['program_keahlian'], student_data['jenjang_kelas'])
         elif teacher_data:
-            return User(teacher_data['_id'], teacher_data['peran'], teacher_data['nama'],student_data['jabatan'], platform)
+            return User(teacher_data['_id'], teacher_data['peran'], teacher_data['nama'],student_data['jabatan'])
         else:
             return None
         

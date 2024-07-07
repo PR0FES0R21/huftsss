@@ -61,12 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // hapus 1 data guru
-    const batalkanHapusGuru = document.getElementById('batalkan-hapus-data')
-    batalkanHapusGuru.addEventListener('click', () => {
-        closeAlert()
-    })
-
     const lihatprofileGuru = document.querySelectorAll('.lihat-profile-guru')
     lihatprofileGuru.forEach(event => {
         event.addEventListener('click', () => {
@@ -157,12 +151,14 @@ const addGuru = () => {
 const delete_data = (id) => {
     showAlert();
 
-    x = document.getElementById('confirmasi-hapus-data')
-    x.disabled = false
-    x.innerHTML = 'Ya, Hapus'
-    x.addEventListener('click', function a(event) {
-        x.disabled = true
-        x.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+    const confirmasiHapusData = document.getElementById('confirmasi-hapus-data');
+    confirmasiHapusData.disabled = false;
+    confirmasiHapusData.innerHTML = 'Ya, Hapus';
+
+    const confirmHandler = function(event) {
+        confirmasiHapusData.disabled = true;
+        confirmasiHapusData.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+
         $.ajax({
             url: '/api/delete/guru',
             beforeSend: xhr => {
@@ -172,23 +168,41 @@ const delete_data = (id) => {
             data: { id: id },
             success: response => {
                 if (response.status == 200) {
-                    set_count_data('/api/get/count/guru', '#teacher_count_data')
-                    success('Data Guru Berhasil Dihapus')
+                    set_count_data('/api/get/count/guru', '#teacher_count_data');
+                    success('Data Guru Berhasil Dihapus');
                     $('#table-data').DataTable().ajax.reload();
-                } else if( response.status == 400 ){
-                    success(response.message, 'center', 'info')
+                } else if (response.status == 400) {
+                    success(response.message, 'center', 'info');
                 } else {
-                    success('Terjadi Kesalahan')
+                    success('Terjadi Kesalahan');
                 }
-                closeAlert()
-                x.disabled = false
-                x.innerHTML = 'Ya, Hapus'
+                closeAlert();
+                confirmasiHapusData.disabled = false;
+                confirmasiHapusData.innerHTML = 'Ya, Hapus';
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
             },
-        })
+            error: (xhr, status, error) => {
+                success('Terjadi Kesalahan', 'center', 'error');
+                closeAlert();
+                confirmasiHapusData.disabled = false;
+                confirmasiHapusData.innerHTML = 'Ya, Hapus';
+                confirmasiHapusData.removeEventListener('click', confirmHandler);
+            }
+        });
+    };
 
-        x.removeEventListener('click', a)
-    })
-}
+    confirmasiHapusData.addEventListener('click', confirmHandler);
+
+    // Tombol untuk membatalkan operasi
+    const batalkanHapusGuru = document.getElementById('batalkan-hapus-data');
+    batalkanHapusGuru.addEventListener('click', function() {
+        closeAlert();
+        confirmasiHapusData.disabled = false;
+        confirmasiHapusData.innerHTML = 'Ya, Hapus';
+        confirmasiHapusData.removeEventListener('click', confirmHandler);
+    });
+};
+
 
 
 // Update Data Guru
@@ -236,6 +250,7 @@ function updateGuru() {
 
 // handler untuk melakukan inisisasi data guru yang akan diubah
 const set_update = (id) => {
+    console.log(id);
 
     document.getElementById('submit-form').disabled = false
     document.getElementById('submit-form').innerHTML = 'Ubah Data'
@@ -248,6 +263,7 @@ const set_update = (id) => {
         },
         success: response => {
             const datas = response[0]
+            console.log(datas);
             const tanggal_lahir = datas.tanggal_lahir
             // inisiasi target
             $('#idGuru').val(datas._id)
@@ -259,7 +275,7 @@ const set_update = (id) => {
             });
             $(`input[name="jkGuru"][value="${datas.jenis_kelamin}"]`).prop('checked', true)
             $('#jabatan').val(datas.jabatan)
-            $('#mapelYangDiajar').val(datas.mata_pelajaran)
+            $('#mapelYangDiajar').val(datas.id_mapel)
             $('#emailGuru').val(datas.email)
             $('#nomorTeleponGuru').val(datas.nomor_telepon)
 
@@ -316,6 +332,11 @@ const delete_all_data = () => {
             console.error(error);
         }
     }) 
+}
+
+
+const view_data = (id) => {
+    window.location.href = `/admin/profile?entities=teacher&id=${id}`
 }
 
 
