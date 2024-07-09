@@ -1,5 +1,6 @@
 from app import create_app, socket
 
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
-    socket.run(app, '0.0.0.0', port='5000', debug=True)
+    socket.run(app, '0.0.0.0', port='8000', debug=True)
