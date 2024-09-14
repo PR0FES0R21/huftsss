@@ -1318,6 +1318,11 @@ form .form-label {
     width: calc(100% + 40px);
     margin-left: -20px;
   }
+
+  #pengaturan-sekolah {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1374,6 +1379,87 @@ form .form-label {
     margin-top: -5px;
   }
 }
+
+#pengaturan-sekolah {
+  display: none;
+}
+
+/* .container-pengaturan-sekolah {
+  margin-left: 15px;
+} */
+
+.pengaturan-sekolah-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #545454;
+}
+
+.container-informasi-sekolah {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  background-color: #F2F6FC;
+  border: 1px solid #E2EAF7;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.content-information-sekolah-label {
+  margin-right: auto;
+  padding-right: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  padding-left: 5px;
+}
+
+.content-information-sekolah-value {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.content-information-sekolah-value span {
+  padding: 0 15px 0 10px;
+}
+
+.content-information-sekolah-value span:first-of-type {
+  color: #545454;
+}
+
+.content-information-sekolah-value span:last-of-type {
+  color: #5F88D2;
+}
+
+#start-year,
+#end-year {
+  width: 45px;
+  border: none;
+  outline: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (min-width: 574px) and (max-width: 635px) {
   .view-table-data-title {

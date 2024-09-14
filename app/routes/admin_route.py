@@ -78,7 +78,10 @@ class AdminView:
 
         user_actifities = Tracking().get(True)
         for actifity in user_actifities:
-            actifity['time_ago'] = self.time_ago(actifity['waktu_aktifitas'])
+            try:
+                actifity['time_ago'] = self.time_ago(actifity['waktu_aktifitas'])
+            except:
+                actifity['time_ago'] = 'Terjadi Kesalahan'
 
         data = {
             'name': current_user.name,

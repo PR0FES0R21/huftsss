@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#5F88D2" />
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/yearpickr/yearpicker.css') }}">
     {% include 'components/admin/link.html' %}
 
     <title>Dashboard | Kelola Mata Pelajaran</title>
@@ -13,6 +14,10 @@
     <style>
         body {
             background: #f2f6fc;
+        }
+
+        .yearpicker-container {
+            right: 0;
         }
 
         #checkbox {
@@ -105,8 +110,8 @@
         <div class="profile">
             <div class="profile-container position-relative">
                 <div class="sidebar-profile visible" id="sidebar-profile">
-                    <div class="burger-menu float-end fs-1 text-success" style="margin-left: -20px; cursor: pointer;"
-                        id="toggle-hide">
+                    <div class="burger-menu d-md-none float-end fs-1 text-success"
+                        style="margin-left: -20px; cursor: pointer;" id="toggle-hide">
                         <i class="bi bi-x"></i>
                     </div>
                     <div class="sidebar-menu" data-type="profile">
@@ -121,7 +126,7 @@
                 </div>
 
                 <div class="content-profile" id="profile">
-                    <div class="burger-menu position-absolute fs-1 text-success toggle-show"
+                    <div class="burger-menu d-md-none position-absolute fs-1 text-success toggle-show"
                         style="margin-left: -20px; cursor: pointer;">
                         <i class="bi bi-text-left"></i>
                     </div>
@@ -248,10 +253,13 @@
                                     </div>
                                     <div class="value-data-profile">
                                         <div class="data-profile">
-                                            {{ data.user_profile['jenjang_kelas'] }}
+                                            {{ data.user_profile['jenjang_kelas'] if data.user_profile['jenjang_kelas']
+                                            else '-' }}
                                         </div>
                                         <div class="data-profile">
-                                            Teknik Komputer dan Jaringan
+                                            {{ data.user_profile['program_keahlian'] if
+                                            data.user_profile['program_keahlian']
+                                            else '-' }}
                                         </div>
                                     </div>
                                 </div>
@@ -391,7 +399,7 @@
                 </div>
                 <div class="content-profile" id="aktifitas-pengguna">
                     <div class="user-actifity-container">
-                        <div class="burger-menu fs-1 text-success toggle-show"
+                        <div class="burger-menu d-md-none fs-1 text-success toggle-show"
                             style="margin-left: 0px; cursor: pointer;">
                             <i class="bi bi-text-left"></i>
                         </div>
@@ -633,6 +641,45 @@
                         </div>
                     </div>
                 </div>
+                <div class="content-profile" id="pengaturan-sekolah">
+                    <div class="burger-menu d-md-none fs-1 text-success toggle-show"
+                        style="margin-left: 0px; cursor: pointer;">
+                        <i class="bi bi-text-left"></i>
+                    </div>
+                    <div class="container-pengaturan-sekolah">
+                        <div class="information-pengaturan-sekolah">
+                            <div class="pengaturan-sekolah-title">Pengaturan Sekolah</div>
+                            <div class="pengaturan-sekolah-desc">Halaman ini memungkinkan admin untuk mengelola
+                                pengaturan dasar sekolah, seperti smester dan tahun ajaran saat ini</div>
+                        </div>
+                        <div class="content-information-sekolah mt-5">
+                            <div class="container-informasi-sekolah">
+                                <div class="content-information-sekolah-label">Smester saat ini</div>
+                                <div class="content-information-sekolah-value">
+                                    <span>ganjil</span>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                            checked>
+                                    </div>
+                                    <span>genap</span>
+                                </div>
+                            </div>
+                            <div class="container-informasi-sekolah mt-2">
+                                <div class="content-information-sekolah-label">Tahun ajaran</div>
+                                <div class="content-information-sekolah-value me-1">
+                                    <form>
+                                        <input type="text" name="tahun_mulai" class="year-picker" id="start-year" />
+                                        <span>/</span>
+                                        <input type="text" name="tahun_mulai" class="year-picker" id="end-year" />
+                                    </form>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-success mt-3 ms-auto">Perbarui Pengaturan</button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -640,11 +687,19 @@
     <!-- end main section -->
 
     {% include 'components/admin/script.html' %}
+    <script src="{{ url_for('static', filename='vendor/yearpickr/yearpicker.js') }}"></script>
     <script src="{{ url_for('static', filename='js/entities/admin/profile.js') }}"></script>
     <script>
         flatpickr("#tanggal-lahir", {
             dateFormat: "d-m-Y"
         });
+
+        $('.year-picker').yearpicker()
+        s = 2024
+        e = 2024
+        $('#start-year').val(s);
+        $('#end-year').val(e);
+
     </script>
 </body>
 

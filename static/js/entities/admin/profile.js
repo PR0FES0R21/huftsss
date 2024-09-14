@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
         show.addEventListener("click", function() {
             sidebar.classList.add("d-block");
             show.style.display = 'none';
-    
             // if (sidebar.classList.contains("d-block")) {
             //     toggle.style.display = 'none'
             //     toggle.style.left = "0px";
@@ -39,12 +38,23 @@ document.addEventListener("DOMContentLoaded", function() {
             if( dataType == 'profile' ) {
                 console.log('profile');
                 $('#aktifitas-pengguna').hide()
+                $('#pengaturan-sekolah').hide()
+                
                 $('#profile').show()
             } else if ( dataType == 'aktifitas-pengguna') {
                 console.log('aktifitas pengguna');
                 $('#profile').hide()
+                $('#pengaturan-sekolah').hide()
+
                 $('#toggle-profile-menu').show()
                 $('#aktifitas-pengguna').show()
+            } else if ( dataType == 'pengaturan-sekolah') {
+                console.log('object');
+
+                $('#profile').hide()
+                $('#aktifitas-pengguna').hide()
+
+                $('#pengaturan-sekolah').show()
             }
             $(this).siblings().find("a").removeClass("active");
             $(this).find("a").addClass("active");
@@ -56,47 +66,39 @@ document.addEventListener("DOMContentLoaded", function() {
     const pengaturanProfile = document.getElementById('pengaturan-profile')
     const pengaturanSekolah = document.getElementById('pengaturan-profile')
     subMenus.forEach((subMenu) => {
-    subMenu.addEventListener('click', () => {
-        subMenus.forEach((otherSubMenu) => {
-        otherSubMenu.classList.remove('active');
+        subMenu.addEventListener('click', () => {
+            subMenus.forEach((otherSubMenu) => {
+            otherSubMenu.classList.remove('active');
+            });
+            const dataType = subMenu.getAttribute('data-type');
+            console.log(dataType);
+            if( dataType == 'informasi-pribadi' ) {
+                keamananPage.style.display = 'none';
+                pengaturanProfile.style.display = 'none';
+                pengaturanSekolah.style.display = 'none'
+
+                console.log('object');
+                mInformasiPribadi.style.display = 'block';
+            } else if ( dataType == 'pengaturan-profile' ) {
+                mInformasiPribadi.style.display = 'none';
+                keamananPage.style.display = 'none';
+                pengaturanSekolah.style.display = 'none'
+
+                console.log('ajn');
+                pengaturanProfile.style.display = 'block';
+            } else if ( dataType == 'keamanan' ) {
+                pengaturanProfile.style.display = 'none';
+                mInformasiPribadi.style.display = 'none';
+                pengaturanSekolah.style.display = 'none'
+                
+                console.log('oct');
+                keamananPage.style.display = 'block';
+            } else if ( dataType == 'pengaturan-sekolah' ) {
+                
+            }
+            subMenu.classList.add('active');
+            
         });
-        const dataType = subMenu.getAttribute('data-type');
-        if( dataType == 'informasi-pribadi' ) {
-            keamananPage.style.display = 'none';
-            pengaturanProfile.style.display = 'none';
-            pengaturanSekolah.style.display = 'none'
-
-            
-            console.log('object');
-            mInformasiPribadi.style.display = 'block';
-        } else if ( dataType == 'pengaturan-profile' ) {
-            mInformasiPribadi.style.display = 'none';
-            keamananPage.style.display = 'none';
-            pengaturanSekolah.style.display = 'none'
-
-            console.log('ajn');
-            pengaturanProfile.style.display = 'block';
-        } else if ( dataType == 'keamanan' ) {
-            pengaturanProfile.style.display = 'none';
-            mInformasiPribadi.style.display = 'none';
-            pengaturanSekolah.style.display = 'none'
-            
-            
-            console.log('oct');
-            keamananPage.style.display = 'block';
-        } else if ( dataType == 'pengaturan-sekolah' ) {
-            pengaturanProfile.style.display = 'none';
-            mInformasiPribadi.style.display = 'none';
-            keamananPage.style.display = 'none';
-
-            console.log('kl');
-            pengaturanSekolah.style.display = 'block'
-        }
-        subMenu.classList.add('active');
-        
     });
-    });
-
-
 });
 

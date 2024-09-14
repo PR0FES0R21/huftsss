@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 event.preventDefault()
                 event.stopPropagation()
             }
-    
             form.classList.add('was-validated')
             }, false)
         })

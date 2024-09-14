@@ -11,7 +11,7 @@ def role_based_prefix_middleware(func):
         user_cookie = escape(request.cookies.get('s0m3t2'))
         if not user_cookie:
             return jsonify({'status': 403, 'message': 'Anda tidak memiliki izin untuk mengakses sumber daya ini no cookie'})
-        
+
         controllers = [AdminController(), TeacherController(), StudentController()]
         user_data = next((c.check_cookie(user_cookie) for c in controllers if c.check_cookie(user_cookie)), None)
 
